@@ -22,7 +22,7 @@ class HomeScreenPage extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               CoMakeCompo(),
               SizedBox(
@@ -37,7 +37,7 @@ class HomeScreenPage extends StatelessWidget {
                 children: [
                   RecordCompo(),
                   SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
                   FaceCompo(),
                 ],

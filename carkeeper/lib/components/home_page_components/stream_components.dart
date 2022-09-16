@@ -11,7 +11,9 @@ class StreamCompoState extends State<StreamCompo> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, "/stream");
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),

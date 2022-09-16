@@ -6,7 +6,9 @@ class FaceCompo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, "/face");
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
