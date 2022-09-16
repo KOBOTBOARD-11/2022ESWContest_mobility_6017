@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "927007293579",
+    "project_id": "esc-car-keeper",
+    "storage_bucket": "esc-car-keeper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927007293579:android:a9977a48358ed42816548e",
+        "android_client_info": {
+          "package_name": "com.example.carkeeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927007293579-buhd38qnrvc3avc0551hhse2fri5vqll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAALDWMeRogfY8G0ZdVK8jVCzWYjPfxybQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927007293579-buhd38qnrvc3avc0551hhse2fri5vqll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

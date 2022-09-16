@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_local_notifications: ^9.9.1
   carousel_slider: ^4.1.1
+  firebase_core: ^1.22.0
 
 dev_dependencies:
   flutter_test:
