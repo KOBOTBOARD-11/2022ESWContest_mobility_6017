@@ -35,26 +35,32 @@
 
 ## 👮팀 소개 및 역할
 
-1. 🧑🏻‍💻 최보석
-- Role : 팀장,프로젝트 관리, FrontEnd
-- Github: https://github.com/YEONOC
-- Email : chlqhtjr752@kookmin.ac.kr
-
-2. 👨🏾‍💻 박준용
-- Role : FrontEnd,Backend
+1. 👨🏾‍💻 박준용
+- Role : 팀장,인공지능, 아두이노
 - Github: https://github.com/junyong1111
 - Email : jypark93@kookmin.ac.kr
 
-3. 🧑🏽‍💻 변준형
-- Role : 컴퓨터 비전, 인공지능
+2. 🧑🏽‍💻 변준형
+- Role : 컴퓨터 비전, 라즈베리파이
 - Github: https://github.com/Byeooon
 - Email : junhyeong0519@kookmin.ac.kr
 
 
-4. 👩🏻‍💻 이세희
-- Role : 서버관리, Backend
+3. 👩🏻‍💻 이세희
+- Role : 서버개발, Backend
 - Github: https://github.com/Sehee-Lee-01
 - Email : tpfktpgml24@kookmin.ac.kr
+
+
+4. 🧑🏻‍💻 최보석
+- Role : 데이터라벨링, FrontEnd
+- Github: https://github.com/YEONOC
+- Email : chlqhtjr752@kookmin.ac.kr
+
+
+
+
+
 
 ## 🔎사용 환경 설정 및 시작하기
 
