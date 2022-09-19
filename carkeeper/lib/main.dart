@@ -2,10 +2,9 @@ import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/pages/stream_page.dart';
-import 'package:carkeeper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

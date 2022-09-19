@@ -1,32 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
-class CommonFormCard extends StatefulWidget {
+class CommonFormCard extends StatelessWidget {
   final gasName;
   final amount;
 
   const CommonFormCard({required this.gasName, required this.amount});
 
   @override
-  State<CommonFormCard> createState() => _CommonFormCardState(gasName, amount);
-}
-
-class _CommonFormCardState extends State<CommonFormCard> {
-  final gas;
-  final amt;
-  var mColor;
-  var status;
-  var sColor;
-  _CommonFormCardState(this.gas, this.amt);
-  @override
   Widget build(BuildContext context) {
-    print(amt);
-    if (amt < (10)) {
+    var mColor;
+    var status;
+    var sColor;
+    //print("hi $amt");
+    if (amount == null) {
       mColor = Color(0xFFDCECFF);
       status = "안전";
       sColor = Color(0xFF0057FF);
-    } else if (10 <= amt && amt < 50) {
+      //amt = 0;
+    } else if (amount < (10)) {
+      mColor = Color(0xFFDCECFF);
+      status = "안전";
+      sColor = Color(0xFF0057FF);
+    } else if (10 <= amount && amount < 50) {
       mColor = Color(0xFFFFF3DC);
       status = "주의";
       sColor = Color(0xFFFF8A00);
@@ -45,7 +43,7 @@ class _CommonFormCardState extends State<CommonFormCard> {
         children: [
           SizedBox(height: 10),
           Text(
-            '${gas} 수치',
+            '${gasName} 수치',
             style: h5(),
           ),
           SizedBox(height: 30),
@@ -55,7 +53,7 @@ class _CommonFormCardState extends State<CommonFormCard> {
               Row(
                 children: [
                   Text(
-                    "${amt}",
+                    "${amount}",
                     style: bigSize1(),
                   ),
                   SizedBox(width: 10),
