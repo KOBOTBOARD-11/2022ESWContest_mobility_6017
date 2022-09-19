@@ -37,6 +37,9 @@ dependencies:
   flutter_local_notifications: ^9.9.1
   carousel_slider: ^4.1.1
   firebase_core: ^1.22.0
+  firebase_messaging: ^13.0.2
+  cloud_firestore: ^3.4.8
+  web_socket_channel: ^2.2.0
 
 dev_dependencies:
   flutter_test:
