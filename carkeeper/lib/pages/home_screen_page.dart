@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 import '../components/home_page_components/co_make_components.dart';
 import '../components/home_page_components/face_components.dart';
 
-class HomeScreenPage extends StatelessWidget {
+class HomeScreenPage extends StatefulWidget {
+  @override
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
