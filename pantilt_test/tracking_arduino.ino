@@ -1,12 +1,14 @@
-//Face Tracker using OpenCV and Arduino
-//by Shubham Santosh
+// 라즈베리파이 gpio로 변형 필요
+// Face Tracker using OpenCV and Arduino
+// by Shubham Santosh
 
-#include<Servo.h>
+#include <Servo.h>
 
 Servo x, y;
-int width = 640, height = 480;  // total resolution of the video
-int xpos = 90, ypos = 90;  // initial positions of both Servos
-void setup() {
+int width = 640, height = 480; // total resolution of the video
+int xpos = 90, ypos = 90;      // initial positions of both Servos
+void setup()
+{
 
   Serial.begin(9600);
   x.attach(7);
@@ -17,15 +19,16 @@ void setup() {
   x.write(xpos);
   y.write(ypos);
 }
-const int angle = 5;   // degree of increment or decrement
+const int angle = 5; // degree of increment or decrement
 
-void loop() {
+void loop()
+{
   if (Serial.available() > 0)
   {
     int x_mid, y_mid;
     if (Serial.read() == 'X')
     {
-      x_mid = Serial.parseInt();  // read center x-coordinate
+      x_mid = Serial.parseInt(); // read center x-coordinate
       if (Serial.read() == 'Y')
         y_mid = Serial.parseInt(); // read center y-coordinate
     }
@@ -40,7 +43,6 @@ void loop() {
       ypos -= angle;
     if (y_mid > height / 2 - 30)
       ypos += angle;
-
 
     // if the servo degree is outside its range
     if (xpos >= 180)
