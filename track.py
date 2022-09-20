@@ -1,5 +1,10 @@
 import argparse
 import os
+from pickle import FALSE
+import time
+import datetime
+
+from matplotlib.pyplot import flag
 
 # limit the number of cpus used by high performance libraries
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -168,6 +173,15 @@ def run(
         strongsort_list[i].model.warmup()
     outputs = [None] * nr_sources
 
+    # !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
+    
+    picNum = 0
+    wildboar_flag = False
+    dog_flag = False
+    waterdeer_flag = False
+    racoon_flag = False
+    human_flag = False
+    
     # Run tracking
     model.warmup(imgsz=(1 if pt else nr_sources, 3, *imgsz))  # warmup
     dt, seen = [0.0, 0.0, 0.0, 0.0], 0
@@ -193,16 +207,21 @@ def run(
         dt[2] += time_sync() - t3
 
         # Process detections
+        
         for i, det in enumerate(pred):  # detections per image
             seen += 1
             if webcam:  # nr_sources >= 1
                 p, im0, _ = path[i], im0s[i].copy(), dataset.count
-                p = Path(p)  # to Path
-                s += f'{i}: '
+                im0 = cv2.add(im0, -40) # image brightness control !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
+
+                p = Path(p)  # to Path 
+                # s += f'{i}: '
                 txt_file_name = p.name
                 save_path = str(save_dir / p.name)  # im.jpg, vid.mp4, ...
             else:
                 p, im0, _ = path, im0s.copy(), getattr(dataset, 'frame', 0)
+                im0 = cv2.add(im0, -40) # image brightness control !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
+
                 p = Path(p)  # to Path
                 # video file
                 if source.endswith(VID_FORMATS):
@@ -215,7 +234,7 @@ def run(
             curr_frames[i] = im0
 
             txt_path = str(save_dir / 'tracks' / txt_file_name)  # im.txt
-            s += '%gx%g ' % im.shape[2:]  # print string
+            # s += '%gx%g ' % im.shape[2:]  # print string
             imc = im0.copy() if save_crop else im0  # for save_crop
 
             annotator = Annotator(im0, line_width=2, pil=not ascii)
@@ -263,6 +282,110 @@ def run(
                         if save_vid or save_crop or show_vid:  # Add bbox to image
                             c = int(cls)  # integer class
                             id = int(id)  # integer id
+                            
+                            # Wildboar      0
+                            # dog           1
+                            # racoon        2
+                            # waterdeer     3
+                            # human         4
+                            if c == 0 :
+                                LOGGER.info("wildboar!")
+                                if wildboar_flag == False : 
+                                    first_wildboar_time = time.time()
+                                    print("wildboar_flag : " , wildboar_flag)
+                                    wildboar_flag = True
+                                elif wildboar_flag == True:
+                                    print("wildboar_flag : " , wildboar_flag)
+                                    measure_wildboar_time = time.time()
+                                    LOGGER.info("wildboar!")
+                                    print("first_wildboar_time : " , first_wildboar_time)
+                                    print("wildboar_time : " , measure_wildboar_time)
+                                    if measure_wildboar_time - first_wildboar_time >= 5 :
+                                        print("upload!")
+                                        wildboar_flag = False
+                                        image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0)
+                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        picNum += 1
+                               
+                            if c == 1 :
+                                if dog_flag == False : 
+                                    first_dog_time = time.time()
+                                    print("dog_flag : " , dog_flag)
+                                    dog_flag = True
+                                elif dog_flag == True:
+                                    print("dog_flag : " , dog_flag)
+                                    measure_dog_time = time.time()
+                                    LOGGER.info("dog!")
+                                    print("first_dog_time : " , first_dog_time)
+                                    print("dog_time : " , measure_dog_time)
+                                    if measure_dog_time - first_dog_time >= 5 :
+                                        print("upload!")
+                                        dog_flag = False
+                                        image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0)
+                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        picNum += 1
+                            if c == 2 :
+                                LOGGER.info("racoon!")
+                                if racoon_flag == False : 
+                                    first_racoon_time = time.time()
+                                    print("racoon_flag : " , racoon_flag)
+                                    racoon_flag = True
+                                elif racoon_flag == True:
+                                    print("racoon_flag : " , racoon_flag)
+                                    measure_racoon_time = time.time()
+                                    LOGGER.info("racoon!")
+                                    print("first_racoon_time : " , first_racoon_time)
+                                    print("racoon_time : " , measure_racoon_time)
+                                    if measure_racoon_time - first_racoon_time >= 5 :
+                                        print("upload!")
+                                        racoon_flag = False
+                                        image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0)
+                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        picNum += 1
+                                
+                            if c == 3 :
+                                LOGGER.info("waterdeer!")
+                                if waterdeer_flag == False : 
+                                    first_waterdeer_time = time.time()
+                                    print("waterdeer_flag : " , waterdeer_flag)
+                                    waterdeer_flag = True
+                                elif waterdeer_flag == True:
+                                    print("waterdeer_flag : " , waterdeer_flag)
+                                    measure_waterdeer_time = time.time()
+                                    LOGGER.info("waterdeer!")
+                                    print("first_waterdeer_time : " , first_waterdeer_time)
+                                    print("waterdeer_time : " , measure_waterdeer_time)
+                                    if measure_waterdeer_time - first_waterdeer_time >= 5 :
+                                        print("upload!")
+                                        waterdeer_flag = False
+                                        image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0)
+                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        picNum += 1
+                                
+                            if c == 4 :
+                                LOGGER.info("human!")
+                                if human_flag == False : 
+                                    first_human_time = time.time()
+                                    print("human_flag : " , human_flag)
+                                    human_flag = True
+                                elif human_flag == True:
+                                    print("human_flag : " , human_flag)
+                                    measure_human_time = time.time()
+                                    LOGGER.info("human!")
+                                    print("first_human_time : " , first_human_time)
+                                    print("human_time : " , measure_human_time)
+                                    if measure_human_time - first_human_time >= 5 :
+                                        print("upload!")
+                                        human_flag = False
+                                        image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0)
+                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        picNum += 1
+                                                      
                             label = None if hide_labels else (f'{id} {names[c]}' if hide_conf else \
                                 (f'{id} {conf:.2f}' if hide_class else f'{id} {names[c]} {conf:.2f}'))
                             annotator.box_label(bboxes, label, color=colors(c, True))
@@ -270,7 +393,7 @@ def run(
                                 txt_file_name = txt_file_name if (isinstance(path, list) and len(path) > 1) else ''
                                 save_one_box(bboxes, imc, file=save_dir / 'crops' / txt_file_name / names[c] / f'{id}' / f'{p.stem}.jpg', BGR=True)
 
-                LOGGER.info(f'{s}Done. YOLO:({t3 - t2:.3f}s), StrongSORT:({t5 - t4:.3f}s)')
+                LOGGER.info(f'{s}Done.')
 
             else:
                 strongsort_list[i].increment_ages()
@@ -294,11 +417,18 @@ def run(
                         h = int(vid_cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
                     else:  # stream
                         fps, w, h = 30, im0.shape[1], im0.shape[0]
-                    save_path = str(Path(save_path).with_suffix('.mp4'))  # force *.mp4 suffix on results videos
+                    # save_path = str(Path(save_path).with_suffix('.mp4'))  # force *.mp4 suffix on results videos
+                    image_path = str(Path('humanPic/' + 'human_' + str(picNum) + ".jpg")) #이미지 파일 저장 경로
+                    cv2.imwrite(image_path, im0)
+                    
                     vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                 vid_writer[i].write(im0)
 
             prev_frames[i] = curr_frames[i]
+                
+            
+            
+
 
     # Print results
     t = tuple(x / seen * 1E3 for x in dt)  # speeds per image
@@ -309,6 +439,11 @@ def run(
     if update:
         strip_optimizer(yolo_weights)  # update model (to fix SourceChangeWarning)
 
+# !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! 
+def timer():
+    
+    return 0
+    
 
 def parse_opt():
     parser = argparse.ArgumentParser()
