@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
+var mColor;
+var status;
+var sColor;
+
 class CommonFormCard extends StatelessWidget {
   final gasName;
   final amount;
@@ -11,9 +15,6 @@ class CommonFormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mColor;
-    var status;
-    var sColor;
     //print("hi $amt");
     if (amount == null) {
       mColor = Color(0xFFDCECFF);
@@ -47,11 +48,11 @@ class CommonFormCard extends StatelessWidget {
         ),
       );
     } else {
-      if (amount < (10)) {
+      if (amount < (40)) {
         mColor = Color(0xFFDCECFF);
         status = "안전";
         sColor = Color(0xFF0057FF);
-      } else if (10 <= amount && amount < 50) {
+      } else if (40 <= amount && amount < 800) {
         mColor = Color(0xFFFFF3DC);
         status = "주의";
         sColor = Color(0xFFFF8A00);
@@ -99,6 +100,52 @@ class CommonFormCard extends StatelessWidget {
           ],
         ),
       );
+    }
+  }
+
+  void checkGasName(String gasName) {
+    if (gasName == "일산화탄소(CO)") {
+      if (amount < (40)) {
+        mColor = Color(0xFFDCECFF);
+        status = "안전";
+        sColor = Color(0xFF0057FF);
+      } else if (40 <= amount && amount < 800) {
+        mColor = Color(0xFFFFF3DC);
+        status = "주의";
+        sColor = Color(0xFFFF8A00);
+      } else {
+        mColor = Color(0xFFFFDCDC);
+        status = "위험";
+        sColor = Color(0xFFFF0000);
+      }
+    } else if (gasName == "메탄가스(CH4)") {
+      if (amount < (1000)) {
+        mColor = Color(0xFFDCECFF);
+        status = "안전";
+        sColor = Color(0xFF0057FF);
+      } else if (1000 <= amount && amount < 2500) {
+        mColor = Color(0xFFFFF3DC);
+        status = "주의";
+        sColor = Color(0xFFFF8A00);
+      } else {
+        mColor = Color(0xFFFFDCDC);
+        status = "위험";
+        sColor = Color(0xFFFF0000);
+      }
+    } else {
+      if (amount < (1000)) {
+        mColor = Color(0xFFDCECFF);
+        status = "안전";
+        sColor = Color(0xFF0057FF);
+      } else if (1000 <= amount && amount < 2500) {
+        mColor = Color(0xFFFFF3DC);
+        status = "주의";
+        sColor = Color(0xFFFF8A00);
+      } else {
+        mColor = Color(0xFFFFDCDC);
+        status = "위험";
+        sColor = Color(0xFFFF0000);
+      }
     }
   }
 }
