@@ -1,29 +1,47 @@
+import 'package:camera/camera.dart';
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/pages/stream_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:carkeeper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'firebase/firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
 }
 
+Future<bool> permission() async {
+  Map<Permission, PermissionStatus> status =
+      await [Permission.camera].request(); // [] 권한배열에 권한을 작성
+
+  if (await Permission.camera.isGranted) {
+    return Future.value(true);
+  } else {
+    return Future.value(false);
+  }
+}
+
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+late final firstCamera;
 
 void main() async {
+  // UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   String? token = await FirebaseMessaging.instance.getToken();
   print("token : ${token ?? 'token NULL!'}");
-
+  permission();
+  // 디바이스에서 이용가능한 카메라 목록을 받아옵니다.
+  final cameras = await availableCameras();
+  // 이용가능한 카메라 목록에서 특정 카메라를 얻습니다.
+  firstCamera = cameras.first;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     RemoteNotification? notification = message.notification;

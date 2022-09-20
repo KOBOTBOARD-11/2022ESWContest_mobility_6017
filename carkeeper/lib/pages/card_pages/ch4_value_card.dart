@@ -18,8 +18,12 @@ class _Ch4ValueCardState extends State<Ch4ValueCard> {
     return StreamBuilder(
         stream: _snapshot,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          var amt = snapshot.data?["ppm"];
-          return CommonFormCard(gasName: "메탄가스(CH4)", amount: amt);
+          if (!snapshot.hasData) {
+            return CommonFormCard(gasName: "메탄가스(CH4)", amount: null);
+          } else {
+            var amt = snapshot.data?["ppm"];
+            return CommonFormCard(gasName: "메탄가스(CH4)", amount: amt);
+          }
         });
   }
 }

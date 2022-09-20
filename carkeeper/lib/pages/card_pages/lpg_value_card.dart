@@ -18,8 +18,12 @@ class _LPGCardState extends State<LPGCard> {
     return StreamBuilder(
         stream: _snapshot,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          var amt = snapshot.data?["ppm"];
-          return CommonFormCard(gasName: "LPG", amount: amt);
+          if (!snapshot.hasData) {
+            return CommonFormCard(gasName: "LPG", amount: null);
+          } else {
+            var amt = snapshot.data?["ppm"];
+            return CommonFormCard(gasName: "LPG", amount: amt);
+          }
         });
   }
 }
