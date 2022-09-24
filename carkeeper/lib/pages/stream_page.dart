@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:carkeeper/components/stream_page_components/stream_video.dart';
 import '../styles.dart';
 
 class StreamPage extends StatelessWidget {
@@ -11,41 +11,15 @@ class StreamPage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          VideoStream(),
           Container(
             padding: EdgeInsets.symmetric(vertical: 45),
             alignment: Alignment.center,
             constraints: BoxConstraints(maxWidth: 300),
             child: Text(
-              "※ 갹체가 탐지되면 객체의 움직임을\n\t\t\t 스트리밍 해줍니다.",
+              "※ 객체가 탐지되면 객체의 움직임을\n\t\t\t 감지합니다.",
               style: subtitle3(),
             ),
-          ),
-          Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: 200,
-                color: Colors.black,
-                child: Text(
-                  "image",
-                  style: h4(mColor: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 90,
-                color: Color(0xFFA7D2CB),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "확대하기",
-                    style: h5(mColor: Colors.white),
-                  ),
-                ),
-              )
-            ],
           ),
           Spacer(),
           Container(
