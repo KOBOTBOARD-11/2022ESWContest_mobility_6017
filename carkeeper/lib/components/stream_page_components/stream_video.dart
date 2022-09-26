@@ -21,16 +21,19 @@ class _VideoStreamState extends State<VideoStream> {
   }
 
   @override
+  void dispose() {
+    _socket.disconnect();
+    setState(() {
+      _isConnected = false;
+    });
+    super.dispose();
+  }
+
+  @override
   void initState() {
-    _socket = WebSocket("ws://192.168.25.33:6000");
+    _socket = WebSocket("ws://192.168.0.42:6000");
     _socket.connect();
   }
-  // void disconnect() {
-  //   _socket.disconnect();
-  //   setState(() {
-  //     _isConnected = false;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
