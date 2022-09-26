@@ -1,9 +1,12 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+
+bool videoSelect = false;
 
 class FaceRegisterPage extends StatefulWidget {
   @override
@@ -13,15 +16,15 @@ class FaceRegisterPage extends StatefulWidget {
 class _FaceRegisterPageState extends State<FaceRegisterPage> {
   File? _cameraVideo;
   final picker = ImagePicker();
-
+  String albumName = 'Media';
   // 이미지를 보여주는 위젯
-  Widget showImage() {
+  Widget showGuideLine() {
     return Container(
         color: const Color(0xffd0cece),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.width,
         child: Center(
-          child: Text('No image selected.'),
+          child: Text('가이드 라인'),
         ));
     //: Image.file(File(_image!.path))));
   }
@@ -33,48 +36,62 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return Scaffold(
+        appBar: AppBar(
+          title: Text("얼굴 등록"),
+        ),
         backgroundColor: const Color(0xfff4f3f9),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 25.0),
-            showImage(),
+            showGuideLine(),
             SizedBox(
               height: 50.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                // 카메라 촬영 버튼
+              children: [
                 FloatingActionButton(
                   heroTag: "camera",
-                  child: Icon(Icons.add_a_photo),
+                  child: Icon(Icons.video_camera_front_outlined),
                   tooltip: 'pick Iamge',
                   onPressed: () {
-                    getVideo(ImageSource.camera);
+                    getVideo(ImageSource.gallery);
+                    _uploadFile(context);
                   },
                 ),
-
-                // 갤러리에서 이미지를 가져오는 버튼
                 FloatingActionButton(
                   heroTag: "gallery",
                   child: Icon(Icons.wallpaper),
                   tooltip: 'pick Iamge',
                   onPressed: () {
-                    _uploadFile(context);
+                    takeVideo();
                   },
-                ),
+                )
               ],
             )
           ],
         ));
   }
 
-  // 비동기 처리를 통해 카메라와 갤러리에서 이미지를 가져온다.
   Future getVideo(ImageSource imageSource) async {
-    final XFile? file = await picker.pickVideo(source: ImageSource.gallery);
+    final video = await picker.pickVideo(source: imageSource);
+    setState(() {
+      _cameraVideo = File(video!.path);
+    });
+  }
+
+  void takeVideo() async {
+    videoSelect = true;
+    PickedFile? file = await picker.getVideo(
+      source: ImageSource.camera,
+    );
     print(file);
-    _cameraVideo = File(file!.path);
+    GallerySaver.saveVideo(file!.path).then((bool? success) {
+      setState(() {
+        print("save video");
+      });
+    });
   }
 
   Future _uploadFile(BuildContext context) async {
@@ -95,6 +112,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
       // 업로드 완료 후 url
       final downloadUrl = await firebaseStorageRef.getDownloadURL();
       print(downloadUrl);
+      videoSelect = false;
       // 문서 작성
       // await FirebaseFirestore.instance.collection('post').add({
       //   'contents': textEditingController.text,

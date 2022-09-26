@@ -48,6 +48,8 @@ dependencies:
   image_picker: ^0.8.5+3
   firebase_auth: ^3.9.0
   firebase_storage: ^10.3.8
+  gallery_saver: ^2.3.2
+  images_picker: ^1.2.11
 
 dev_dependencies:
   flutter_test:
