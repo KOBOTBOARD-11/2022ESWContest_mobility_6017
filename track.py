@@ -274,11 +274,13 @@ def run(
                             bbox_top = output[1]
                             bbox_w = output[2] - output[0]
                             bbox_h = output[3] - output[1]
+                    
                             # Write MOT compliant results to file
                             with open(txt_path + '.txt', 'a') as f:
                                 f.write(('%g ' * 10 + '\n') % (frame_idx + 1, id, bbox_left,  # MOT format
                                                                bbox_top, bbox_w, bbox_h, -1, -1, -1, i))
-
+                        
+                        
                         if save_vid or save_crop or show_vid:  # Add bbox to image
                             c = int(cls)  # integer class
                             id = int(id)  # integer id
@@ -306,8 +308,17 @@ def run(
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        #storage
+                                        pictures = db.collection("pictures") #Database
+                                        pictures.document("pic" + str(picNum)).set({
+                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+                                            'type' : 'wildboar',
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                        })
                                         picNum += 1
-                               
+
+            
+                            # 화재상황   
                             if c == 1 :
                                 if dog_flag == False : 
                                     first_dog_time = time.time()
@@ -325,6 +336,13 @@ def run(
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        #storage
+                                        pictures = db.collection("pictures") #Database
+                                        pictures.document("pic" + str(picNum)).set({
+                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+                                            'type' : 'wildboar',
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                        })
                                         picNum += 1
                             if c == 2 :
                                 LOGGER.info("racoon!")
@@ -344,6 +362,13 @@ def run(
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        #storage
+                                        pictures = db.collection("pictures") #Database
+                                        pictures.document("pic" + str(picNum)).set({
+                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+                                            'type' : 'racoon',
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                        })
                                         picNum += 1
                                 
                             if c == 3 :
@@ -364,6 +389,13 @@ def run(
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        #storage
+                                        pictures = db.collection("pictures") #Database
+                                        pictures.document("pic" + str(picNum)).set({
+                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+                                            'type' : 'waterdeer',
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                        })
                                         picNum += 1
                                 
                             if c == 4 :
@@ -384,6 +416,13 @@ def run(
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+                                        #storage
+                                        pictures = db.collection("pictures") #Database
+                                        pictures.document("pic" + str(picNum)).set({
+                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+                                            'type' : 'human',
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                        })
                                         picNum += 1
                                                       
                             label = None if hide_labels else (f'{id} {names[c]}' if hide_conf else \
