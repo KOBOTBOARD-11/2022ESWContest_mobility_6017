@@ -71,6 +71,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                         SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: Color(0xFF06A66C),
                             ),

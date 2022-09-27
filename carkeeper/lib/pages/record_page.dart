@@ -46,7 +46,7 @@ class RecordPage extends StatelessWidget {
           child: CommonFormField(date: date, info: info),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0xFFA7D2CB),
+            color: Color(0xFF06A66C),
           ),
         ),
         SizedBox(height: 10),

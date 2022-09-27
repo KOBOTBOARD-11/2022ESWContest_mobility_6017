@@ -40,7 +40,6 @@ class _RecordCompoState extends State<RecordCompo> {
             height: 50,
             child: CommonFormFieldSmall(date: date, info: info),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
               color: Colors.white,
             ),
           ),

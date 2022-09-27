@@ -21,7 +21,7 @@ class _CommonFormFieldState extends State<CommonFormField> {
     return Container(
       width: double.infinity,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             dateText,
