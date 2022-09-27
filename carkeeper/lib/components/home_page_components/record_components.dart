@@ -1,4 +1,5 @@
 import 'package:carkeeper/commons/common_form_field_small.dart';
+import 'package:carkeeper/pages/record_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../commons/common_form_field.dart';
@@ -29,7 +30,8 @@ class _RecordCompoState extends State<RecordCompo> {
   TextButton _buildRecordContainer(String date, String info) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/record');
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const RecordPage()));
       },
       child: Column(
         children: [

@@ -20,9 +20,9 @@ class _CoMakeCompoState extends State<CoMakeCompo> {
   Widget build(BuildContext context) {
     return CarouselSlider(
       items: [
-        LPGCard(),
         CoValueCard(),
         Ch4ValueCard(),
+        LPGCard(),
       ],
       options: CarouselOptions(
         height: 78,

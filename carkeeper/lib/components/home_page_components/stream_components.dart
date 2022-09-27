@@ -1,3 +1,4 @@
+import 'package:carkeeper/pages/stream_page.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ class StreamCompoState extends State<StreamCompo> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, "/stream");
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => StreamPage()));
       },
       child: Container(
         decoration: BoxDecoration(

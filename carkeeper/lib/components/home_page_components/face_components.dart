@@ -1,3 +1,4 @@
+import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../styles.dart';
@@ -7,7 +8,8 @@ class FaceCompo extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, "/face");
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => FaceRegisterPage()));
       },
       child: Container(
         decoration: BoxDecoration(

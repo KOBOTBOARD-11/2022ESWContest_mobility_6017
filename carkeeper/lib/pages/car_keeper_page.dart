@@ -25,38 +25,59 @@ class _CarKeeperPageState extends State<CarKeeperPage> {
     });
   }
 
-  // 메인 위젯
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.text_snippet, color: Color(0xFF06A66C)),
-            label: '감지 내역',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Color(0xFF06A66C)),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline, color: Color(0xFF06A66C)),
-            label: '사용자 등록',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF06A66C),
-        onTap: _onItemTapped,
-      ),
-    );
-  }
+  late List<GlobalKey<NavigatorState>> _navigatorKeyList;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
+    _navigatorKeyList = List.generate(
+        _widgetOptions.length, (index) => GlobalKey<NavigatorState>());
+  }
+
+  // 메인 위젯
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return !(await _navigatorKeyList[_selectedIndex]
+            .currentState!
+            .maybePop());
+      },
+      child: Scaffold(
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _widgetOptions.map((page) {
+            int index = _widgetOptions.indexOf(page);
+            return Navigator(
+              key: _navigatorKeyList[index],
+              onGenerateRoute: (_) {
+                return MaterialPageRoute(builder: (context) => page);
+              },
+            );
+          }).toList(),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.text_snippet, color: Color(0xFF06A66C)),
+              label: '감지 내역',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Color(0xFF06A66C)),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline, color: Color(0xFF06A66C)),
+              label: '사용자 등록',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color(0xFF06A66C),
+          onTap: _onItemTapped,
+        ),
+      ),
+    );
   }
 
   @override
