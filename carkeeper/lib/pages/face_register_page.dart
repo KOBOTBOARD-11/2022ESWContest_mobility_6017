@@ -83,7 +83,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
 
   void takeVideo() async {
     videoSelect = true;
-    PickedFile? file = await picker.getVideo(
+    XFile? file = await picker.pickVideo(
       source: ImageSource.camera,
     );
     print(file);

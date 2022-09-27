@@ -1,36 +1,48 @@
+import 'package:carkeeper/commons/common_form_field_small.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../commons/common_form_field.dart';
 import '../../styles.dart';
 
-class RecordCompo extends StatelessWidget {
+class RecordCompo extends StatefulWidget {
+  @override
+  State<RecordCompo> createState() => _RecordCompoState();
+}
+
+class _RecordCompoState extends State<RecordCompo> {
   @override
   Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          _buildRecordContainer("00시 00분 10초", "외부인 감지"),
+          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
+          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
+          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
+          //_buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
+        ],
+      ),
+    );
+  }
+
+  TextButton _buildRecordContainer(String date, String info) {
     return TextButton(
       onPressed: () {
         Navigator.pushNamed(context, '/record');
       },
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color(0xFFC98474),
-        ),
-        width: 140,
-        height: 130,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              CupertinoIcons.doc_text_fill,
-              size: 60,
+      child: Column(
+        children: [
+          Container(
+            width: 130,
+            height: 50,
+            child: CommonFormFieldSmall(date: date, info: info),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
               color: Colors.white,
             ),
-            Text(
-              '접근 기록',
-              style: subtitle3(mColor: Colors.white),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

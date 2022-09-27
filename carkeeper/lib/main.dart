@@ -97,13 +97,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: Color(0xFFF2D388),
+          backgroundColor: Color(0xFFFFFAF2),
           titleTextStyle: TextStyle(
-            color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 24,
           ),
+          elevation: 1,
         ),
+        scaffoldBackgroundColor: Color(0xFFFFFAF2),
+        primaryColor: Colors.white,
+        accentColor: Color(0xFF06A66C),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/home',

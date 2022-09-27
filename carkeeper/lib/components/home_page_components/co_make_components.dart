@@ -25,6 +25,7 @@ class _CoMakeCompoState extends State<CoMakeCompo> {
         Ch4ValueCard(),
       ],
       options: CarouselOptions(
+        height: 78,
         autoPlay: false,
         aspectRatio: 2.0,
         initialPage: 0,

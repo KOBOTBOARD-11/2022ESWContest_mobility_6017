@@ -1,9 +1,11 @@
+import 'package:carkeeper/components/home_page_components/picture_page_components.dart';
 import 'package:carkeeper/components/home_page_components/record_components.dart';
 import 'package:carkeeper/components/home_page_components/stream_components.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../components/home_page_components/calendar_components.dart';
 import '../components/home_page_components/co_make_components.dart';
 
 import '../components/home_page_components/face_components.dart';
@@ -40,7 +42,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       appBar: AppBar(
         title: Text(
           "Car Keeper",
-          style: h5(mColor: Colors.white),
+          style: h5(mColor: Color(0xFF06A66C)),
         ),
       ),
       body: ListView(
@@ -48,29 +50,43 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         children: [
           Column(
             children: [
-              SizedBox(
-                height: 40,
-              ),
+              SizedBox(height: 10),
+              PicturePageComponents(),
+              SizedBox(height: 10),
               CoMakeCompo(),
-              SizedBox(
-                height: 20,
-              ),
-              StreamCompo(),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RecordCompo(),
-                  SizedBox(
-                    width: 10,
+                  Column(
+                    children: [
+                      CalendarComponents(),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFF06A66C),
+                          ),
+                        ),
+                        height: 230,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RecordCompo(),
+                        ),
+                      ),
+                    ],
                   ),
-                  FaceCompo(),
+                  SizedBox(width: 25),
+                  Column(
+                    children: [
+                      StreamCompo(),
+                      SizedBox(height: 10),
+                      FaceCompo(),
+                    ],
+                  )
                 ],
-              )
+              ),
             ],
-          ),
+          )
         ],
       ),
     );

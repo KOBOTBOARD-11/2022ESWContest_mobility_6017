@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
-var mColor;
 var status;
 var sColor;
 
@@ -15,66 +14,57 @@ class CommonFormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print("hi $amt");
     if (amount == null) {
-      mColor = Color(0xFFDCECFF);
       status = "안전";
       sColor = Color(0xFF0057FF);
       return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: mColor),
+          border: Border.all(color: Color(0xFF06A66C)),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
         alignment: Alignment.center,
         width: 300,
-        height: 180,
+        height: 60,
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 8),
             Text(
               '${gasName} 수치',
-              style: h5(),
+              style: subtitle3(mColor: sColor),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "측정중",
-                  style: bigSize1(),
+                  style: subtitle2(),
                 ),
-                SizedBox(width: 10),
               ],
             )
           ],
         ),
       );
     } else {
-      if (amount < (40)) {
-        mColor = Color(0xFFDCECFF);
-        status = "안전";
-        sColor = Color(0xFF0057FF);
-      } else if (40 <= amount && amount < 800) {
-        mColor = Color(0xFFFFF3DC);
-        status = "주의";
-        sColor = Color(0xFFFF8A00);
-      } else {
-        mColor = Color(0xFFFFDCDC);
-        status = "위험";
-        sColor = Color(0xFFFF0000);
-      }
+      checkGasName(gasName);
       return Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: mColor),
+          border: Border.all(color: Color(0xFF06A66C)),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
         alignment: Alignment.center,
         width: 300,
-        height: 180,
+        height: 60,
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 7),
             Text(
-              '${gasName} 수치',
-              style: h5(),
+              '${gasName}',
+              style: subtitle1(mColor: Color(0xFF06A66C)),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -82,18 +72,18 @@ class CommonFormCard extends StatelessWidget {
                   children: [
                     Text(
                       "${amount}",
-                      style: bigSize1(),
+                      style: h5(mColor: sColor),
                     ),
                     SizedBox(width: 10),
                     Text(
                       "ppm",
-                      style: body2(),
+                      style: subtitle2(mColor: Color(0xFF06A66C)),
                     )
                   ],
                 ),
                 Text(
                   "${status}",
-                  style: h4(mColor: sColor),
+                  style: subtitle1(mColor: sColor),
                 )
               ],
             )
@@ -106,43 +96,34 @@ class CommonFormCard extends StatelessWidget {
   void checkGasName(String gasName) {
     if (gasName == "일산화탄소(CO)") {
       if (amount < (40)) {
-        mColor = Color(0xFFDCECFF);
         status = "안전";
         sColor = Color(0xFF0057FF);
       } else if (40 <= amount && amount < 800) {
-        mColor = Color(0xFFFFF3DC);
         status = "주의";
         sColor = Color(0xFFFF8A00);
       } else {
-        mColor = Color(0xFFFFDCDC);
         status = "위험";
         sColor = Color(0xFFFF0000);
       }
     } else if (gasName == "메탄가스(CH4)") {
       if (amount < (1000)) {
-        mColor = Color(0xFFDCECFF);
         status = "안전";
         sColor = Color(0xFF0057FF);
       } else if (1000 <= amount && amount < 2500) {
-        mColor = Color(0xFFFFF3DC);
         status = "주의";
         sColor = Color(0xFFFF8A00);
       } else {
-        mColor = Color(0xFFFFDCDC);
         status = "위험";
         sColor = Color(0xFFFF0000);
       }
     } else {
       if (amount < (1000)) {
-        mColor = Color(0xFFDCECFF);
         status = "안전";
         sColor = Color(0xFF0057FF);
       } else if (1000 <= amount && amount < 2500) {
-        mColor = Color(0xFFFFF3DC);
         status = "주의";
         sColor = Color(0xFFFF8A00);
       } else {
-        mColor = Color(0xFFFFDCDC);
         status = "위험";
         sColor = Color(0xFFFF0000);
       }

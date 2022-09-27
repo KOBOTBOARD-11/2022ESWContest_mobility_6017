@@ -16,24 +16,24 @@ class StreamCompoState extends State<StreamCompo> {
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Color(0xFFA7D2CB),
+          borderRadius: BorderRadius.circular(10),
+          color: Color(0xFF06A66C),
         ),
         alignment: Alignment.center,
-        width: 300,
-        height: 180,
+        width: 120,
+        height: 120,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               CupertinoIcons.clock_fill,
-              size: 90,
+              size: 60,
               color: Colors.white,
             ),
             Text(
               textAlign: TextAlign.center,
-              '차량 주변 \n 실시간 스트리밍',
-              style: subtitle3(mColor: Colors.white),
+              '실시간 동영상',
+              style: subtitle2(mColor: Colors.white),
             ),
           ],
         ),

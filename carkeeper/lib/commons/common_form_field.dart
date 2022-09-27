@@ -23,21 +23,15 @@ class _CommonFormFieldState extends State<CommonFormField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10),
-            child: Text(
-              dateText,
-              style: subtitle3(mColor: Colors.white),
-            ),
+          Text(
+            dateText,
+            style: subtitle3(mColor: Colors.white),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              infoText,
-              style: subtitle3(mColor: Colors.white),
-            ),
+          Text(
+            infoText,
+            style: subtitle3(mColor: Colors.white),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 1),
         ],
       ),
     );
