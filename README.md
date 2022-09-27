@@ -1,70 +1,139 @@
 # ESC_2022 Car Keeper README.md
 
-
-## 📋프로젝트 개요 
 **🚙 Car Keeper(카키퍼)**     
 
-**작품 설명(3줄 요약)**   
-- 사용자에게 안전한 차박 경험을 제공하기 위한 솔루션
-- 차박 상황에서 주변의 위협 감지 및 객체 인식
-- 전용 애플리케이션을 통한 사용자와의 상호작용
+## 🧔🏻FaceID 
+
+## 학습을 통해 얼굴의 특성 추출
+
+### 필요 라이브러리 설치
+
+```
+pip install -r requirements.txt
+```
 
 
+### 학습에 필요한 사진 준비
 
-**개발 배경**   
+- App에서 저장된 동영상을 이미지로 변환 
+SaveImg_fromVideo.py
 
- 최근 차박을 하는 사람들이 증가하는 추세이고 관련된 범죄도 증가할 것이라 예상된다. 특히 그중에서 사람에 대해 벌어지는 범죄(강도, 도난, 성범죄 등)에 대해 예방이 가능한 안전장치에 대한 필요성을 느꼈다.
+```python
+import cv2
+import os
+import time
+
+# cap = cv2.VideoCapture("Emma.mp4")
+cap = cv2.VideoCapture(0) ## 웹캠
+## 동영상 경로
+
+name_pattern = ".mp4"
+Name = "User1.mp4"
+Name = Name.replace(name_pattern, "")
+## 사용자 이름에 맞게 저장
+
+with open ("Names", "a") as txt:
+    txt.write(Name + "\n")
+## 사용자 등록
+
+with open ("Image_path", "a") as txt:
+    txt.write('Image/' + Name + "/\n")
+    
+count = 1
+
+while cap.isOpened():
+    ret, frame = cap.read()
+    
+    if not os.path.exists("Image"):
+                os.makedirs('Image')
+                os.makedirs("Image/"+Name)    
+                     
+    if not os.path.exists("Image/"+Name):  
+        os.makedirs("Image/"+Name)              
+            ## Image경로가 없다면 만드는 코드
+    if not ret:
+        print("종료")
+        break
+    # if(int(cap.get(1)) % 40 == 0):
+    ## 20프레임마다 저장  
+    
+    print('Saved frame number :' + str(int(cap.get(1))))
+    cv2.imwrite("Image/"+Name+"/" + Name+ "%d.jpg" % count, frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
+    print('Saved frame%d.jpg' % count)
+    time.sleep(0.2)
+    ##0.2초간격
+    count = count +1
+    if(count == 21):
+        break
+        ## 최대 20장
+cap.release()
+
+```
+
+### 학습 시작
+
+Face_train.py
+
+```python
+import enum
+import cv2
+import face_recognition
+import pickle
 
 
+Image_paths = []
+Names = []
+Image_num = 20
+image_type = '.jpg'
+encoding_file = 'encodings.pickle'
+model_method = 'cnn'
+## CNN or HOG  TRADEOFF 존재
 
-**개발 목적**   
+## CNN 정확하지만 느림
+## HOG 빠르지만 정확도가 떨어짐 
 
-- 차박 중 야생동물이나, 외부인의 접근을 인식하고 사용자가 신속하게 대응할 수 있도록 도와줌으로써 안전한 차박을 제공하는 애플리케이션을 개발하는 것
-- 사용자가 외출, 수면 등 외부상황을 신경쓰기 어려운 상태일 때, 외부 카메라를 통해 외부인의 접근을 인식/추적하고 사용자에게 알림.
-- 알림을 받은 사용자와 애플리케이션간의 상호작용을 통해 신속하게 대응.
-- 객체 탐지가 어려운 야간 상황에서도 정확한 정보 제공.
+with open ("Image_path" , "r") as txt:
+    Image_paths.append(txt.read().split())
+## 이미지 경로 가져오기    
+with open ("Names" , "r") as txt:
+    Names.append(txt.read().split())
+## 사용자 정보 가져오기
+# print(Image_paths)
+# print(Names)
 
+knownEncodings = []
+knownNames = []
 
+for (i, Image_path) in enumerate(Image_paths):
+    name = Names[i]
+    #print(name)
+    for idx in range(Image_num):
+        file_name = Image_path + str(idx+1) + image_type
+        #print(file_name)
+        
+        image = cv2.imread(file_name)
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+################# 저장된 경로에서 이미지를 하나씩 읽어옴 ##################
 
-## 🎬프로젝트 시연 동영상
+        boxes = face_recognition.face_locations(rgb, 
+                                                model = model_method)  
+        ##  face_recognition을 이용하여 얼굴 부분 확인 -> CNN 모델 사용
+        
+        encodings = face_recognition.face_encodings(rgb, boxes)
+        ## face_recognition을 이용하여 얼굴 특징 인코딩  
+        
+        for encoding in encodings:
+            print(file_name, name, encoding)
+            knownEncodings.append(encoding)
+            knownNames.append(name)
+            ## 인코딩된 값을 저장
+            
+## 위에서 얻은 정보들을 파일로 저장
+data = {"encodings": knownEncodings, "names": knownNames}
+f = open(encoding_file, "wb")
+f.write(pickle.dumps(data))    
+```
 
- <div align="center">
-
-
-</div>
-
-## 👮팀 소개 및 역할
-
-1. 👨🏾‍💻 박준용
-- Role : 팀장,인공지능, 아두이노
-- Github: https://github.com/junyong1111
-- Email : jypark93@kookmin.ac.kr
-
-2. 🧑🏽‍💻 변준형
-- Role : 컴퓨터 비전, 라즈베리파이
-- Github: https://github.com/Byeooon
-- Email : junhyeong0519@kookmin.ac.kr
-
-
-3. 👩🏻‍💻 이세희
-- Role : 서버개발, Backend
-- Github: https://github.com/Sehee-Lee-01
-- Email : tpfktpgml24@kookmin.ac.kr
-
-
-4. 🧑🏻‍💻 최보석
-- Role : 데이터라벨링, FrontEnd
-- Github: https://github.com/YEONOC
-- Email : chlqhtjr752@kookmin.ac.kr
-
-
-
-
-
-
-## 🔎사용 환경 설정 및 시작하기
-
-[🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev) 
 
 
 
