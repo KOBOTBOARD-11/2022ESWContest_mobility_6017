@@ -3,6 +3,7 @@ import 'package:carkeeper/pages/record_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../commons/common_form_field.dart';
+import '../../firebase/record_data_list.dart';
 import '../../styles.dart';
 
 class RecordCompo extends StatefulWidget {
@@ -11,23 +12,60 @@ class RecordCompo extends StatefulWidget {
 }
 
 class _RecordCompoState extends State<RecordCompo> {
+  // @override
+  // Widget build(BuildContext context) {
+  //   return SingleChildScrollView(
+  //       scrollDirection: Axis.vertical,
+  //       child: Column(
+  //         children: [
+  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
+  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
+  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
+  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
+  //         ],
+  //       ));
+  // }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
         children: [
-          _buildRecordContainer("00시 00분 10초", "외부인 감지"),
-          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
-          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
-          _buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
-          //_buildRecordContainer("00시 00분 10초", "맷돼지 감지"),
+          for (var i in recordInfo)
+            _buildRecordContainer(
+              i['time'],
+              i['type'],
+            ),
         ],
       ),
     );
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ListView.builder(
+  //     //shrinkWrap: true,
+  //     itemCount: recordInfo.length,
+  //     itemBuilder: (context, index) {
+  //       return _buildRecordContainer(
+  //         recordInfo[index]['time'],
+  //         recordInfo[index]['type'],
+  //       );
+  //     },
+  //   );
+  // }
 
   TextButton _buildRecordContainer(String date, String info) {
+    if (info == 'wildboar') {
+      info = "멧돼지";
+    } else if (info == 'human') {
+      info = "외부인";
+    } else if (info == 'dog') {
+      info = "들개";
+    } else if (info == 'waterdeer') {
+      info = "물사슴";
+    } else if (info == 'racoon') {
+      info = "너구리";
+    }
     return TextButton(
       onPressed: () {
         Navigator.of(context)

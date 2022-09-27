@@ -29,11 +29,11 @@ class _CommonFormFieldSmallState extends State<CommonFormFieldSmall> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            dateText,
+            dateText.substring(2, 21),
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
           Text(
-            infoText,
+            "${infoText} 감지",
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
         ],

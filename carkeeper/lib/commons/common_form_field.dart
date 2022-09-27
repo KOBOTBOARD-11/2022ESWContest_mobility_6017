@@ -24,11 +24,11 @@ class _CommonFormFieldState extends State<CommonFormField> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            dateText,
+            dateText.substring(2, 21),
             style: subtitle3(mColor: Colors.white),
           ),
           Text(
-            infoText,
+            "${infoText} 감지",
             style: subtitle3(mColor: Colors.white),
           ),
           SizedBox(height: 1),
