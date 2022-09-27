@@ -17,6 +17,7 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
+  int _selectedIndex = 0;
   void initState() {
     var initialzationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -36,6 +37,12 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     super.initState();
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,49 +52,52 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           style: h5(mColor: Color(0xFF06A66C)),
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        children: [
-          Column(
-            children: [
-              SizedBox(height: 10),
-              PicturePageComponents(),
-              SizedBox(height: 10),
-              CoMakeCompo(),
-              SizedBox(height: 15),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      CalendarComponents(),
-                      SizedBox(height: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF06A66C),
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 10),
+                PicturePageComponents(),
+                SizedBox(height: 10),
+                CoMakeCompo(),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        CalendarComponents(),
+                        SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xFF06A66C),
+                            ),
+                          ),
+                          height: 230,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RecordCompo(),
                           ),
                         ),
-                        height: 230,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RecordCompo(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 25),
-                  Column(
-                    children: [
-                      StreamCompo(),
-                      SizedBox(height: 10),
-                      FaceCompo(),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
+                      ],
+                    ),
+                    SizedBox(width: 25),
+                    Column(
+                      children: [
+                        StreamCompo(),
+                        SizedBox(height: 10),
+                        FaceCompo(),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 5),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

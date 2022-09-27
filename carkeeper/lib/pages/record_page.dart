@@ -7,7 +7,10 @@ class RecordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("접근 기록"),
+        title: Text(
+          "Car Keeper",
+          style: h5(mColor: Color(0xFF06A66C)),
+        ),
       ),
       body: ListView(
         children: [

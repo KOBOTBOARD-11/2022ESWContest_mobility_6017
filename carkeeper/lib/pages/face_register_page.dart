@@ -6,6 +6,8 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../styles.dart';
+
 bool videoSelect = false;
 
 class FaceRegisterPage extends StatefulWidget {
@@ -37,9 +39,13 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("얼굴 등록"),
+          title: Text(
+            "Car Keeper",
+            style: h5(
+              mColor: Color(0xFF06A66C),
+            ),
+          ),
         ),
-        backgroundColor: const Color(0xfff4f3f9),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

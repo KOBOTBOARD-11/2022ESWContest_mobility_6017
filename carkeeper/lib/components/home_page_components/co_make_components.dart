@@ -26,7 +26,7 @@ class _CoMakeCompoState extends State<CoMakeCompo> {
       ],
       options: CarouselOptions(
         height: 78,
-        autoPlay: false,
+        autoPlay: true,
         aspectRatio: 2.0,
         initialPage: 0,
         enlargeCenterPage: true,

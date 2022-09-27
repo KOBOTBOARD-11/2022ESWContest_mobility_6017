@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
@@ -108,8 +109,9 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFF06A66C),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/carkeeper',
       routes: {
+        '/carkeeper': (context) => CarKeeperPage(),
         '/home': (context) => HomeScreenPage(),
         '/stream': (context) => StreamPage(),
         '/record': (context) => RecordPage(),

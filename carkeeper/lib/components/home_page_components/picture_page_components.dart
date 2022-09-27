@@ -20,7 +20,7 @@ class _PicturePageComponentsState extends State<PicturePageComponents> {
             child: Image.asset(
               "assets/hyundai_peli.jpg",
               fit: BoxFit.cover,
-              height: 300,
+              height: 250,
               width: double.infinity,
             ),
           ),
@@ -30,7 +30,7 @@ class _PicturePageComponentsState extends State<PicturePageComponents> {
           builder: (context) {
             return Column(
               children: [
-                SizedBox(height: 205),
+                SizedBox(height: 155),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Container(
