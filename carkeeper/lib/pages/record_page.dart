@@ -86,6 +86,9 @@ class _RecordPageState extends State<RecordPage> {
       info = "물사슴";
     } else if (info == 'racoon') {
       info = "너구리";
+    } else {
+      date = "No";
+      info = "No";
     }
     return Column(
       children: [

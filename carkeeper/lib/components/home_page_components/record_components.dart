@@ -29,30 +29,19 @@ class _RecordCompoState extends State<RecordCompo> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          for (var i in recordInfo)
-            _buildRecordContainer(
-              i['time'],
-              i['type'],
+      child: recordInfo.isEmpty
+          ? _buildRecordContainer("No", "No")
+          : Column(
+              children: [
+                for (var i in recordInfo)
+                  _buildRecordContainer(
+                    i['time'],
+                    i['type'],
+                  ),
+              ],
             ),
-        ],
-      ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ListView.builder(
-  //     //shrinkWrap: true,
-  //     itemCount: recordInfo.length,
-  //     itemBuilder: (context, index) {
-  //       return _buildRecordContainer(
-  //         recordInfo[index]['time'],
-  //         recordInfo[index]['type'],
-  //       );
-  //     },
-  //   );
-  // }
 
   TextButton _buildRecordContainer(String date, String info) {
     if (info == 'wildboar') {
@@ -65,6 +54,8 @@ class _RecordCompoState extends State<RecordCompo> {
       info = "물사슴";
     } else if (info == 'racoon') {
       info = "너구리";
+    } else {
+      info = info;
     }
     return TextButton(
       onPressed: () {
@@ -75,7 +66,7 @@ class _RecordCompoState extends State<RecordCompo> {
         children: [
           Container(
             width: 130,
-            height: 50,
+            height: info == "No" ? 195 : 50,
             child: CommonFormFieldSmall(date: date, info: info),
             decoration: BoxDecoration(
               color: Colors.white,

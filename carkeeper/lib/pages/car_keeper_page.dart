@@ -1,7 +1,6 @@
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
-import 'package:carkeeper/pages/stream_page.dart';
 import 'package:flutter/material.dart';
 
 class CarKeeperPage extends StatefulWidget {
