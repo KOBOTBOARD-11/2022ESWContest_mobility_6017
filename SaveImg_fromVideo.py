@@ -2,8 +2,8 @@ import cv2
 import os
 import time
 
-# cap = cv2.VideoCapture("Emma.mp4")
-cap = cv2.VideoCapture(0) ## 웹캠
+cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0) ## 웹캠
 ## 동영상 경로
 
 name_pattern = ".mp4"
@@ -32,16 +32,16 @@ while cap.isOpened():
     if not ret:
         print("종료")
         break
-    # if(int(cap.get(1)) % 40 == 0):
-    ## 20프레임마다 저장  
+    if(int(cap.get(1)) % 15 == 0):
+    ## 10프레임마다 저장  
     
-    print('Saved frame number :' + str(int(cap.get(1))))
-    cv2.imwrite("Image/"+Name+"/" + Name+ "%d.jpg" % count, frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
-    print('Saved frame%d.jpg' % count)
-    time.sleep(0.2)
-    ##0.2초간격
-    count = count +1
-    if(count == 21):
-        break
-        ## 최대 20장
+        print('Saved frame number :' + str(int(cap.get(1))))
+        cv2.imwrite("Image/"+Name+"/" + Name+ "%d.jpg" % count, frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
+        print('Saved frame%d.jpg' % count)
+        time.sleep(0.2)
+        ##0.2초간격
+        count = count +1
+        if(count == 21):
+            break
+            ## 최대 20장
 cap.release()

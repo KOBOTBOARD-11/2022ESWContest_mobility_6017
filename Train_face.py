@@ -2,14 +2,24 @@ import enum
 import cv2
 import face_recognition
 import pickle
+import os
+import tensorflow as tf
+
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        tf.config.experimental.set_memory_growth(gpus[0], True)
+    except RuntimeError as e:
+        print(e)
 
 
 Image_paths = []
 Names = []
-Image_num = 10
+Image_num = 20
 image_type = '.jpg'
 encoding_file = 'encodings.pickle'
-model_method = 'cnn'
+model_method = 'CNN'
 ## CNN or HOG  TRADEOFF 존재
 
 ## CNN 정확하지만 느림
@@ -38,9 +48,10 @@ for (i, Image_path) in enumerate(Image_paths[0]):
         print(file_name)
         
         image = cv2.imread(file_name, cv2.IMREAD_COLOR)
+        rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 # ################# 저장된 경로에서 이미지를 하나씩 읽어옴 ##################
 
-        boxes = face_recognition.face_locations(image, 
+        boxes = face_recognition.face_locations(rgb_img, 
                                                 model = model_method)  
         ##  face_recognition을 이용하여 얼굴 부분 확인 -> CNN 모델 사용
         
