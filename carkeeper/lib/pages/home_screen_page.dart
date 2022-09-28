@@ -1,10 +1,10 @@
 import 'package:carkeeper/components/home_page_components/picture_page_components.dart';
 import 'package:carkeeper/components/home_page_components/record_components.dart';
 import 'package:carkeeper/components/home_page_components/stream_components.dart';
+import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../components/home_page_components/calendar_components.dart';
 import '../components/home_page_components/co_make_components.dart';
 import '../components/home_page_components/face_components.dart';
 import '../main.dart';
@@ -45,47 +45,93 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              PicturePageComponents(),
-              SizedBox(height: 10),
-              CoMakeCompo(),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      CalendarComponents(),
-                      SizedBox(height: 10),
-                      Container(
-                        constraints: BoxConstraints(minHeight: 230),
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xFFe9e9e9),
+            ],
+            stops: [
+              1,
+              1,
+            ],
+          )),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              children: [
+                PicturePageComponents(),
+                SizedBox(height: 100, child: CoMakeCompo()),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Color(0xFF06A66C),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(minHeight: 230),
+                      padding: EdgeInsets.only(
+                        bottom: 10,
+                        left: 10,
+                        right: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 0,
+                            blurRadius: 5,
+                            offset: Offset(0, 1),
+                          )
+                        ],
+                      ),
+                      height: 260,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const RecordPage()));
+                              },
+                              child: Text(
+                                "감지 내역",
+                                style: subtitle2(mColor: Color(0xFF06A66C)),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 130,
+                            height: 1,
                             color: Color(0xFF06A66C),
                           ),
-                        ),
-                        height: 230,
-                        child: RecordCompo(),
+                          SizedBox(height: 10),
+                          RecordCompo(),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(width: 25),
-                  Column(
-                    children: [
-                      StreamCompo(),
-                      SizedBox(height: 10),
-                      FaceCompo(),
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(height: 5),
-            ],
+                    ),
+                    Column(
+                      children: [
+                        StreamCompo(),
+                        SizedBox(height: 10),
+                        FaceCompo(),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 5),
+              ],
+            ),
           ),
         ),
       ),

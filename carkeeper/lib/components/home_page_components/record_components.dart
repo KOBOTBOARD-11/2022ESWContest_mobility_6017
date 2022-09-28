@@ -2,9 +2,7 @@ import 'package:carkeeper/commons/common_form_field_small.dart';
 import 'package:carkeeper/pages/record_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../commons/common_form_field.dart';
 import '../../firebase/record_data_list.dart';
-import '../../styles.dart';
 
 class RecordCompo extends StatefulWidget {
   @override
@@ -12,19 +10,6 @@ class RecordCompo extends StatefulWidget {
 }
 
 class _RecordCompoState extends State<RecordCompo> {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return SingleChildScrollView(
-  //       scrollDirection: Axis.vertical,
-  //       child: Column(
-  //         children: [
-  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
-  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
-  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
-  //           _buildRecordContainer("['2022.09.27 19:57:23']", "wildboar"),
-  //         ],
-  //       ));
-  // }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -43,7 +28,7 @@ class _RecordCompoState extends State<RecordCompo> {
     );
   }
 
-  TextButton _buildRecordContainer(String date, String info) {
+  Column _buildRecordContainer(String date, String info) {
     if (info == 'wildboar') {
       info = "멧돼지";
     } else if (info == 'human') {
@@ -57,23 +42,27 @@ class _RecordCompoState extends State<RecordCompo> {
     } else {
       info = info;
     }
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const RecordPage()));
-      },
-      child: Column(
-        children: [
-          Container(
-            width: 130,
-            height: info == "No" ? 195 : 50,
-            child: CommonFormFieldSmall(date: date, info: info),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
+
+    return Column(
+      children: [
+        Container(
+          width: 130,
+          height: info == "No" ? 195 : 50,
+          child: CommonFormFieldSmall(date: date, info: info),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.grey.withOpacity(0.5),
+            //     spreadRadius: 0.5,
+            //     blurRadius: 5,
+            //     offset: Offset(0, 1),
+            //   )
+            // ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

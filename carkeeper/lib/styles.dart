@@ -43,7 +43,3 @@ TextStyle overLine({Color mColor = Colors.black}) {
 TextStyle body1({Color mColor = Colors.black}) {
   return TextStyle(fontSize: 20, color: mColor);
 }
-
-TextStyle body2({Color mColor = Colors.black}) {
-  return TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: mColor);
-}

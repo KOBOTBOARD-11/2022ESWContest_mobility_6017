@@ -59,15 +59,15 @@ class _CarKeeperPageState extends State<CarKeeperPage> {
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.text_snippet, color: Color(0xFF06A66C)),
+              icon: Icon(Icons.text_snippet),
               label: '감지 내역',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Color(0xFF06A66C)),
+              icon: Icon(Icons.home),
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline, color: Color(0xFF06A66C)),
+              icon: Icon(Icons.person_outline),
               label: '사용자 등록',
             ),
           ],

@@ -13,9 +13,17 @@ class FaceCompo extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF06A66C), width: 2),
+          //border: Border.all(color: Color(0xFF06A66C), width: 2),
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 5,
+              offset: Offset(0, 1),
+            )
+          ],
         ),
         alignment: Alignment.center,
         width: 120,
@@ -24,13 +32,13 @@ class FaceCompo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.face,
-              size: 60,
+              Icons.people_alt_outlined,
+              size: 40,
               color: Color(0xFF06A66C),
             ),
             Text(
               '사용자 등록',
-              style: subtitle3(mColor: Color(0xFF06A66C)),
+              style: subtitle2(mColor: Color(0xFF06A66C)),
             ),
           ],
         ),

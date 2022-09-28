@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'firebase/firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -98,13 +99,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: Color(0xFFFFFAF2),
+          backgroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.bold,
           ),
-          elevation: 1,
+          elevation: 0,
         ),
-        scaffoldBackgroundColor: Color(0xFFFFFAF2),
+        // scaffoldBackgroundColor: Color(0xFFe9e9e9),
         primaryColor: Colors.white,
         accentColor: Color(0xFF06A66C),
       ),
