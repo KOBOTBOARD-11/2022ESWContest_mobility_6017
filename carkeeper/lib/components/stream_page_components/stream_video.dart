@@ -12,20 +12,17 @@ class VideoStream extends StatefulWidget {
 class _VideoStreamState extends State<VideoStream> {
   late WebSocket _socket;
   late List<String> cameraInfo;
-  bool _isConnected = true;
-  bool isFullscreen = false;
+  bool _isfullscreen = false;
+
   void ChangeScreenSize() {
     setState(() {
-      isFullscreen = !isFullscreen;
+      _isfullscreen = !_isfullscreen;
     });
   }
 
   @override
   void dispose() {
     _socket.disconnect();
-    setState(() {
-      _isConnected = false;
-    });
     super.dispose();
   }
 
@@ -39,61 +36,60 @@ class _VideoStreamState extends State<VideoStream> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
+        margin: EdgeInsets.all(5),
         child: Column(
           children: [
             const SizedBox(
               height: 10.0,
             ),
-            _isConnected
-                ? StreamBuilder(
-                    stream: _socket.stream,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        print('socket does not have data!');
-                        return const CircularProgressIndicator();
-                      }
+            StreamBuilder(
+              stream: _socket.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  print('socket does not have data!');
+                  return const CircularProgressIndicator();
+                }
 
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return const Center(
-                          child: Text("Connection Closed !"),
-                        );
-                      }
-                      //? Working for single frames
-                      if (isFullscreen) {
-                        return Image.memory(
-                          Uint8List.fromList(
-                            base64Decode(
-                              (snapshot.data.toString()),
-                            ),
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return const Center(
+                    child: Text("Connection Closed !"),
+                  );
+                }
+                if (_isfullscreen) {
+                  return RotatedBox(
+                      quarterTurns: 1,
+                      child: Container(
+                          child: Image.memory(
+                        Uint8List.fromList(
+                          base64Decode(
+                            (snapshot.data.toString()),
                           ),
-                          gaplessPlayback: true,
-                          excludeFromSemantics: true,
-                        );
-                      } else {
-                        return Image.memory(
-                            Uint8List.fromList(
-                              base64Decode(
-                                (snapshot.data.toString()),
-                              ),
-                            ),
-                            width: double.infinity,
-                            gaplessPlayback: true,
-                            excludeFromSemantics: true);
-                      }
-                    },
-                  )
-                : const Text("통신이 원활하지 않습니다."),
-            isFullscreen
-                ? ElevatedButton(
+                        ),
+                        gaplessPlayback: true,
+                        excludeFromSemantics: true,
+                      )));
+                }
+                //? Working for single frames
+                return Container(
+                    child: Image.memory(
+                  Uint8List.fromList(
+                    base64Decode(
+                      (snapshot.data.toString()),
+                    ),
+                  ),
+                  gaplessPlayback: true,
+                  excludeFromSemantics: true,
+                ));
+              },
+            ),
+            Container(
+                width: double.infinity,
+                child: TextButton(
                     onPressed: ChangeScreenSize,
-                    child: const Text("X"),
-                  )
-                : ElevatedButton(
-                    onPressed: ChangeScreenSize,
-                    child: const Text("확대하기"),
-                  )
+                    child: _isfullscreen
+                        ? const Text("축소하기")
+                        : const Text("확대하기"))),
           ],
         ),
       ),

@@ -13,11 +13,11 @@ class StreamPage extends StatelessWidget {
           style: h5(mColor: Color(0xFF06A66C)),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           VideoStream(),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 45),
+            padding: EdgeInsets.symmetric(vertical: 10),
             alignment: Alignment.center,
             constraints: BoxConstraints(maxWidth: 300),
             child: Text(
