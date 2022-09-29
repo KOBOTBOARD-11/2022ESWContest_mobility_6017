@@ -52,12 +52,6 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Car Keeper",
-          style: h5(mColor: Color(0xFF06A66C)),
-        ),
-      ),
       body: SafeArea(
         child: Container(
           height: double.infinity,
@@ -75,19 +69,19 @@ class _HomeScreenPageState extends State<HomeScreenPage>
               1,
             ],
           )),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(
-              children: [
-                PicturePageComponents(),
-                SizedBox(height: 100, child: CoMakeCompo()),
-                Container(
-                  width: double.infinity,
-                  height: 1,
-                  color: Color(0xFF06A66C),
-                ),
-                SizedBox(height: 5),
-                Row(
+          child: ListView(
+            children: [
+              PicturePageComponents(),
+              SizedBox(height: 100, child: CoMakeCompo()),
+              Container(
+                width: double.infinity,
+                height: 2,
+                color: Colors.grey,
+              ),
+              //SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
@@ -168,9 +162,9 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                     )
                   ],
                 ),
-                SizedBox(height: 5),
-              ],
-            ),
+              ),
+              SizedBox(height: 5),
+            ],
           ),
         ),
       ),

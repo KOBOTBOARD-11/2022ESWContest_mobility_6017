@@ -11,61 +11,56 @@ class PicturePageComponents extends StatefulWidget {
 class _PicturePageComponentsState extends State<PicturePageComponents> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Stack(
-        children: [
-          Opacity(
-            opacity: 0.9,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                "assets/hyundai_peli.jpg",
-                fit: BoxFit.cover,
-                height: 250,
-                width: double.infinity,
+    return Stack(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: Image.asset(
+            "assets/hyundai_peli.jpg",
+            fit: BoxFit.cover,
+            height: 315,
+            width: double.infinity,
+          ),
+        ),
+        Column(
+          children: [
+            SizedBox(height: 10),
+            Text(
+              "Car Keeper",
+              style: h4(
+                mColor: Color(0xFF06A66C),
               ),
             ),
-          ),
-          TimerBuilder.periodic(
-            const Duration(seconds: 1),
-            builder: (context) {
-              return Column(
-                children: [
-                  SizedBox(height: 155),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Container(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        formatDate(DateTime.now(), [
-                          yy,
-                          "/",
-                          mm,
-                          "/",
-                          dd,
-                          " \n",
-                          am,
-                          " ",
-                          hh,
-                          ':',
-                          nn
-                        ]),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.end,
+            SizedBox(height: 170),
+            TimerBuilder.periodic(
+              const Duration(seconds: 1),
+              builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      formatDate(DateTime.now(),
+                          [yy, "/", mm, "/", dd, " \n", am, " ", hh, ':', nn]),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w500,
                       ),
+                      textAlign: TextAlign.end,
                     ),
                   ),
-                ],
-              );
-            },
-          ),
-        ],
-      ),
+                );
+              },
+            ),
+            Container(
+              width: double.infinity,
+              height: 2,
+              color: Colors.grey,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

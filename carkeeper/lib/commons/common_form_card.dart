@@ -65,7 +65,7 @@ class CommonFormCard extends StatelessWidget {
               )
             ]),
         alignment: Alignment.center,
-        width: 300,
+        width: 320,
         height: 60,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
