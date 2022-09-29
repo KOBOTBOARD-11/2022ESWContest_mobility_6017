@@ -19,63 +19,86 @@ class _RecordPageState extends State<RecordPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Car Keeper",
+            "감지 내역",
             style: h5(mColor: Color(0xFF06A66C)),
           ),
+          elevation: 1,
         ),
-        body: StreamBuilder<QuerySnapshot>(
-            stream: _snapshot,
-            builder: (context, snapshot) {
-              if (snapshot.data?.size == 0) {
-                // snapshot 데이터가 비어있으면
-                return Container(
-                  // 즉, 컬렉션에 아무것도 없으면 No Data를 출력한다.
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Center(
-                    child: Text(
-                      "No Data",
-                      style: h4(mColor: Color(0xFF06A66C)),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xFFe9e9e9),
+            ],
+            stops: [
+              0.5,
+              1,
+            ],
+          )),
+          child: StreamBuilder<QuerySnapshot>(
+              stream: _snapshot,
+              builder: (context, snapshot) {
+                if (snapshot.data?.size == 0) {
+                  // snapshot 데이터가 비어있으면
+                  return Container(
+                    // 즉, 컬렉션에 아무것도 없으면 No Data를 출력한다.
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Center(
+                      child: Text(
+                        "No Data",
+                        style: h4(mColor: Color(0xFF06A66C)),
+                      ),
                     ),
-                  ),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                // snapshot 데이터를 가져오고 있을 때
-                return Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Center(
-                    child: CircularProgressIndicator(color: Color(0xFF06A66C)),
-                  ),
-                );
-              } else {
-                if (recordInfo.isEmpty ||
-                    snapshot.data?.docs.last['pic'] != recordInfo.last['pic']) {
-                  // recordInfo가 비어있거나 또는
-                  // 해당 데이터에서 인원이 감지된 시간과 recordInfo에 전에 저장된 최근 데이터의 인원이 감지된 시간이 다르면
-                  recordInfo.add(snapshot.data?.docs.last.data());
-                  // recordInfo에 해당 Snapshot의 Data를 넣는다.
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  // snapshot 데이터를 가져오고 있을 때
+                  return Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: Center(
+                      child:
+                          CircularProgressIndicator(color: Color(0xFF06A66C)),
+                    ),
+                  );
+                } else {
+                  if (recordInfo.isEmpty ||
+                      snapshot.data?.docs.last['pic'] !=
+                          recordInfo.last['pic']) {
+                    // recordInfo가 비어있거나 또는
+                    // 해당 데이터에서 인원이 감지된 시간과 recordInfo에 전에 저장된 최근 데이터의 인원이 감지된 시간이 다르면
+                    recordInfo.add(snapshot.data?.docs.last.data());
+                    // recordInfo에 해당 Snapshot의 Data를 넣는다.
+                  }
+                  print(recordInfo);
+                  return Container(
+                    padding: EdgeInsets.only(
+                        left: 30, right: 30, top: 15, bottom: 15),
+                    // recordInfo에 들어간 데이터만큼 record_page에 해당 데이터들을 넣는다.
+                    alignment: Alignment.center,
+                    child: ListView.builder(
+                      itemCount: recordInfo.length,
+                      itemBuilder: (context, index) {
+                        return _buildRecordContainer(
+                          recordInfo[index]['pic'],
+                          recordInfo[index]['time'],
+                          recordInfo[index]['type'],
+                        );
+                      },
+                    ),
+                  );
                 }
-                print(recordInfo);
-                return Align(
-                  // recordInfo에 들어간 데이터만큼 record_page에 해당 데이터들을 넣는다.
-                  alignment: Alignment.center,
-                  child: ListView.builder(
-                    itemCount: recordInfo.length,
-                    itemBuilder: (context, index) {
-                      return _buildRecordContainer(
-                        recordInfo[index]['pic'],
-                        recordInfo[index]['time'],
-                        recordInfo[index]['type'],
-                      );
-                    },
-                  ),
-                );
-              }
-            }));
+              }),
+        ));
   }
 
-  Column _buildRecordContainer(String imageUrl, String date, String info) {
+  Container _buildRecordContainer(String imageUrl, String date, String info) {
     if (info == 'wildboar') {
       info = "멧돼지";
     } else if (info == 'human') {
@@ -90,35 +113,36 @@ class _RecordPageState extends State<RecordPage> {
       date = "No";
       info = "No";
     }
-    return Column(
-      children: [
-        SizedBox(height: 25),
-        Container(
-          alignment: Alignment.center,
-          width: 300,
-          height: 200,
-          child: CachedNetworkImage(
-            // cachedNetworkImage를 통해 한번 로딩되면 다음 접속할때는 바로 뜨게 한다.
-            fit: BoxFit.cover,
-            imageUrl: imageUrl,
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+    return Container(
+      decoration: buttonStyle1(),
+      child: Column(
+        children: [
+          SizedBox(height: 15),
+          Container(
+            alignment: Alignment.center,
+            height: 250,
+            child: CachedNetworkImage(
+              // cachedNetworkImage를 통해 한번 로딩되면 다음 접속할때는 바로 뜨게 한다.
+              fit: BoxFit.fitWidth,
+              imageUrl: imageUrl,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
           ),
-        ),
-        SizedBox(height: 5),
-        Container(
-          width: 290,
-          height: 110,
-          alignment: Alignment.center,
-          //color: Color(0xFFA7D2CB),
-          child: CommonFormField(date: date, info: info),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color(0xFF06A66C),
+          SizedBox(height: 10),
+          Container(
+            height: 70,
+            alignment: Alignment.center,
+            //color: Color(0xFFA7D2CB),
+            child: CommonFormField(date: date, info: info),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-      ],
+          SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }

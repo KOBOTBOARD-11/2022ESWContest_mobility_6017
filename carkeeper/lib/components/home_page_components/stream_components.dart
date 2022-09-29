@@ -17,19 +17,7 @@ class StreamCompoState extends State<StreamCompo> {
             .push(MaterialPageRoute(builder: (context) => StreamPage()));
       },
       child: Container(
-        decoration: BoxDecoration(
-          //border: Border.all(color: Color(0xFF06A66C), width: 2),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(0, 1),
-            )
-          ],
-        ),
+        decoration: buttonStyle1(),
         alignment: Alignment.center,
         width: 120,
         height: 120,

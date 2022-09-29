@@ -25,11 +25,11 @@ class _CommonFormFieldState extends State<CommonFormField> {
         children: [
           Text(
             dateText.substring(2, 21),
-            style: subtitle3(mColor: Colors.white),
+            style: subtitle3(mColor: Color(0xFF06A66C)),
           ),
           Text(
-            "${infoText} 감지",
-            style: subtitle3(mColor: Colors.white),
+            "${infoText}가 감지되었습니다.",
+            style: subtitle3(mColor: Color(0xFF06A66C)),
           ),
           SizedBox(height: 1),
         ],

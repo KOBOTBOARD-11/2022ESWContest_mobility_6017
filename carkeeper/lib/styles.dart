@@ -43,3 +43,18 @@ TextStyle overLine({Color mColor = Colors.black}) {
 TextStyle body1({Color mColor = Colors.black}) {
   return TextStyle(fontSize: 20, color: mColor);
 }
+
+BoxDecoration buttonStyle1({double mRadius = 10}) {
+  return BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(mRadius),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.5),
+        spreadRadius: 0,
+        blurRadius: 5,
+        offset: Offset(0, 1),
+      )
+    ],
+  );
+}

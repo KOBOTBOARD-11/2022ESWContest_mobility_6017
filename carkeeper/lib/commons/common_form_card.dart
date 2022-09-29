@@ -33,7 +33,11 @@ class CommonFormCard extends StatelessWidget {
               '${gasName} 수치',
               style: subtitle3(mColor: sColor),
             ),
-            SizedBox(height: 5),
+            Container(
+              width: 150,
+              height: 5,
+              color: Color(0xFF06A66C),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -69,6 +73,11 @@ class CommonFormCard extends StatelessWidget {
             Text(
               '${gasName}',
               style: subtitle3(mColor: Color(0xFF06A66C)),
+            ),
+            Container(
+              width: 200,
+              height: 2,
+              color: Color(0xFF06A66C),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

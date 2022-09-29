@@ -29,11 +29,11 @@ class _CommonFormFieldSmallState extends State<CommonFormFieldSmall> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            (dateText == 'No') ? "접근 기록이" : dateText.substring(2, 21),
+            (dateText == 'No') ? "접근 기록이" : dateText.substring(4, 18),
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
           Text(
-            (infoText == 'No') ? "없습니다." : "${infoText} 감지",
+            (infoText == 'No') ? "없습니다." : "${infoText} 가 감지됐습니다.",
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
         ],

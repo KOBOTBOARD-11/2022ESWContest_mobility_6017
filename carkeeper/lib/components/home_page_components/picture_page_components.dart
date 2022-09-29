@@ -39,17 +39,17 @@ class _PicturePageComponentsState extends State<PicturePageComponents> {
                       alignment: Alignment.bottomRight,
                       child: Text(
                         formatDate(DateTime.now(), [
+                          yy,
+                          "/",
                           mm,
                           "/",
                           dd,
                           " \n",
+                          am,
+                          " ",
                           hh,
                           ':',
-                          nn,
-                          ':',
-                          ss,
-                          ' ',
-                          am
+                          nn
                         ]),
                         style: const TextStyle(
                           color: Colors.white,
