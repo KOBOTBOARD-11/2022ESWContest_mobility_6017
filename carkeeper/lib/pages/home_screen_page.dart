@@ -1,7 +1,6 @@
 import 'package:carkeeper/components/home_page_components/picture_page_components.dart';
 import 'package:carkeeper/components/home_page_components/record_components.dart';
 import 'package:carkeeper/components/home_page_components/stream_components.dart';
-import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ class HomeScreenPage extends StatefulWidget {
 class _HomeScreenPageState extends State<HomeScreenPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  int _selectedIndex = 0;
   void initState() {
     var initialzationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -72,11 +70,21 @@ class _HomeScreenPageState extends State<HomeScreenPage>
           child: ListView(
             children: [
               PicturePageComponents(),
-              SizedBox(height: 100, child: CoMakeCompo()),
-              Container(
-                width: double.infinity,
-                height: 2,
-                color: Colors.grey,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 100, child: CoMakeCompo()),
+                  Container(
+                    width: double.infinity,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                ],
               ),
               //SizedBox(height: 5),
               Padding(
@@ -85,7 +93,6 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      constraints: BoxConstraints(minHeight: 230),
                       padding: EdgeInsets.only(
                         bottom: 10,
                         left: 10,
@@ -148,8 +155,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                             height: 1,
                             color: Color(0xFF06A66C),
                           ),
-                          SizedBox(height: 10),
-                          RecordCompo(),
+                          SizedBox(height: 5),
+                          Container(
+                              constraints: BoxConstraints(maxHeight: 215),
+                              child: RecordCompo()),
                         ],
                       ),
                     ),

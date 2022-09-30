@@ -18,11 +18,7 @@ class CommonFormCard extends StatelessWidget {
       status = "안전";
       sColor = Color(0xFF0064ff);
       return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF06A66C)),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
+        decoration: buttonStyle1(),
         alignment: Alignment.center,
         width: 300,
         height: 50,
@@ -53,17 +49,7 @@ class CommonFormCard extends StatelessWidget {
     } else {
       checkGasName(gasName);
       return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 0.5,
-                blurRadius: 5,
-                offset: Offset(0, 1),
-              )
-            ]),
+        decoration: buttonStyle1(),
         alignment: Alignment.center,
         width: 320,
         height: 60,

@@ -3,6 +3,7 @@ import 'package:carkeeper/commons/common_form_field.dart';
 import 'package:carkeeper/firebase/record_data_list.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class RecordPage extends StatefulWidget {
@@ -69,14 +70,13 @@ class _RecordPageState extends State<RecordPage> {
                   );
                 } else {
                   if (recordInfo.isEmpty ||
-                      snapshot.data?.docs.last['pic'] !=
-                          recordInfo.last['pic']) {
+                      snapshot.data?.docs.last['time'] !=
+                          recordInfo.last['time']) {
                     // recordInfo가 비어있거나 또는
-                    // 해당 데이터에서 인원이 감지된 시간과 recordInfo에 전에 저장된 최근 데이터의 인원이 감지된 시간이 다르면
                     recordInfo.add(snapshot.data?.docs.last.data());
                     // recordInfo에 해당 Snapshot의 Data를 넣는다.
                   }
-                  print(recordInfo);
+
                   return Container(
                     padding: EdgeInsets.only(
                         left: 30, right: 30, top: 15, bottom: 15),
@@ -102,7 +102,7 @@ class _RecordPageState extends State<RecordPage> {
     if (info == 'wildboar') {
       info = "멧돼지";
     } else if (info == 'human') {
-      info = "외부인";
+      info = "낯선이";
     } else if (info == 'dog') {
       info = "들개";
     } else if (info == 'waterdeer') {
@@ -121,12 +121,9 @@ class _RecordPageState extends State<RecordPage> {
           Container(
             alignment: Alignment.center,
             height: 250,
-            child: CachedNetworkImage(
-              // cachedNetworkImage를 통해 한번 로딩되면 다음 접속할때는 바로 뜨게 한다.
+            child: ExtendedImage.network(
+              imageUrl,
               fit: BoxFit.fitWidth,
-              imageUrl: imageUrl,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
           SizedBox(height: 10),

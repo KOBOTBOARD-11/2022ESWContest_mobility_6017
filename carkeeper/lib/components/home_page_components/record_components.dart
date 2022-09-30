@@ -13,7 +13,6 @@ class _RecordCompoState extends State<RecordCompo> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
       scrollDirection: Axis.vertical,
       child: recordInfo.isEmpty
           ? _buildRecordContainer("No", "No")
@@ -55,6 +54,7 @@ class _RecordCompoState extends State<RecordCompo> {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
+        SizedBox(height: 5),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,20 +59,17 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
-                  heroTag: "camera",
+                  heroTag: "video",
                   child: Icon(Icons.video_camera_front_outlined),
-                  tooltip: 'pick Iamge',
                   onPressed: () {
                     getVideo(ImageSource.gallery);
-                    _uploadFile(context);
                   },
                 ),
                 FloatingActionButton(
-                  heroTag: "gallery",
-                  child: Icon(Icons.wallpaper),
-                  tooltip: 'pick Iamge',
+                  heroTag: "upload",
+                  child: Icon(Icons.upload),
                   onPressed: () {
-                    takeVideo();
+                    _uploadFile(context);
                   },
                 )
               ],
@@ -119,14 +117,11 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
       final downloadUrl = await firebaseStorageRef.getDownloadURL();
       print(downloadUrl);
       videoSelect = false;
-      // 문서 작성
-      // await FirebaseFirestore.instance.collection('post').add({
-      //   'contents': textEditingController.text,
-      //   'displayName': widget.user.displayName,
-      //   'email': widget.user.email,
-      //   'photoUrl': downloadUrl,
-      //   'userPhotoUrl': widget.user.photoURL
-      // });
+      //문서 작성
+      await FirebaseFirestore.instance.collection('FaceID').doc('user').set({
+        'VideoURL': downloadUrl,
+        'Time': DateTime.now(),
+      });
     } catch (e) {
       print(e);
     }

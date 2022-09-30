@@ -13,13 +13,26 @@ class _PicturePageComponentsState extends State<PicturePageComponents> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Opacity(
-          opacity: 0.6,
-          child: Image.asset(
-            "assets/hyundai_peli.jpg",
-            fit: BoxFit.cover,
-            height: 315,
-            width: double.infinity,
+        ShaderMask(
+          shaderCallback: (Rect bound) {
+            return LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, Colors.white],
+                stops: [0, 1]).createShader(bound);
+          },
+          blendMode: BlendMode.dstIn,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                "assets/hyundai_peli.jpg",
+                fit: BoxFit.cover,
+                height: 315,
+                width: double.infinity,
+              ),
+            ),
           ),
         ),
         Column(
@@ -31,32 +44,27 @@ class _PicturePageComponentsState extends State<PicturePageComponents> {
                 mColor: Color(0xFF06A66C),
               ),
             ),
-            SizedBox(height: 170),
+            SizedBox(height: 150),
             TimerBuilder.periodic(
               const Duration(seconds: 1),
               builder: (context) {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+                  padding: const EdgeInsets.only(right: 15),
                   child: Container(
                     alignment: Alignment.bottomRight,
                     child: Text(
                       formatDate(DateTime.now(),
-                          [yy, "/", mm, "/", dd, " \n", am, " ", hh, ':', nn]),
+                          [mm, "/", dd, " \n", am, " ", hh, ':', nn]),
                       style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.w800,
                       ),
                       textAlign: TextAlign.end,
                     ),
                   ),
                 );
               },
-            ),
-            Container(
-              width: double.infinity,
-              height: 2,
-              color: Colors.grey,
             ),
           ],
         ),
