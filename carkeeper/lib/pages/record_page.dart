@@ -2,6 +2,7 @@ import 'package:carkeeper/commons/common_form_field.dart';
 import 'package:carkeeper/firebase/record_data_list.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -147,15 +148,22 @@ class _RecordPageState extends State<RecordPage> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 240),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(90),
-                          child: ExtendedImage.network(
-                            userImageUrl,
-                            height: 90,
-                            width: 90,
-                            fit: BoxFit.cover,
-                            cache: false,
+                        SizedBox(width: 220),
+                        Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Color(0xFF73FF00), width: 5),
+                            borderRadius: BorderRadius.circular(90),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(90),
+                            child: ExtendedImage.network(
+                              userImageUrl,
+                              height: 90,
+                              width: 90,
+                              fit: BoxFit.cover,
+                              cache: false,
+                            ),
                           ),
                         ),
                       ],
