@@ -6,16 +6,7 @@ import os
 import tensorflow as tf
 import numpy as np
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
-gpus = tf.config.experimental.list_physical_devices('GPU')
-if gpus:
-    try:
-        tf.config.experimental.set_memory_growth(gpus[0], True)
-    except RuntimeError as e:
-        print(e)
-
-
-file_name = 'User1.mp4'
+file_name = 'User/user.mp4'
 encoding_file = 'encodings.pickle'
 Unknow_name = 'Unknown'
 frame_resizing = 0.25
@@ -23,9 +14,9 @@ model_method = 'CNN'
 
 
 
-def detectAndDisplay(image):
+def detectAndDisplay(image,data):
     start_time = time.time()
-    small_frame = cv2.resize(frame, (0, 0), fx=frame_resizing, fy=frame_resizing)
+    small_frame = cv2.resize(image, (0, 0), fx=frame_resizing, fy=frame_resizing)
     # small_frame = cv2.resize(image, (256,256), interpolation= cv2.INTER_LINEAR)
     rgb_small_frame = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
     boxes = face_recognition.face_locations(rgb_small_frame,model=model_method)
@@ -66,22 +57,3 @@ def detectAndDisplay(image):
     # image = cv2.resize(frame, (0, 0), fx=frame_resizing, fy=frame_resizing)
     cv2.imshow("FACE", image)  
 
-
-
-data = pickle.loads(open(encoding_file, "rb").read())
-cap = cv2.VideoCapture(0)
-
-if not cap.isOpened:
-    print('EEEEEE')
-    exit(0)
-    
-while True:
-    ret, frame = cap.read()
-    if frame is None:
-        print("EEEEEEEEEEEE")
-    detectAndDisplay(frame)
-    
-    
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-cv2.destroyAllWindows()
