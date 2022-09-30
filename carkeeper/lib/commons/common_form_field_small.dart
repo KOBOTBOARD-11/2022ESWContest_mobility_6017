@@ -33,7 +33,7 @@ class _CommonFormFieldSmallState extends State<CommonFormFieldSmall> {
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
           Text(
-            (infoText == 'No') ? "없습니다." : "${infoText} 가 감지됐습니다.",
+            (infoText == 'No') ? "없습니다." : "${infoText} 감지됐습니다.",
             style: overLine(mColor: Color(0xFF06A66C)),
           ),
         ],

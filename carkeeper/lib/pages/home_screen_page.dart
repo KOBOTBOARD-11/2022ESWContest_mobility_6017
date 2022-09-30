@@ -111,7 +111,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                   "감지 내역",
                                   style: subtitle2(mColor: Color(0xFF06A66C)),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 15),
                                 Column(
                                   children: [
                                     SizedBox(height: 1),
@@ -134,7 +134,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                                         child: InkWell(
                                           child: Icon(
                                             Icons.refresh,
-                                            size: 15,
+                                            size: 20,
                                             color: Color(0xFF06A66C),
                                           ),
                                           onTap: () {

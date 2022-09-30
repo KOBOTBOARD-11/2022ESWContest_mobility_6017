@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carkeeper/commons/common_form_field.dart';
 import 'package:carkeeper/firebase/record_data_list.dart';
 import 'package:carkeeper/styles.dart';
@@ -24,6 +23,18 @@ class _RecordPageState extends State<RecordPage> {
             style: h5(mColor: Color(0xFF06A66C)),
           ),
           elevation: 1,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                recordInfo.clear();
+                setState(() {});
+              },
+              icon: Icon(
+                Icons.delete,
+                color: Color(0xFF06A66C),
+              ),
+            ),
+          ],
         ),
         body: Container(
           height: double.infinity,
@@ -87,6 +98,7 @@ class _RecordPageState extends State<RecordPage> {
                       itemBuilder: (context, index) {
                         return _buildRecordContainer(
                           recordInfo[index]['pic'],
+                          recordInfo[index]['user_pic'],
                           recordInfo[index]['time'],
                           recordInfo[index]['type'],
                         );
@@ -98,21 +110,23 @@ class _RecordPageState extends State<RecordPage> {
         ));
   }
 
-  Container _buildRecordContainer(String imageUrl, String date, String info) {
+  Container _buildRecordContainer(
+      String imageUrl, String userImageUrl, String date, String info) {
     if (info == 'wildboar') {
-      info = "멧돼지";
+      info = "멧돼지가";
     } else if (info == 'human') {
-      info = "낯선이";
+      info = "낯선이가";
     } else if (info == 'dog') {
-      info = "들개";
+      info = "들개가";
     } else if (info == 'waterdeer') {
-      info = "물사슴";
+      info = "물사슴이";
     } else if (info == 'racoon') {
-      info = "너구리";
+      info = "너구리가";
     } else {
       date = "No";
       info = "No";
     }
+    print(imageUrl);
     return Container(
       decoration: buttonStyle1(),
       child: Column(
@@ -121,9 +135,35 @@ class _RecordPageState extends State<RecordPage> {
           Container(
             alignment: Alignment.center,
             height: 250,
-            child: ExtendedImage.network(
-              imageUrl,
-              fit: BoxFit.fitWidth,
+            child: Stack(
+              children: [
+                ExtendedImage.network(
+                  imageUrl,
+                  fit: BoxFit.fitWidth,
+                  cache: false,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: 240),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(90),
+                          child: ExtendedImage.network(
+                            userImageUrl,
+                            height: 90,
+                            width: 90,
+                            fit: BoxFit.cover,
+                            cache: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                )
+              ],
             ),
           ),
           SizedBox(height: 10),

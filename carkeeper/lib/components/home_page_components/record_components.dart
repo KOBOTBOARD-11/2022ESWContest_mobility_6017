@@ -30,15 +30,15 @@ class _RecordCompoState extends State<RecordCompo> {
 
   Column _buildRecordContainer(String date, String info) {
     if (info == 'wildboar') {
-      info = "멧돼지";
+      info = "멧돼지가";
     } else if (info == 'human') {
-      info = "외부인";
+      info = "낯선이가";
     } else if (info == 'dog') {
-      info = "들개";
+      info = "들개가";
     } else if (info == 'waterdeer') {
-      info = "물사슴";
+      info = "물사슴이";
     } else if (info == 'racoon') {
-      info = "너구리";
+      info = "너구리가";
     } else {
       info = info;
     }
@@ -47,7 +47,7 @@ class _RecordCompoState extends State<RecordCompo> {
       children: [
         Container(
           width: 130,
-          height: info == "No" ? 195 : 50,
+          height: info == "No" ? 220 : 50,
           child: CommonFormFieldSmall(date: date, info: info),
           decoration: BoxDecoration(
             color: Colors.white,

@@ -28,7 +28,7 @@ class _CommonFormFieldState extends State<CommonFormField> {
             style: subtitle3(mColor: Color(0xFF06A66C)),
           ),
           Text(
-            "${infoText}가 감지되었습니다.",
+            "${infoText} 감지되었습니다.",
             style: subtitle3(mColor: Color(0xFF06A66C)),
           ),
           SizedBox(height: 1),

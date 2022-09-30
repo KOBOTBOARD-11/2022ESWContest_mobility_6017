@@ -13,6 +13,12 @@ class StreamPage extends StatelessWidget {
             "Car Keeper",
             style: h5(mColor: Color(0xFF06A66C)),
           ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context); //뒤로가기
+              },
+              color: Color(0xFF06A66C),
+              icon: Icon(Icons.arrow_back)),
         ),
         body: Center(
             child: ListView(
