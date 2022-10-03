@@ -19,15 +19,36 @@ class FaceRegisterPage extends StatefulWidget {
 class _FaceRegisterPageState extends State<FaceRegisterPage> {
   File? _cameraVideo;
   final picker = ImagePicker();
-  String albumName = 'Media';
   // 이미지를 보여주는 위젯
   Widget showGuideLine() {
     return Container(
-        color: const Color(0xffd0cece),
+        //color: const Color(0xffd0cece),
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width,
-        child: Center(
-          child: Text('가이드 라인'),
+        height: MediaQuery.of(context).size.width * 1.3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset("assets/face_register_guide_image.gif"),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "1. 화면의 영상처럼\n \t\t\t얼굴을 20초간 찍어주세요.",
+                  style: subtitle3(mColor: Colors.black),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "2. 앨범 버튼을 통해 앨범에서\n \t\t\t카메라 영상을 선택해주세요.",
+                  style: subtitle3(mColor: Colors.black),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "3. 업로드 버튼을 눌러서\n \t\t\t영상을 전송하면 등록 끝!",
+                  style: subtitle3(mColor: Colors.black),
+                ),
+              ],
+            ),
+          ],
         ));
     //: Image.file(File(_image!.path))));
   }
@@ -48,19 +69,15 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
           ),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 25.0),
             showGuideLine(),
-            SizedBox(
-              height: 50.0,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
                   heroTag: "video",
-                  child: Icon(Icons.video_camera_front_outlined),
+                  child: Icon(Icons.insert_photo_outlined),
                   onPressed: () {
                     getVideo(ImageSource.gallery);
                   },

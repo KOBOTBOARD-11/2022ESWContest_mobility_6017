@@ -1,10 +1,14 @@
+import 'dart:ffi';
+
 import 'package:carkeeper/commons/common_form_field.dart';
 import 'package:carkeeper/firebase/record_data_list.dart';
+import 'package:carkeeper/pages/record_pages/amplify_user_pic.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);
@@ -84,7 +88,6 @@ class _RecordPageState extends State<RecordPage> {
                   if (recordInfo.isEmpty ||
                       snapshot.data?.docs.last['time'] !=
                           recordInfo.last['time']) {
-                    // recordInfo가 비어있거나 또는
                     recordInfo.add(snapshot.data?.docs.last.data());
                     // recordInfo에 해당 Snapshot의 Data를 넣는다.
                   }
@@ -97,12 +100,21 @@ class _RecordPageState extends State<RecordPage> {
                     child: ListView.builder(
                       itemCount: recordInfo.length,
                       itemBuilder: (context, index) {
-                        return _buildRecordContainer(
-                          recordInfo[index]['pic'],
-                          recordInfo[index]['user_pic'],
-                          recordInfo[index]['time'],
-                          recordInfo[index]['type'],
-                        );
+                        return (recordInfo[index]['type'] == 'human')
+                            ? _buildRecordContainer(
+                                recordInfo[index]['pic'],
+                                recordInfo[index]['user_pic'],
+                                recordInfo[index]['user_type'],
+                                recordInfo[index]['time'],
+                                recordInfo[index]['type'],
+                              )
+                            : _buildRecordContainer(
+                                recordInfo[index]['pic'],
+                                "no",
+                                0,
+                                recordInfo[index]['time'],
+                                recordInfo[index]['type'],
+                              );
                       },
                     ),
                   );
@@ -111,8 +123,8 @@ class _RecordPageState extends State<RecordPage> {
         ));
   }
 
-  Container _buildRecordContainer(
-      String imageUrl, String userImageUrl, String date, String info) {
+  Container _buildRecordContainer(String imageUrl, String userImageUrl,
+      int userType, String date, String info) {
     if (info == 'wildboar') {
       info = "멧돼지가";
     } else if (info == 'human') {
@@ -155,14 +167,21 @@ class _RecordPageState extends State<RecordPage> {
                                 Border.all(color: Color(0xFF73FF00), width: 5),
                             borderRadius: BorderRadius.circular(90),
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(90),
-                            child: ExtendedImage.network(
-                              userImageUrl,
-                              height: 90,
-                              width: 90,
-                              fit: BoxFit.cover,
-                              cache: false,
+                          child: InkWell(
+                            onDoubleTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => AmplifyUserPic(
+                                      userImageSrc: userImageUrl)));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(90),
+                              child: ExtendedImage.network(
+                                userImageUrl,
+                                height: 90,
+                                width: 90,
+                                fit: BoxFit.cover,
+                                cache: false,
+                              ),
                             ),
                           ),
                         ),

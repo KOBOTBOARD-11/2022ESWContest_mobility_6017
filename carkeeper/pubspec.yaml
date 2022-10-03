@@ -55,6 +55,7 @@ dependencies:
   cached_network_image: ^3.2.1
   provider: ^6.0.3
   extended_image: ^6.2.1
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:
