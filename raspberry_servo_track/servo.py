@@ -29,11 +29,14 @@ def on_message(client, userdata, msg):
     json_data = json.loads(message)
     obj_flag = json_data["obj_flag"]
     if obj_flag: # 객체가 탐지 되었을 때,
-        x_flag= json_data["x_flag"]; # 센터 - 객체 센터(양: 왼쪽, 음: 오른쪽)
-        y_flag= json_data["y_flag"]; # 센터 - 객체센터(양: 위쪽, 음: 아래쪽)
-    else:
-        x_flag=0; # 센터 - 객체 센터(양: 왼쪽, 음: 오른쪽)
-        y_flag=0;
+        if (json_data["x_flag"]>0): # 센터 - 객체 센터(양: 왼쪽, 음: 오른쪽)
+            x_flag = 1;
+        else:
+            x_flag = 0;
+        if (json_data["y_flag"]>0): # 센터 - 객체센터(양: 위쪽, 음: 아래쪽)
+            y_flag=1
+        else:
+            y_flag=0
  
 client = mqtt.Client()
 
@@ -74,8 +77,8 @@ while True:
     pos_x = x_direc[x_flag]*high_x_time
     pos_y = y_direc[y_flag]*high_y_time
     if (obj_flag != ""):
-        pwm_x.ChangeDutyCycle(pos_x/10.0) # for 반복문에 실수가 올 수 없으므로 /10.0 로 처리함. 
-        pwm_y.ChangeDutyCycle(pos_y/10.0) # for 반복문에 실수가 올 수 없으므로 /10.0 로 처리함. 
+        pwm_x.ChangeDutyCycle(pos_x/10.0)  
+        pwm_y.ChangeDutyCycle(pos_y/10.0)  
 
     else:
         pwm_x.ChangeDutyCycle(pos_x/10.0) # for 반복문에 실수가 올 수 없으므로 /10.0 로 처리함. 
