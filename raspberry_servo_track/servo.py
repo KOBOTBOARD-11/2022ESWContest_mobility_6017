@@ -69,13 +69,13 @@ pwm_y = GPIO.PWM(servo_y_pin, 50)
 pwm_x.start(3.0)
 pwm_y.start(3.0)
 
-high_x_time = 30
-high_y_time = 30
+pos_x = 30
+pos_y = 30
 
 while True:
     time.sleep(0.02)
-    pos_x = x_direc[x_flag]*high_x_time
-    pos_y = y_direc[y_flag]*high_y_time
+    pos_x = pos_x+x_direc[x_flag]
+    pos_y = pos_y+y_direc[y_flag]
     if (obj_flag != ""):
         pwm_x.ChangeDutyCycle(pos_x/10.0)  
         pwm_y.ChangeDutyCycle(pos_y/10.0)  
