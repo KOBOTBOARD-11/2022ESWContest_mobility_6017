@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -107,12 +107,6 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
     XFile? file = await picker.pickVideo(
       source: ImageSource.camera,
     );
-    print(file);
-    GallerySaver.saveVideo(file!.path).then((bool? success) {
-      setState(() {
-        print("save video");
-      });
-    });
   }
 
   Future _uploadFile(BuildContext context) async {
