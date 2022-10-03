@@ -33,7 +33,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1. 화면의 영상처럼\n \t\t\t얼굴을 20초간 찍어주세요.",
+                  "1. 화면의 영상처럼\n \t\t\t얼굴을 10초간 찍어주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 SizedBox(height: 5),
