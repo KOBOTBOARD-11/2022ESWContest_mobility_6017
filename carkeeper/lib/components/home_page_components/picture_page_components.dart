@@ -1,5 +1,6 @@
 import 'package:carkeeper/styles.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_builder/timer_builder.dart';
 
@@ -8,67 +9,124 @@ class PicturePageComponents extends StatefulWidget {
   State<PicturePageComponents> createState() => _PicturePageComponentsState();
 }
 
-class _PicturePageComponentsState extends State<PicturePageComponents> {
+bool selected = false;
+var alignment = Alignment.bottomLeft;
+
+class _PicturePageComponentsState extends State<PicturePageComponents>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ShaderMask(
-          shaderCallback: (Rect bound) {
-            return LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.transparent, Colors.white],
-                stops: [0, 1]).createShader(bound);
-          },
-          blendMode: BlendMode.dstIn,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                "assets/hyundai_peli.jpg",
-                fit: BoxFit.cover,
-                height: 315,
-                width: double.infinity,
+    double Height = MediaQuery.of(context).size.height;
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 2000),
+      curve: Curves.fastLinearToSlowEaseIn,
+      height: selected ? Height * 0.4 : Height * 0.9,
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: selected ? 1 : 0.5,
+            child: ShaderMask(
+              shaderCallback: (Rect bound) {
+                return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.transparent, Colors.white],
+                    stops: [0, 1]).createShader(bound);
+              },
+              blendMode: BlendMode.dstIn,
+              child: AnimatedPadding(
+                padding: selected
+                    ? const EdgeInsets.symmetric(horizontal: 8.0)
+                    : const EdgeInsets.symmetric(horizontal: 0),
+                duration: Duration(milliseconds: 2000),
+                child: AnimatedContainer(
+                  height: selected ? Height * 0.4 : Height * 0.9,
+                  duration: Duration(milliseconds: 2000),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  child: ClipRRect(
+                    borderRadius: selected
+                        ? BorderRadius.circular(30)
+                        : BorderRadius.circular(0),
+                    child: Image.asset(
+                      "assets/hyundai_peli.jpg",
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            SizedBox(height: 10),
-            Text(
-              "Car Keeper",
-              style: h4(
-                mColor: Color(0xFF06A66C),
+          Column(
+            mainAxisAlignment: selected
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.spaceEvenly,
+            children: [
+              AnimatedDefaultTextStyle(
+                style: selected
+                    ? h4(mColor: Color(0xFF06A66C))
+                    : bigSize1(mColor: Color(0xFF06A66C)),
+                duration: Duration(milliseconds: 800),
+                child: Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: const Text("Car Keeper")),
               ),
-            ),
-            SizedBox(height: 150),
-            TimerBuilder.periodic(
-              const Duration(seconds: 1),
-              builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: Container(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      formatDate(DateTime.now(),
-                          [mm, "/", dd, " \n", am, " ", hh, ':', nn]),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.w800,
+              AnimatedAlign(
+                alignment: alignment,
+                duration: Duration(milliseconds: 800),
+                child: selected
+                    ? TimerBuilder.periodic(
+                        const Duration(seconds: 1),
+                        builder: (context) {
+                          return Padding(
+                            padding: selected
+                                ? const EdgeInsets.only(right: 12.0)
+                                : const EdgeInsets.only(
+                                    left: 12.0, bottom: 12.0),
+                            child: AnimatedDefaultTextStyle(
+                              duration: Duration(milliseconds: 800),
+                              child: Text(
+                                formatDate(DateTime.now(),
+                                    [mm, "/", dd, " \n", am, " ", hh, ':', nn]),
+                              ),
+                              style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontSize: selected ? 50 : 70,
+                                fontWeight: FontWeight.w800,
+                              ),
+                              textAlign:
+                                  selected ? TextAlign.end : TextAlign.start,
+                            ),
+                          );
+                        },
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 100),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              selected = !selected;
+                              alignment = alignment == Alignment.bottomLeft
+                                  ? Alignment.topRight
+                                  : Alignment.bottomLeft;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            decoration: buttonStyle2(mColor: Color(0xFF06A66C)),
+                            alignment: Alignment.center,
+                            duration: Duration(milliseconds: 800),
+                            child: Text(
+                              "시작하기",
+                              style: h4(mColor: Colors.white),
+                            ),
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

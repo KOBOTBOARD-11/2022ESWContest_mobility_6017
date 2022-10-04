@@ -44,9 +44,9 @@ TextStyle body1({Color mColor = Colors.black}) {
   return TextStyle(fontSize: 20, color: mColor);
 }
 
-BoxDecoration buttonStyle1({double mRadius = 10}) {
+BoxDecoration buttonStyle1({double mRadius = 10, Color mColor = Colors.white}) {
   return BoxDecoration(
-    color: Colors.white,
+    color: mColor,
     borderRadius: BorderRadius.circular(mRadius),
     boxShadow: [
       BoxShadow(
@@ -56,5 +56,12 @@ BoxDecoration buttonStyle1({double mRadius = 10}) {
         offset: Offset(0, 1),
       )
     ],
+  );
+}
+
+BoxDecoration buttonStyle2({double mRadius = 10, Color mColor = Colors.white}) {
+  return BoxDecoration(
+    color: mColor,
+    borderRadius: BorderRadius.circular(mRadius),
   );
 }

@@ -6,15 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../components/home_page_components/co_make_components.dart';
-import '../components/home_page_components/face_components.dart';
+import '../components/home_page_components/pause_components.dart';
 import '../main.dart';
 
 class HomeScreenPage extends StatefulWidget {
   @override
-  State<HomeScreenPage> createState() => _HomeScreenPageState();
+  State<HomeScreenPage> createState() => HomeScreenPageState();
 }
 
-class _HomeScreenPageState extends State<HomeScreenPage>
+class HomeScreenPageState extends State<HomeScreenPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   void initState() {
@@ -26,6 +26,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
       requestBadgePermission: true,
       requestAlertPermission: true,
     );
+
     var initializationSettings = InitializationSettings(
         android: initialzationSettingsAndroid, iOS: initialzationSettingsIOS);
 
@@ -45,6 +46,10 @@ class _HomeScreenPageState extends State<HomeScreenPage>
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  void setAni() {
+    setState(() {});
   }
 
   @override
@@ -68,6 +73,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
             ],
           )),
           child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               PicturePageComponents(),
               Column(
@@ -81,12 +87,11 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                   SizedBox(height: 100, child: CoMakeCompo()),
                   Container(
                     width: double.infinity,
-                    height: 1,
+                    height: 0.5,
                     color: Colors.grey,
                   ),
                 ],
               ),
-              //SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
@@ -166,7 +171,7 @@ class _HomeScreenPageState extends State<HomeScreenPage>
                       children: [
                         StreamCompo(),
                         SizedBox(height: 10),
-                        FaceCompo(),
+                        PauseCompo(),
                       ],
                     )
                   ],

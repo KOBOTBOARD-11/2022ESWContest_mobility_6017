@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:carkeeper/commons/common_form_field.dart';
 import 'package:carkeeper/firebase/record_data_list.dart';
 import 'package:carkeeper/pages/record_pages/amplify_user_pic.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 

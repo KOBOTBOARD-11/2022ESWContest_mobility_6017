@@ -19,13 +19,16 @@ class AmplifyUserPic extends StatelessWidget {
           ExtendedImage.network(
             userImageSrc,
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.cancel_outlined,
-              color: Colors.white,
+          Opacity(
+            opacity: 0.5,
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.cancel_outlined,
+                color: Colors.white,
+              ),
             ),
           )
         ],
