@@ -27,6 +27,7 @@ class AmplifyUserPic extends StatelessWidget {
               },
               icon: Icon(
                 Icons.cancel_outlined,
+                size: 50,
                 color: Colors.white,
               ),
             ),

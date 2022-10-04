@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../components/home_page_components/picture_page_components.dart';
+import '../firebase/record_data_list.dart';
 import '../pages/home_screen_page.dart';
 import '../styles.dart';
 
@@ -83,6 +85,13 @@ CheckDialogYesOrNo(
                 ),
                 onPressed: () {
                   Navigator.pop(context);
+                  if (subContent == "모든 내용이 초기화됩니다.") {
+                    recordInfo.clear();
+                    FirebaseFirestore.instance
+                        .collection('pictures')
+                        .doc('pic')
+                        .delete();
+                  }
                 },
               )
             ],

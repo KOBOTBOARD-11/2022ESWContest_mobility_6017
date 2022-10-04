@@ -27,8 +27,13 @@ class _RecordPageState extends State<RecordPage> {
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                recordInfo.clear();
-                setState(() {});
+                setState(() {
+                  recordInfo.clear();
+                  FirebaseFirestore.instance
+                      .collection('pictures')
+                      .doc('pic')
+                      .delete();
+                });
               },
               icon: Icon(
                 Icons.delete,
@@ -56,7 +61,7 @@ class _RecordPageState extends State<RecordPage> {
           child: StreamBuilder<QuerySnapshot>(
               stream: _snapshot,
               builder: (context, snapshot) {
-                if (snapshot.data?.size == 0) {
+                if (snapshot.data?.size == 0 || recordInfo.isEmpty) {
                   // snapshot 데이터가 비어있으면
                   return Container(
                     // 즉, 컬렉션에 아무것도 없으면 No Data를 출력한다.

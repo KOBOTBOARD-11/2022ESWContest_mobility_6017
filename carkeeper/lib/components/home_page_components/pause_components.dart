@@ -16,8 +16,6 @@ class _PauseCompoState extends State<PauseCompo> {
   HomeScreenPage home = new HomeScreenPage();
   @override
   Widget build(BuildContext context) {
-    HomeScreenPageState? parent =
-        context.findAncestorStateOfType<HomeScreenPageState>();
     return TextButton(
       onPressed: () {
         CheckDialogYesOrNo(
