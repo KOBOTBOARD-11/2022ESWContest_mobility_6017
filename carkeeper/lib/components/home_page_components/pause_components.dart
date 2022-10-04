@@ -1,3 +1,4 @@
+import 'package:carkeeper/commons/confirm.dart';
 import 'package:carkeeper/components/home_page_components/picture_page_components.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,12 +20,8 @@ class _PauseCompoState extends State<PauseCompo> {
         context.findAncestorStateOfType<HomeScreenPageState>();
     return TextButton(
       onPressed: () {
-        parent!.setState(() {
-          selected = !selected;
-          alignment = alignment == Alignment.bottomLeft
-              ? Alignment.topRight
-              : Alignment.bottomLeft;
-        });
+        CheckDialogYesOrNo(
+            context, "정말로 종료하시겠습니까?", "모든 내용이 초기화됩니다.", Colors.white);
       },
       child: Container(
         decoration: buttonStyle1(),

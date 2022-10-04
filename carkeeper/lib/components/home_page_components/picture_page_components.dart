@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timer_builder/timer_builder.dart';
 
+import '../../commons/confirm.dart';
+
 class PicturePageComponents extends StatefulWidget {
   @override
   State<PicturePageComponents> createState() => _PicturePageComponentsState();
@@ -104,12 +106,11 @@ class _PicturePageComponentsState extends State<PicturePageComponents>
                         padding: const EdgeInsets.symmetric(horizontal: 100),
                         child: InkWell(
                           onTap: () {
-                            setState(() {
-                              selected = !selected;
-                              alignment = alignment == Alignment.bottomLeft
-                                  ? Alignment.topRight
-                                  : Alignment.bottomLeft;
-                            });
+                            CheckDialogYesOrNo(
+                                context,
+                                "사용자 등록 페이지에서\n 등록을 완료하셨습니까?",
+                                "안하셨다면 \n등록을 완료해주세요!",
+                                Color(0xFF06A66C));
                           },
                           child: AnimatedContainer(
                             decoration: buttonStyle2(mColor: Color(0xFF06A66C)),
