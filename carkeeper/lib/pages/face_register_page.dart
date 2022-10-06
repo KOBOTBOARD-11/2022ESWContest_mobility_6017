@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../styles.dart';
 
-bool videoSelect = false;
-
 class FaceRegisterPage extends StatefulWidget {
   const FaceRegisterPage({Key? key}) : super(key: key);
 
@@ -32,7 +30,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1. 화면의 영상처럼\n \t\t\t얼굴을 10초간 찍어주세요.",
+                  "1. 카메라 어플을 통해서\n \t\t\t화면의 영상처럼\n \t\t\t얼굴을 10초간 찍어주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 const SizedBox(height: 5),
@@ -118,7 +116,6 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
 
       // 업로드 완료 후 url
       final downloadUrl = await firebaseStorageRef.getDownloadURL();
-      videoSelect = false;
       //문서 작성
       await FirebaseFirestore.instance.collection('FaceID').doc('user').set({
         'VideoURL': downloadUrl,
