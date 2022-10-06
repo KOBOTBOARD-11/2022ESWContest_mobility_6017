@@ -15,7 +15,7 @@ class AmplifyUserPic extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           ExtendedImage.network(
             userImageSrc,
           ),
@@ -25,7 +25,7 @@ class AmplifyUserPic extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.cancel_outlined,
                 size: 50,
                 color: Colors.white,

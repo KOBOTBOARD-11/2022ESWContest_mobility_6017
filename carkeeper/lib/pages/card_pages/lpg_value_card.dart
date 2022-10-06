@@ -9,7 +9,7 @@ class LPGCard extends StatefulWidget {
 }
 
 class _LPGCardState extends State<LPGCard> {
-  var _snapshot = FirebaseFirestore.instance
+  final _snapshot = FirebaseFirestore.instance
       .collection('gas_sensor')
       .doc("detect_lpg")
       .snapshots();
@@ -19,7 +19,7 @@ class _LPGCardState extends State<LPGCard> {
         stream: _snapshot,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (!snapshot.hasData) {
-            return CommonFormCard(gasName: "LPG", amount: null);
+            return const CommonFormCard(gasName: "LPG", amount: null);
           } else {
             var amt = snapshot.data?["ppm"];
             return CommonFormCard(gasName: "LPG", amount: amt);

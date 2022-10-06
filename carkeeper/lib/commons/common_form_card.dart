@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
@@ -16,7 +15,7 @@ class CommonFormCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (amount == null) {
       status = "안전";
-      sColor = Color(0xFF0064ff);
+      sColor = const Color(0xFF0064ff);
       return Container(
         decoration: buttonStyle1(),
         alignment: Alignment.center,
@@ -24,15 +23,15 @@ class CommonFormCard extends StatelessWidget {
         height: 50,
         child: Column(
           children: [
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              '${gasName} 수치',
+              '$gasName 수치',
               style: subtitle3(mColor: sColor),
             ),
             Container(
               width: 150,
               height: 5,
-              color: Color(0xFF06A66C),
+              color: const Color(0xFF06A66C),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,33 +56,33 @@ class CommonFormCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              '${gasName}',
-              style: subtitle3(mColor: Color(0xFF06A66C)),
+              '$gasName',
+              style: subtitle3(mColor: const Color(0xFF06A66C)),
             ),
             Container(
               width: 200,
               height: 2,
-              color: Color(0xFF06A66C),
+              color: const Color(0xFF06A66C),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   children: [
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
-                      "${amount}",
+                      "$amount",
                       style: h5(mColor: sColor),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       "ppm",
-                      style: subtitle2(mColor: Color(0xFF06A66C)),
+                      style: subtitle2(mColor: const Color(0xFF06A66C)),
                     )
                   ],
                 ),
                 Text(
-                  "${status}",
+                  "$status",
                   style: subtitle3(mColor: sColor),
                 )
               ],
@@ -98,35 +97,35 @@ class CommonFormCard extends StatelessWidget {
     if (gasName == "일산화탄소(CO)") {
       if (amount < (40)) {
         status = "안전";
-        sColor = Color(0xFF0064ff);
+        sColor = const Color(0xFF0064ff);
       } else if (40 <= amount && amount < 800) {
         status = "주의";
-        sColor = Color(0xFFFF8A00);
+        sColor = const Color(0xFFFF8A00);
       } else {
         status = "위험";
-        sColor = Color(0xFFFF0000);
+        sColor = const Color(0xFFFF0000);
       }
     } else if (gasName == "메탄가스(CH4)") {
       if (amount < (1000)) {
         status = "안전";
-        sColor = Color(0xFF0064ff);
+        sColor = const Color(0xFF0064ff);
       } else if (1000 <= amount && amount < 2500) {
         status = "주의";
-        sColor = Color(0xFFFF8A00);
+        sColor = const Color(0xFFFF8A00);
       } else {
         status = "위험";
-        sColor = Color(0xFFFF0000);
+        sColor = const Color(0xFFFF0000);
       }
     } else {
       if (amount < (1000)) {
         status = "안전";
-        sColor = Color(0xFF0064ff);
+        sColor = const Color(0xFF0064ff);
       } else if (1000 <= amount && amount < 2500) {
         status = "주의";
-        sColor = Color(0xFFFF8A00);
+        sColor = const Color(0xFFFF8A00);
       } else {
         status = "위험";
-        sColor = Color(0xFFFF0000);
+        sColor = const Color(0xFFFF0000);
       }
     }
   }

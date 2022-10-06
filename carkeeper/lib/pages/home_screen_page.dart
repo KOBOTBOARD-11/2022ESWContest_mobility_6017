@@ -2,7 +2,6 @@ import 'package:carkeeper/components/home_page_components/picture_page_component
 import 'package:carkeeper/components/home_page_components/record_components.dart';
 import 'package:carkeeper/components/home_page_components/stream_components.dart';
 import 'package:carkeeper/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../components/home_page_components/co_make_components.dart';
@@ -10,6 +9,8 @@ import '../components/home_page_components/pause_components.dart';
 import '../main.dart';
 
 class HomeScreenPage extends StatefulWidget {
+  const HomeScreenPage({Key? key}) : super(key: key);
+
   @override
   State<HomeScreenPage> createState() => HomeScreenPageState();
 }
@@ -17,11 +18,12 @@ class HomeScreenPage extends StatefulWidget {
 class HomeScreenPageState extends State<HomeScreenPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+  @override
   void initState() {
     var initialzationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    var initialzationSettingsIOS = IOSInitializationSettings(
+    var initialzationSettingsIOS = const IOSInitializationSettings(
       requestSoundPermission: true,
       requestBadgePermission: true,
       requestAlertPermission: true,
@@ -37,7 +39,7 @@ class HomeScreenPageState extends State<HomeScreenPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       upperBound: 0.5,
     );
   }
@@ -98,7 +100,7 @@ class HomeScreenPageState extends State<HomeScreenPage>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                         bottom: 10,
                         left: 10,
                         right: 10,
@@ -108,18 +110,19 @@ class HomeScreenPageState extends State<HomeScreenPage>
                       child: Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Row(
                               children: [
-                                SizedBox(width: 35),
+                                const SizedBox(width: 35),
                                 Text(
                                   "감지 내역",
-                                  style: subtitle2(mColor: Color(0xFF06A66C)),
+                                  style: subtitle2(
+                                      mColor: const Color(0xFF06A66C)),
                                 ),
-                                SizedBox(width: 15),
+                                const SizedBox(width: 15),
                                 Column(
                                   children: [
-                                    SizedBox(height: 1),
+                                    const SizedBox(height: 1),
                                     Container(
                                       decoration: BoxDecoration(
                                         color: Colors.white,
@@ -129,7 +132,7 @@ class HomeScreenPageState extends State<HomeScreenPage>
                                             color: Colors.grey.withOpacity(0.5),
                                             spreadRadius: 0,
                                             blurRadius: 1,
-                                            offset: Offset(0, 1),
+                                            offset: const Offset(0, 1),
                                           )
                                         ],
                                       ),
@@ -137,7 +140,7 @@ class HomeScreenPageState extends State<HomeScreenPage>
                                         turns: Tween(begin: 0.0, end: 2.0)
                                             .animate(_controller),
                                         child: InkWell(
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.refresh,
                                             size: 20,
                                             color: Color(0xFF06A66C),
@@ -158,11 +161,11 @@ class HomeScreenPageState extends State<HomeScreenPage>
                           Container(
                             width: 130,
                             height: 1,
-                            color: Color(0xFF06A66C),
+                            color: const Color(0xFF06A66C),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Container(
-                              constraints: BoxConstraints(maxHeight: 215),
+                              constraints: const BoxConstraints(maxHeight: 215),
                               child: RecordCompo()),
                         ],
                       ),
@@ -170,14 +173,14 @@ class HomeScreenPageState extends State<HomeScreenPage>
                     Column(
                       children: [
                         StreamCompo(),
-                        SizedBox(height: 10),
-                        PauseCompo(),
+                        const SizedBox(height: 10),
+                        const PauseCompo(),
                       ],
                     )
                   ],
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
             ],
           ),
         ),

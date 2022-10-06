@@ -72,7 +72,7 @@ class _CarKeeperPageState extends State<CarKeeperPage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xFF06A66C),
+          selectedItemColor: const Color(0xFF06A66C),
           onTap: _onItemTapped,
         ),
       ),

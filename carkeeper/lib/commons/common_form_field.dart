@@ -18,20 +18,20 @@ class _CommonFormFieldState extends State<CommonFormField> {
   _CommonFormFieldState(this.dateText, this.infoText);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             dateText.substring(2, 21),
-            style: subtitle3(mColor: Color(0xFF06A66C)),
+            style: subtitle3(mColor: const Color(0xFF06A66C)),
           ),
           Text(
-            "${infoText} 감지되었습니다.",
-            style: subtitle3(mColor: Color(0xFF06A66C)),
+            "$infoText 감지되었습니다.",
+            style: subtitle3(mColor: const Color(0xFF06A66C)),
           ),
-          SizedBox(height: 1),
+          const SizedBox(height: 1),
         ],
       ),
     );

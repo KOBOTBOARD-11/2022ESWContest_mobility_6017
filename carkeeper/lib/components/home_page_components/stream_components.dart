@@ -24,7 +24,7 @@ class StreamCompoState extends State<StreamCompo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               CupertinoIcons.videocam,
               size: 50,
               color: Color(0xFF06A66C),
@@ -32,7 +32,7 @@ class StreamCompoState extends State<StreamCompo> {
             Text(
               textAlign: TextAlign.center,
               '실시간 동영상',
-              style: subtitle2(mColor: Color(0xFF06A66C)),
+              style: subtitle2(mColor: const Color(0xFF06A66C)),
             ),
           ],
         ),

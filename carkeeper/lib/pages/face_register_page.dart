@@ -9,6 +9,8 @@ import '../styles.dart';
 bool videoSelect = false;
 
 class FaceRegisterPage extends StatefulWidget {
+  const FaceRegisterPage({Key? key}) : super(key: key);
+
   @override
   _FaceRegisterPageState createState() => _FaceRegisterPageState();
 }
@@ -18,7 +20,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
   final picker = ImagePicker();
   // 이미지를 보여주는 위젯
   Widget showGuideLine() {
-    return Container(
+    return SizedBox(
         //color: const Color(0xffd0cece),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.width * 1.3,
@@ -33,12 +35,12 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
                   "1. 화면의 영상처럼\n \t\t\t얼굴을 10초간 찍어주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   "2. 앨범 버튼을 통해 앨범에서\n \t\t\t카메라 영상을 선택해주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   "3. 업로드 버튼을 눌러서\n \t\t\t영상을 전송하면 등록 끝!",
                   style: subtitle3(mColor: Colors.black),
@@ -61,7 +63,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
           title: Text(
             "Car Keeper",
             style: h5(
-              mColor: Color(0xFF06A66C),
+              mColor: const Color(0xFF06A66C),
             ),
           ),
         ),
@@ -74,14 +76,14 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               children: [
                 FloatingActionButton(
                   heroTag: "video",
-                  child: Icon(Icons.insert_photo_outlined),
+                  child: const Icon(Icons.insert_photo_outlined),
                   onPressed: () {
                     getVideo(ImageSource.gallery);
                   },
                 ),
                 FloatingActionButton(
                   heroTag: "upload",
-                  child: Icon(Icons.upload),
+                  child: const Icon(Icons.upload),
                   onPressed: () {
                     _uploadFile(context);
                   },
@@ -97,13 +99,6 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
     setState(() {
       _cameraVideo = File(video!.path);
     });
-  }
-
-  void takeVideo() async {
-    videoSelect = true;
-    XFile? file = await picker.pickVideo(
-      source: ImageSource.camera,
-    );
   }
 
   Future _uploadFile(BuildContext context) async {
@@ -123,7 +118,6 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
 
       // 업로드 완료 후 url
       final downloadUrl = await firebaseStorageRef.getDownloadURL();
-      print(downloadUrl);
       videoSelect = false;
       //문서 작성
       await FirebaseFirestore.instance.collection('FaceID').doc('user').set({

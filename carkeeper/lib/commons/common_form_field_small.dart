@@ -22,7 +22,7 @@ class _CommonFormFieldSmallState extends State<CommonFormFieldSmall> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Color(0xFF06A66C)),
+        border: Border.all(color: const Color(0xFF06A66C)),
       ),
       width: double.infinity,
       child: Column(
@@ -30,11 +30,11 @@ class _CommonFormFieldSmallState extends State<CommonFormFieldSmall> {
         children: [
           Text(
             (dateText == 'No') ? "접근 기록이" : dateText.substring(4, 18),
-            style: overLine(mColor: Color(0xFF06A66C)),
+            style: overLine(mColor: const Color(0xFF06A66C)),
           ),
           Text(
-            (infoText == 'No') ? "없습니다." : "${infoText} 감지됐습니다.",
-            style: overLine(mColor: Color(0xFF06A66C)),
+            (infoText == 'No') ? "없습니다." : "$infoText 감지됐습니다.",
+            style: overLine(mColor: const Color(0xFF06A66C)),
           ),
         ],
       ),

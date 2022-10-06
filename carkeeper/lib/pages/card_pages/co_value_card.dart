@@ -9,7 +9,7 @@ class CoValueCard extends StatefulWidget {
 }
 
 class _CoValueCardState extends State<CoValueCard> {
-  var _snapshot = FirebaseFirestore.instance
+  final _snapshot = FirebaseFirestore.instance
       .collection('gas_sensor')
       .doc("detect_co")
       .snapshots();
@@ -19,7 +19,7 @@ class _CoValueCardState extends State<CoValueCard> {
         stream: _snapshot,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (!snapshot.hasData) {
-            return CommonFormCard(gasName: "일산화탄소(CO)", amount: null);
+            return const CommonFormCard(gasName: "일산화탄소(CO)", amount: null);
           } else {
             var amt = snapshot.data?["ppm"];
             return CommonFormCard(gasName: "일산화탄소(CO)", amount: amt);

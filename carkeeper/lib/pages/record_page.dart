@@ -14,14 +14,15 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPageState extends State<RecordPage> {
-  var _snapshot = FirebaseFirestore.instance.collection('pictures').snapshots();
+  final _snapshot =
+      FirebaseFirestore.instance.collection('pictures').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
             "감지 내역",
-            style: h5(mColor: Color(0xFF06A66C)),
+            style: h5(mColor: const Color(0xFF06A66C)),
           ),
           elevation: 1,
           actions: <Widget>[
@@ -35,7 +36,7 @@ class _RecordPageState extends State<RecordPage> {
                       .delete();
                 });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete,
                 color: Color(0xFF06A66C),
               ),
@@ -63,21 +64,21 @@ class _RecordPageState extends State<RecordPage> {
               builder: (context, snapshot) {
                 if (snapshot.data?.size == 0 || recordInfo.isEmpty) {
                   // snapshot 데이터가 비어있으면
-                  return Container(
+                  return SizedBox(
                     // 즉, 컬렉션에 아무것도 없으면 No Data를 출력한다.
                     width: double.infinity,
                     height: double.infinity,
                     child: Center(
                       child: Text(
                         "No Data",
-                        style: h4(mColor: Color(0xFF06A66C)),
+                        style: h4(mColor: const Color(0xFF06A66C)),
                       ),
                     ),
                   );
                 } else if (snapshot.connectionState ==
                     ConnectionState.waiting) {
                   // snapshot 데이터를 가져오고 있을 때
-                  return Container(
+                  return const SizedBox(
                     width: double.infinity,
                     height: double.infinity,
                     child: Center(
@@ -94,7 +95,7 @@ class _RecordPageState extends State<RecordPage> {
                   }
 
                   return Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 30, right: 30, top: 15, bottom: 15),
                     // recordInfo에 들어간 데이터만큼 record_page에 해당 데이터들을 넣는다.
                     alignment: Alignment.center,
@@ -140,12 +141,11 @@ class _RecordPageState extends State<RecordPage> {
       date = "No";
       info = "No";
     }
-    print(imageUrl);
     return Container(
       decoration: buttonStyle1(),
       child: Column(
         children: [
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Container(
             alignment: Alignment.center,
             height: 250,
@@ -161,11 +161,11 @@ class _RecordPageState extends State<RecordPage> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 220),
+                        const SizedBox(width: 220),
                         Container(
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Color(0xFF73FF00), width: 5),
+                            border: Border.all(
+                                color: const Color(0xFF73FF00), width: 5),
                             borderRadius: BorderRadius.circular(90),
                           ),
                           child: InkWell(
@@ -188,24 +188,24 @@ class _RecordPageState extends State<RecordPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 )
               ],
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
             height: 70,
             alignment: Alignment.center,
-            //color: Color(0xFFA7D2CB),
-            child: CommonFormField(date: date, info: info),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
             ),
+            //color: Color(0xFFA7D2CB),
+            child: CommonFormField(date: date, info: info),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

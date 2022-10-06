@@ -47,7 +47,7 @@ class _RecordCompoState extends State<RecordCompo> {
       children: [
         Container(
           width: 130,
-          height: info == "No" ? 210 : 50,
+          height: info == "No" ? 215 : 50,
           child: CommonFormFieldSmall(date: date, info: info),
           decoration: BoxDecoration(
             color: Colors.white,

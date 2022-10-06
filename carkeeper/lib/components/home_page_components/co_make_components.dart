@@ -1,4 +1,3 @@
-import 'package:carkeeper/commons/common_form_card.dart';
 import 'package:carkeeper/pages/card_pages/ch4_value_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ class CoMakeCompo extends StatefulWidget {
 }
 
 class _CoMakeCompoState extends State<CoMakeCompo> {
+  @override
   void initState() {
     super.initState();
   }
@@ -27,7 +27,7 @@ class _CoMakeCompoState extends State<CoMakeCompo> {
       options: CarouselOptions(
         height: 78,
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 10),
+        autoPlayInterval: const Duration(seconds: 10),
         initialPage: 0,
         viewportFraction: 0.8,
         enlargeCenterPage: true,

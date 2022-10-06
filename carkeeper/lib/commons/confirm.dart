@@ -19,7 +19,7 @@ CheckDialogYesOrNo(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         //Dialog Main Title
         //
-        content: Container(
+        content: SizedBox(
           height: 130,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,7 +46,7 @@ CheckDialogYesOrNo(
                 color: mColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Color(0xFF06A66C),
                   ),
                 ),
@@ -54,7 +54,7 @@ CheckDialogYesOrNo(
                   "예",
                   style: subtitle3(
                       mColor: mColor == Colors.white
-                          ? Color(0xFF06A66C)
+                          ? const Color(0xFF06A66C)
                           : Colors.white),
                 ),
                 onPressed: () {
@@ -68,11 +68,12 @@ CheckDialogYesOrNo(
                 },
               ),
               FlatButton(
-                color:
-                    mColor == Colors.white ? Color(0xFF06A66C) : Colors.white,
+                color: mColor == Colors.white
+                    ? const Color(0xFF06A66C)
+                    : Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Color(0xFF06A66C),
                   ),
                 ),
@@ -81,7 +82,7 @@ CheckDialogYesOrNo(
                   style: subtitle3(
                       mColor: mColor == Colors.white
                           ? Colors.white
-                          : Color(0xFF06A66C)),
+                          : const Color(0xFF06A66C)),
                 ),
                 onPressed: () {
                   Navigator.pop(context);

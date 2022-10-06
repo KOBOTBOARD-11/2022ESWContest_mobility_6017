@@ -36,8 +36,8 @@ class _VideoStreamState extends State<VideoStream> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: EdgeInsets.all(5),
-        margin: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         child: Column(
           children: [
             const SizedBox(
@@ -59,8 +59,7 @@ class _VideoStreamState extends State<VideoStream> {
                 if (_isfullscreen) {
                   return RotatedBox(
                       quarterTurns: 1,
-                      child: Container(
-                          child: Image.memory(
+                      child: Image.memory(
                         Uint8List.fromList(
                           base64Decode(
                             (snapshot.data.toString()),
@@ -68,11 +67,10 @@ class _VideoStreamState extends State<VideoStream> {
                         ),
                         gaplessPlayback: true,
                         excludeFromSemantics: true,
-                      )));
+                      ));
                 }
                 //? Working for single frames
-                return Container(
-                    child: Image.memory(
+                return Image.memory(
                   Uint8List.fromList(
                     base64Decode(
                       (snapshot.data.toString()),
@@ -80,10 +78,10 @@ class _VideoStreamState extends State<VideoStream> {
                   ),
                   gaplessPlayback: true,
                   excludeFromSemantics: true,
-                ));
+                );
               },
             ),
-            Container(
+            SizedBox(
                 width: double.infinity,
                 child: TextButton(
                     onPressed: ChangeScreenSize,
