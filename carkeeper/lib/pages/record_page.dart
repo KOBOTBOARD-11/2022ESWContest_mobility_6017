@@ -28,9 +28,9 @@ class _RecordPageState extends State<RecordPage> {
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                setState(() {
+                setState(() async {
                   recordInfo.clear();
-                  FirebaseFirestore.instance
+                  await FirebaseFirestore.instance
                       .collection('pictures')
                       .doc('pic')
                       .delete();

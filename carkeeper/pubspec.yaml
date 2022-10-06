@@ -53,6 +53,7 @@ dependencies:
   cached_network_image: ^3.2.1
   provider: ^6.0.3
   extended_image: ^6.2.1
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -116,7 +116,7 @@ class _PicturePageComponentsState extends State<PicturePageComponents>
                             alignment: Alignment.center,
                             duration: const Duration(milliseconds: 800),
                             child: Text(
-                              "시작하기",
+                              "START",
                               style: h4(mColor: Colors.white),
                             ),
                           ),

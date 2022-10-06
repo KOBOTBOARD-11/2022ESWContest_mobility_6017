@@ -6,8 +6,8 @@ import '../firebase/record_data_list.dart';
 import '../pages/home_screen_page.dart';
 import '../styles.dart';
 
-CheckDialogYesOrNo(
-    BuildContext context, String mainContent, String subContent, Color mColor) {
+CheckDialogYesOrNo(BuildContext context, String mainContent, String subContent,
+    Color mColor) async {
   HomeScreenPageState? parent =
       context.findAncestorStateOfType<HomeScreenPageState>();
   showDialog(
@@ -20,7 +20,7 @@ CheckDialogYesOrNo(
         //Dialog Main Title
         //
         content: SizedBox(
-          height: 130,
+          height: 140,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -57,7 +57,27 @@ CheckDialogYesOrNo(
                           ? const Color(0xFF06A66C)
                           : Colors.white),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  if (mainContent == "사용자 등록 페이지에서\n 등록을 완료하셨습니까?") {
+                    await FirebaseFirestore.instance
+                        .collection("CarKeeper")
+                        .doc("observer")
+                        .set({
+                      'mode': 'on',
+                    });
+                  } else {
+                    await FirebaseFirestore.instance
+                        .collection("CarKeeper")
+                        .doc("observer")
+                        .update({
+                      'mode': 'off',
+                    });
+                    recordInfo.clear();
+                    await FirebaseFirestore.instance
+                        .collection('pictures')
+                        .doc('pic')
+                        .delete();
+                  }
                   parent!.setState(() {
                     Navigator.pop(context);
                     selected = !selected;

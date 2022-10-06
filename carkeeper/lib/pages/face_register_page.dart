@@ -21,7 +21,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
     return SizedBox(
         //color: const Color(0xffd0cece),
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width * 1.3,
+        height: MediaQuery.of(context).size.width * 1.4,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -30,17 +30,17 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1. 카메라 어플을 통해서\n \t\t\t화면의 영상처럼\n \t\t\t얼굴을 10초간 찍어주세요.",
+                  "1.  카메라 어플을 통해서\n\t화면의 영상처럼\n\t얼굴을 10초간 찍어주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "2. 앨범 버튼을 통해 앨범에서\n \t\t\t카메라 영상을 선택해주세요.",
+                  "2.  앨범 버튼을 통해 앨범에서\n\t카메라 영상을 선택해주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "3. 업로드 버튼을 눌러서\n \t\t\t영상을 전송하면 등록 끝!",
+                  "3.  업로드 버튼을 눌러서\n\t영상을 전송하면 등록 끝!",
                   style: subtitle3(mColor: Colors.black),
                 ),
               ],
