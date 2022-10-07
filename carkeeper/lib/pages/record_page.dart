@@ -16,6 +16,7 @@ class RecordPage extends StatefulWidget {
 class _RecordPageState extends State<RecordPage> {
   final _snapshot =
       FirebaseFirestore.instance.collection('pictures').snapshots();
+  bool human = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,7 @@ class _RecordPageState extends State<RecordPage> {
           child: StreamBuilder<QuerySnapshot>(
               stream: _snapshot,
               builder: (context, snapshot) {
-                if (snapshot.data?.size == 0 || recordInfo.isEmpty) {
+                if (snapshot.data?.size == 0) {
                   // snapshot 데이터가 비어있으면
                   return SizedBox(
                     // 즉, 컬렉션에 아무것도 없으면 No Data를 출력한다.
@@ -131,6 +132,7 @@ class _RecordPageState extends State<RecordPage> {
       info = "멧돼지가";
     } else if (info == 'human') {
       info = "낯선이가";
+      human = true;
     } else if (info == 'dog') {
       info = "들개가";
     } else if (info == 'waterdeer') {
@@ -165,26 +167,37 @@ class _RecordPageState extends State<RecordPage> {
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color(0xFF73FF00), width: 5),
+                              color: human
+                                  ? const Color(0xFF73FF00)
+                                  : Colors.transparent,
+                              width: 5,
+                            ),
                             borderRadius: BorderRadius.circular(90),
                           ),
-                          child: InkWell(
-                            onDoubleTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => AmplifyUserPic(
-                                      userImageSrc: userImageUrl)));
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(90),
-                              child: ExtendedImage.network(
-                                userImageUrl,
-                                height: 90,
-                                width: 90,
-                                fit: BoxFit.cover,
-                                cache: false,
-                              ),
-                            ),
-                          ),
+                          child: human
+                              ? InkWell(
+                                  onDoubleTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AmplifyUserPic(
+                                                    userImageSrc:
+                                                        userImageUrl)));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(90),
+                                    child: ExtendedImage.network(
+                                      userImageUrl,
+                                      height: 90,
+                                      width: 90,
+                                      fit: BoxFit.cover,
+                                      cache: false,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  color: Colors.transparent,
+                                ),
                         ),
                       ],
                     ),
