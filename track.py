@@ -1,6 +1,9 @@
 import argparse
+from asyncio.log import logger
+from configparser import Interpolation
 import os
 from pickle import FALSE
+from re import L
 import time
 import datetime
 
@@ -64,7 +67,6 @@ config = {
     "databaseURL" : "https://esc-carkeeper-default-rtdb.asia-southeast1.firebasedatabase.app",
   }
 
-
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 Token = "esc-car-keeper.firebaseapp.com" # fire storage
@@ -74,6 +76,69 @@ login = credentials.Certificate(credpath)
 firebase_admin.initialize_app(login)
 db = firestore.client()
 
+import urllib.request
+import threading
+from saveimgfromVid import SaveImg
+from facetrainfromIMG import FaceTrain
+from recognition import detectAndDisplay
+import os
+import pickle
+
+def Mode_snapshot(doc_snapshot, changes, read_time):
+    global observerMode
+    for doc in doc_snapshot:
+        observerMode = (doc.to_dict()["mode"])
+    callback_done.set()
+
+def on_snapshot(doc_snapshot, changes, read_time):
+    for doc in doc_snapshot:
+        VideoURl.append(doc.to_dict()["VideoURL"])
+    callback_done.set()
+    
+#-- save video from url --# 
+def save_video(video_url) :
+    savename = 'User/user.mp4'
+    urllib.request.urlretrieve(video_url,savename)
+    SaveImg(savename)
+    FaceTrain()
+
+
+doc_ref = db.collection(u'FaceID').document(u'user')
+doc_ref.on_snapshot(on_snapshot)
+
+callback_done = threading.Event()
+VideoURl =[]
+observerMode = 'off'
+
+import paho.mqtt.client as mqtt
+import json
+
+distance = 1000 # 초기값 설정 1000
+
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("connected OK")
+    else:
+        print("Bad connection Returned code=", rc)
+def on_disconnect(client, userdata, flags, rc=0):
+    print(str(rc))
+def on_subscribe(client, userdata, mid, granted_qos):
+    print("subscribed: " + str(mid) + " " + str(granted_qos))
+def on_message(client, userdata, msg) : # msg -> 거리
+    global distance 
+    distance = int(str(msg.payload.decode("utf-8")))
+    print("초음파 거리: ", distance)
+def on_publish(client, userdata, mid):
+    print("on Send = ", mid)
+    
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_disconnect = on_disconnect
+client.on_subscribe = on_subscribe
+client.on_message = on_message
+
+client.connect('10.3.60.134', 1883)
+client.subscribe('ultraCarKeeper', 1)
 
 @torch.no_grad()
 def run(
@@ -172,8 +237,6 @@ def run(
         )
         strongsort_list[i].model.warmup()
     outputs = [None] * nr_sources
-
-    # !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
     
     picNum = 0
     wildboar_flag = False
@@ -181,6 +244,23 @@ def run(
     waterdeer_flag = False
     racoon_flag = False
     human_flag = False
+    user_flag = False
+    
+    doc_ref = db.collection(u'FaceID').document(u'user')
+    doc_ref.on_snapshot(on_snapshot)
+
+    while True:
+        doc_ref.on_snapshot(on_snapshot)
+        time.sleep(1)
+        if(VideoURl):
+            print(VideoURl[0])
+            break
+        
+    save_video(VideoURl[0]) # Learning Part
+  
+    encoding_file = 'encodings.pickle'
+
+    data = pickle.loads(open(encoding_file, "rb").read())
     
     # Run tracking
     model.warmup(imgsz=(1 if pt else nr_sources, 3, *imgsz))  # warmup
@@ -208,20 +288,22 @@ def run(
 
         # Process detections
         
-        for i, det in enumerate(pred):  # detections per image
+        for i, det in enumerate(pred): # detections per image
+            # startDocRef = db.collection(u'CarKeeper').document(u'observer')
+            # startDocRef.on_snapshot(Mode_snapshot)
+            # if observerMode == 'off':
+            #     print("--------- observerMode OFF ----------")
+            #     time.sleep(1)
+            #     pass
+    
             seen += 1
             if webcam:  # nr_sources >= 1
                 p, im0, _ = path[i], im0s[i].copy(), dataset.count
-                im0 = cv2.add(im0, -40) # image brightness control !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
-
                 p = Path(p)  # to Path 
-                # s += f'{i}: '
                 txt_file_name = p.name
                 save_path = str(save_dir / p.name)  # im.jpg, vid.mp4, ...
             else:
                 p, im0, _ = path, im0s.copy(), getattr(dataset, 'frame', 0)
-                im0 = cv2.add(im0, -40) # image brightness control !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! !!!
-
                 p = Path(p)  # to Path
                 # video file
                 if source.endswith(VID_FORMATS):
@@ -231,6 +313,10 @@ def run(
                 else:
                     txt_file_name = p.parent.name  # get folder name containing current img
                     save_path = str(save_dir / p.parent.name)  # im.jpg, vid.mp4, ...
+                    
+                    
+                    
+            # im0 = cv2.cvtColor(im0, cv2.COLOR_GRAY2BGR) # !!! !!! !!! !!! !!! !!! !!!
             curr_frames[i] = im0
 
             txt_path = str(save_dir / 'tracks' / txt_file_name)  # im.txt
@@ -284,25 +370,27 @@ def run(
                         if save_vid or save_crop or show_vid:  # Add bbox to image
                             c = int(cls)  # integer class
                             id = int(id)  # integer id
-                            
                             # Wildboar      0
                             # dog           1
                             # racoon        2
                             # waterdeer     3
                             # human         4
                             if c == 0 :
-                                LOGGER.info("wildboar!")
+                                coordi = xywhs.tolist() # tensor to list
+                                jsonObject = {
+                                    "obj_flag": 1,
+                                    "x_flag": 320 - coordi[0][0],
+                                    "y_flag": 240 - coordi[0][1],
+                                }
+                                jsonStr = json.dumps(jsonObject)
+                                client.publish('servoCarKeeper', jsonStr, 1)
+                                
                                 if wildboar_flag == False : 
                                     first_wildboar_time = time.time()
-                                    print("wildboar_flag : " , wildboar_flag)
                                     wildboar_flag = True
                                 elif wildboar_flag == True:
-                                    print("wildboar_flag : " , wildboar_flag)
                                     measure_wildboar_time = time.time()
-                                    LOGGER.info("wildboar!")
-                                    print("first_wildboar_time : " , first_wildboar_time)
-                                    print("wildboar_time : " , measure_wildboar_time)
-                                    if measure_wildboar_time - first_wildboar_time >= 5 :
+                                    if measure_wildboar_time - first_wildboar_time >= 5 and distance <= 200:
                                         print("upload!")
                                         wildboar_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -315,22 +403,22 @@ def run(
                                             'type' : 'wildboar',
                                             'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
                                         })
-                                        picNum += 1
-
-            
-                            # 화재상황   
+                                        
                             if c == 1 :
+                                coordi = xywhs.tolist()
+                                jsonObject = {
+                                    "obj_flag": 1,
+                                    "x_flag": 320 - coordi[0][0],
+                                    "y_flag": 240 - coordi[0][1],
+                                }
+                                jsonStr = json.dumps(jsonObject)
+                                client.publish('servoCarKeeper', jsonStr, 1)
                                 if dog_flag == False : 
                                     first_dog_time = time.time()
-                                    print("dog_flag : " , dog_flag)
                                     dog_flag = True
                                 elif dog_flag == True:
-                                    print("dog_flag : " , dog_flag)
                                     measure_dog_time = time.time()
-                                    LOGGER.info("dog!")
-                                    print("first_dog_time : " , first_dog_time)
-                                    print("dog_time : " , measure_dog_time)
-                                    if measure_dog_time - first_dog_time >= 5 :
+                                    if measure_dog_time - first_dog_time >= 5 and distance <= 200:
                                         print("upload!")
                                         dog_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -340,23 +428,25 @@ def run(
                                         pictures = db.collection("pictures") #Database
                                         pictures.document("pic" + str(picNum)).set({
                                             'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
-                                            'type' : 'wildboar',
+                                            'type' : 'dog',
                                             'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
                                         })
-                                        picNum += 1
+                                        
                             if c == 2 :
-                                LOGGER.info("racoon!")
+                                coordi = xywhs.tolist()
+                                jsonObject = {
+                                    "obj_flag": 1,
+                                    "x_flag": 320 - coordi[0][0],
+                                    "y_flag": 240 - coordi[0][1],
+                                }
+                                jsonStr = json.dumps(jsonObject)
+                                client.publish('servoCarKeeper', jsonStr, 1)
                                 if racoon_flag == False : 
                                     first_racoon_time = time.time()
-                                    print("racoon_flag : " , racoon_flag)
                                     racoon_flag = True
                                 elif racoon_flag == True:
-                                    print("racoon_flag : " , racoon_flag)
                                     measure_racoon_time = time.time()
-                                    LOGGER.info("racoon!")
-                                    print("first_racoon_time : " , first_racoon_time)
-                                    print("racoon_time : " , measure_racoon_time)
-                                    if measure_racoon_time - first_racoon_time >= 5 :
+                                    if measure_racoon_time - first_racoon_time >= 5 and distance <= 200:
                                         print("upload!")
                                         racoon_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -369,21 +459,23 @@ def run(
                                             'type' : 'racoon',
                                             'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
                                         })
-                                        picNum += 1
-                                
+                           
                             if c == 3 :
-                                LOGGER.info("waterdeer!")
+                                coordi = xywhs.tolist()
+                                jsonObject = {
+                                    "obj_flag": 1,
+                                    "x_flag": 320 - coordi[0][0],
+                                    "y_flag": 240 - coordi[0][1],
+                                }
+                                jsonStr = json.dumps(jsonObject)
+                                client.publish('servoCarKeeper', jsonStr, 1)
+                                
                                 if waterdeer_flag == False : 
                                     first_waterdeer_time = time.time()
-                                    print("waterdeer_flag : " , waterdeer_flag)
                                     waterdeer_flag = True
                                 elif waterdeer_flag == True:
-                                    print("waterdeer_flag : " , waterdeer_flag)
                                     measure_waterdeer_time = time.time()
-                                    LOGGER.info("waterdeer!")
-                                    print("first_waterdeer_time : " , first_waterdeer_time)
-                                    print("waterdeer_time : " , measure_waterdeer_time)
-                                    if measure_waterdeer_time - first_waterdeer_time >= 5 :
+                                    if measure_waterdeer_time - first_waterdeer_time >= 5 and distance <= 200:
                                         print("upload!")
                                         waterdeer_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -396,38 +488,60 @@ def run(
                                             'type' : 'waterdeer',
                                             'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
                                         })
-                                        picNum += 1
-                                
+                        
                             if c == 4 :
-                                LOGGER.info("human!")
+                                coordi = xywhs.tolist() # tensor to list
+                                jsonObject = {
+                                    "obj_flag": 1,
+                                    "x_flag": 320 - int(coordi[0][0]),
+                                    "y_flag": 240 - int(coordi[0][1]),
+                                }
+                                LOGGER.info(320 - int(coordi[0][0]))
+                                LOGGER.info(240 - int(coordi[0][1]))
+                                jsonStr = json.dumps(jsonObject)
+                                client.publish('servoCarKeeper', jsonStr, 1)
                                 if human_flag == False : 
                                     first_human_time = time.time()
-                                    print("human_flag : " , human_flag)
                                     human_flag = True
                                 elif human_flag == True:
-                                    print("human_flag : " , human_flag)
                                     measure_human_time = time.time()
-                                    LOGGER.info("human!")
-                                    print("first_human_time : " , first_human_time)
-                                    print("human_time : " , measure_human_time)
-                                    if measure_human_time - first_human_time >= 5 :
+                                    if measure_human_time - first_human_time >= 5 and distance <= 200:
+                                        
+                                        faceImg = im0[int(coordi[0][1]-int(int(coordi[0][3])/2)):int(coordi[0][1]),int(coordi[0][0])-int(int(coordi[0][2])/2):int(coordi[0][0])+int(int(coordi[0][2])/2)]
+                                        faceImg = cv2.resize(faceImg, (0, 0), fx = 3.0, fy = 3.0, interpolation= cv2.INTER_LANCZOS4) # faceImg -> frame
+                                        
+                                        ID = detectAndDisplay(faceImg,data)
+                                        
                                         print("upload!")
                                         human_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
-                                        cv2.imwrite(image_path, im0)
+                                        image_path2 = str(Path('user_pic/' + 'user_' + str(picNum) + ".jpg"))
+                                        cv2.imwrite(image_path, im0) 
+                                        cv2.imwrite(image_path2, faceImg)
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
-                                        #storage
+                                        storage.child("user_pic/user/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/user_pic/user_' + str(picNum) + '.jpg')
+                                       
+                                        if ID :
+                                            if ID[0] == 'CarOwner' :
+                                                user_flag = 2
+                                            elif ID[0] == 'stranger':
+                                                user_flag = 1
+                                        else :
+                                            user_flag = 0
+                                        
                                         pictures = db.collection("pictures") #Database
                                         pictures.document("pic" + str(picNum)).set({
                                             'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
                                             'type' : 'human',
-                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1),
+                                            'user_pic' : storage.child("user_pic/user/" + str(picNum)).get_url(1),
+                                            'user_type' : user_flag
                                         })
-                                        picNum += 1
-                                                      
-                            label = None if hide_labels else (f'{id} {names[c]}' if hide_conf else \
+                          
+                            label = None if hide_labels else (f'{w} {names[c]}' if hide_conf else \
                                 (f'{id} {conf:.2f}' if hide_class else f'{id} {names[c]} {conf:.2f}'))
                             annotator.box_label(bboxes, label, color=colors(c, True))
+                            
                             if save_crop:
                                 txt_file_name = txt_file_name if (isinstance(path, list) and len(path) > 1) else ''
                                 save_one_box(bboxes, imc, file=save_dir / 'crops' / txt_file_name / names[c] / f'{id}' / f'{p.stem}.jpg', BGR=True)
@@ -436,7 +550,12 @@ def run(
 
             else:
                 strongsort_list[i].increment_ages()
-                LOGGER.info('No detections')
+             
+                jsonObject = {
+                    "obj_flag": 0
+                }
+                jsonStr = json.dumps(jsonObject)
+                client.publish('servoCarKeeper', jsonStr, 1)
 
             # Stream results
             im0 = annotator.result()
@@ -464,10 +583,6 @@ def run(
                 vid_writer[i].write(im0)
 
             prev_frames[i] = curr_frames[i]
-                
-            
-            
-
 
     # Print results
     t = tuple(x / seen * 1E3 for x in dt)  # speeds per image
@@ -478,18 +593,14 @@ def run(
     if update:
         strip_optimizer(yolo_weights)  # update model (to fix SourceChangeWarning)
 
-# !!! !!! !!! !!! !!! !!! !!! !!! !!! !!! 
-def timer():
-    
-    return 0
-    
-
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--yolo-weights', nargs='+', type=Path, default=WEIGHTS / '/home/kobot/Yolov5_DeepSort_Pytorch_ESC/best.pt') #, help='model.pt path(s)')
     parser.add_argument('--strong-sort-weights', type=Path, default=WEIGHTS / 'osnet_x0_25_msmt17.pt')
     parser.add_argument('--config-strongsort', type=str, default='strong_sort/configs/strong_sort.yaml')
-    parser.add_argument('--source', type=str, default='0', help='file/dir/URL/glob, 0 for webcam')  
+    parser.add_argument('--source', type=str, default='http://203.246.113.210:12345/video_feed', help='file/dir/URL/glob, 0 for webcam')
+    # parser.add_argument('--source', type=str, default=0, help='file/dir/URL/glob, 0 for webcam')  
+    
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.5, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.5, help='NMS IoU threshold')
@@ -529,5 +640,7 @@ def main(opt):
 
 
 if __name__ == "__main__":
+    client.loop_start()
     opt = parse_opt()
     main(opt)
+    client.loop_stop()
