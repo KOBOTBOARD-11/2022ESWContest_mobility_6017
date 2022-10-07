@@ -65,13 +65,23 @@ exports.sendGasNotifications = functions
 exports.sendAccessNotifications = functions
   .region('asia-northeast3')
   .firestore
-  .document('access_capture/{documentId}')
+  .document('pictures/{documentId}')
   .onUpdate(
     async (snapshot, context) => {
       koreaDate = getNowDate()      
       // Notification details.
       const data = snapshot.after.data();
-      const accessObject = data.access_object;
+      let accessObject = data.type;
+      console.log(accessObject);
+      if (accessObject == "human") {
+        if(data.user_type!=2) {
+          accessObject="외부인";
+        }
+      }
+      if (accessObject == "wildboar") {accessObject="멧돼지";}
+      if (accessObject == "dog") {accessObject="들개";}
+      if (accessObject == "racoon") {accessObject="너구리";}
+      if (accessObject == "waterdeer") {accessObject="물사슴";}
       const payload = {
         notification: {
           title: "Car Keeper ⚠ 접근 경보",
@@ -84,13 +94,27 @@ exports.sendAccessNotifications = functions
       allTokens.forEach((tokenDoc) => {
         tokens.push(tokenDoc.id);
       });
-
-      try {
-        if (tokens.length > 0) {
-          // Send notifications to all tokens.
-          const response = await admin.messaging().sendToDevice(tokens, payload);
+      
+      if (accessObject == "human"){
+        if(data.user_type!=2){
+        try {
+          if (tokens.length > 0) {
+            // Send notifications to all tokens.
+            const response = await admin.messaging().sendToDevice(tokens, payload);
+          }
+        } catch (error) {
+          console.log(error);
         }
+      } 
+    }
+    else {
+      try {
+      if (tokens.length > 0) {
+        // Send notifications to all tokens.
+        const response = await admin.messaging().sendToDevice(tokens, payload);
+      }
       } catch (error) {
         console.log(error);
       }
+    }
   });
