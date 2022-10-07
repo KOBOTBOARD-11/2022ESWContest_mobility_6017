@@ -49,6 +49,11 @@ pip install firebase_admin
 |-- requirements.txt
 |-- saveimgfromVid.py
 |-- track.py
+|
+|-- Image
+|-- Pictures
+|-- User
+|-- user_pic
 ...
 ```
 
