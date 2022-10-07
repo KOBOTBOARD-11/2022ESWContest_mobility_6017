@@ -1,65 +1,79 @@
 # ESC_2022 Car Keeper README.md
 
 
-## 📋프로젝트 개요 
-**🚙 Car Keeper(카키퍼)**     
+## **🚙 Car Keeper(카키퍼)**     
 
-**작품 설명(3줄 요약)**   
-- 사용자에게 안전한 차박 경험을 제공하기 위한 솔루션
-- 차박 상황에서 주변의 위협 감지 및 객체 인식
-- 전용 애플리케이션을 통한 사용자와의 상호작용
+ 
 
+### 0. 기능
 
+Wifi 모듈이 탑재된 Wemos D1 보드와 가스센서를 이용하여 실시간으로 차량 내부에 가스(CO, LPG, CH4)를 측정하고 서버로 데이터 전송
 
-**개발 배경**   
+<center>
+<img width="381" alt="KakaoTalk_Photo_2022-10-07-16-42-08" src="https://user-images.githubusercontent.com/79856225/194499905-9f6e8ca6-fd04-485c-8754-e1f1a5ae2580.jpeg">
 
- 최근 차박을 하는 사람들이 증가하는 추세이고 관련된 범죄도 증가할 것이라 예상된다. 특히 그중에서 사람에 대해 벌어지는 범죄(강도, 도난, 성범죄 등)에 대해 예방이 가능한 안전장치에 대한 필요성을 느꼈다.
-
+</center>
 
 
-**개발 목적**   
+### 1.센서 종류
 
-- 차박 중 야생동물이나, 외부인의 접근을 인식하고 사용자가 신속하게 대응할 수 있도록 도와줌으로써 안전한 차박을 제공하는 애플리케이션을 개발하는 것
-- 사용자가 외출, 수면 등 외부상황을 신경쓰기 어려운 상태일 때, 외부 카메라를 통해 외부인의 접근을 인식/추적하고 사용자에게 알림.
-- 알림을 받은 사용자와 애플리케이션간의 상호작용을 통해 신속하게 대응.
-- 객체 탐지가 어려운 야간 상황에서도 정확한 정보 제공.
+- MQ-9 아날로그 CO / 연소성 가스 센서 모듈 [SEN0134]
 
+    <img width="203" alt="스크린샷 2022-10-07 오후 4 30 01" src="https://user-images.githubusercontent.com/79856225/194497508-373d7964-e926-47e0-84f8-c8c3b78e3609.png">
 
+- 스펙
 
-## 🎬프로젝트 시연 동영상
+    <img width="281" alt="스크린샷 2022-10-07 오후 4 35 25" src="https://user-images.githubusercontent.com/79856225/194498400-c09f53c1-43da-45eb-ae5b-f1b7144f8866.png">
 
- <div align="center">
-
-
-</div>
-
-## 👮팀 소개 및 역할
-
-1. 👨🏾‍💻 박준용
-- Role : 팀장,인공지능, 아두이노
-- Github: https://github.com/junyong1111
-- Email : jypark93@kookmin.ac.kr
-
-2. 🧑🏽‍💻 변준형
-- Role : 컴퓨터 비전, 라즈베리파이
-- Github: https://github.com/Byeooon
-- Email : junhyeong0519@kookmin.ac.kr
+    | 측정종류 | 이름 | 범위 | | 
+    |---|---|---|---|
+    |CO2|이산화탄소|0 - 1000ppm|
+    |CH4|메탄|0 - 10,000ppm|
+    |LPG|LPG|0 - 10,000ppm|
 
 
-3. 👩🏻‍💻 이세희
-- Role : 서버개발, Backend
-- Github: https://github.com/Sehee-Lee-01
-- Email : tpfktpgml24@kookmin.ac.kr
+### 2. 알림 기준 
 
+MQ-9 아날로그 CO / 연소성 가스 센서 모듈 [SEN0134]
 
-4. 🧑🏻‍💻 최보석
-- Role : 데이터라벨링, FrontEnd
-- Github: https://github.com/YEONOC
-- Email : chlqhtjr752@kookmin.ac.kr
+| 종류 | 안전 | 주의 | 위험 | 
+|---|---|---|---|
+|CO2|0~39ppm|40~799ppm|800ppm이상| 
+|CH4|0~999ppm|1000~2499ppm| 2500ppm이상|
+|LPG|0~999ppm|1000~2499ppm| 2500ppm이상|
 
+### 3. 사용 방법 
 
+#### 필수 라이브러리 다운로드
+1. MQ9 라이브러리 
+2. esp8266 보드 라이브러리
+3. Firebase Arduino Client library for ESP 8266 라이브러리
 
+#### Wifi 및 Firebase 정보 입력
+1. Wifi 연결을 위해 wifi 정보 입력
 
+```arduino
+#define WIFI_SSID "사용자 Wifi "
+#define WIFI_PASSWORD "Wifi 비밀번호"
+```
+
+2. Firebase 프로젝트 API 인증키 등록
+```arduino
+#define API_KEY "자신의 Firebase 프로젝트 API 인증키"
+```
+
+3. 자신의 Firebase 프로젝트 ID 입력
+
+```arduino
+#define FIREBASE_PROJECT_ID "Firebase 프로젝트 ID"
+```
+
+4. Firebase에 등록한 User 정보 입력 (선택 사항)
+
+```arduino
+#define USER_EMAIL "Firebase에 등록한 User 이메일"
+#define USER_PASSWORD "User 이메일 비밀번호"
+```
 
 
 ## 🔎사용 환경 설정 및 시작하기

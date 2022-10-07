@@ -13,17 +13,21 @@
 // #define WIFI_SSID "KOBOT"
 // #define WIFI_PASSWORD "zhqhtghkdlxld!!"
 
-#define WIFI_SSID "KOBOT"
-#define WIFI_PASSWORD "zhqhtghkdlxld!!"
+#define WIFI_SSID "사용자 Wifi "
+#define WIFI_PASSWORD "Wifi 비밀번호"
 /* 2. Define the API Key */
-#define API_KEY "AIzaSyAALDWMeRogfY8G0ZdVK8jVCzWYjPfxybQ"
+// #define API_KEY "AIzaSyAALDWMeRogfY8G0ZdVK8jVCzWYjPfxybQ"
+#define API_KEY "자신의 Firebase 프로젝트 API 인증키"
 
 /* 3. Define the project ID */
-#define FIREBASE_PROJECT_ID "esc-car-keeper"
+// #define FIREBASE_PROJECT_ID "esc-car-keeper"
+#define FIREBASE_PROJECT_ID "Firebase 프로젝트 ID"
 
 /* 4. Define the user Email and password that alreadey registerd or added in your project */
-#define USER_EMAIL "kobot@kookmin.ac.kr"
-#define USER_PASSWORD "zhqhtghkdlxld!!"
+// #define USER_EMAIL "kobot@kookmin.ac.kr"
+// #define USER_PASSWORD "zhqhtghkdlxld!!"
+#define USER_EMAIL "Firebase에 등록한 User 이메일"
+#define USER_PASSWORD "User 이메일 비밀번호"
 
 // Define Firebase Data object
 #include <MQUnifiedsensor.h>
