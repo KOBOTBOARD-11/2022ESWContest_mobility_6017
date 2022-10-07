@@ -64,12 +64,9 @@
 
 ## 🔎사용 환경 설정 및 시작하기
 
-[🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev) 
-
-
-
-
-
-
-
-
+[🛠 Tracking ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/AI_dev)  
+[🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev2)  
+[🛠 FaceID ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/faceid_dev)   
+[🛠 Functions ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/functions_dev)    
+[🛠 Streaming ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/stream_dev)    
+[🛠 Pan-Tilt_HAT](https://github.com/KOBOTBOARD-11/ESC_2022/tree/track_dev)    
