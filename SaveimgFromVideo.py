@@ -18,7 +18,6 @@ def SaveImg(path):
     
     while cap.isOpened():
         ret, frame = cap.read()
-        # frame = cv2.flip(frame, -1) #-- 상하좌우 대칭 변환
         frame = cv2.flip(frame, 1) #-- 상하좌우 대칭 변환
     
         if not os.path.exists("Image"):
