@@ -76,16 +76,3 @@ MQ-9 아날로그 CO / 연소성 가스 센서 모듈 [SEN0134]
 #define USER_EMAIL "Firebase에 등록한 User 이메일"
 #define USER_PASSWORD "User 이메일 비밀번호"
 ```
-
-
-## 🔎사용 환경 설정 및 시작하기
-
-[🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev) 
-
-
-
-
-
-
-
-
