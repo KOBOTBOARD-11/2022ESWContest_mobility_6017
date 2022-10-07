@@ -68,7 +68,8 @@ MQ-9 아날로그 CO / 연소성 가스 센서 모듈 [SEN0134]
 #define FIREBASE_PROJECT_ID "Firebase 프로젝트 ID"
 ```
 
-4. Firebase에 등록한 User 정보 입력 (선택 사항)
+4. Firebase에 등록한 User 정보 입력
+ #Firebase 로그인 이메일이 아닌 프로젝트에 등록된 User 이메일
 
 ```arduino
 #define USER_EMAIL "Firebase에 등록한 User 이메일"
