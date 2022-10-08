@@ -184,6 +184,7 @@ pip install -r requirements.txt
     <summary> 코드 </summary>
     <div markdown="1">
 
+    ```python
     import cv2
     import face_recognition
     import pickle
@@ -244,7 +245,7 @@ pip install -r requirements.txt
         cv2.imshow("FACE", image)  
 
 
-
+    ```
     </div>
     </details>
 
