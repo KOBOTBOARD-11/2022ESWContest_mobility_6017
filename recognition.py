@@ -3,7 +3,6 @@ import face_recognition
 import pickle
 import time
 import os
-import tensorflow as tf
 import numpy as np
 
 file_name = 'User/user.mp4'
