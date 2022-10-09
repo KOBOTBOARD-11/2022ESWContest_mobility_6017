@@ -201,7 +201,7 @@ pip install -r requirements.txt
 
 
 
-    def detectAndDisplay(image,data):
+    def DetectAndDisplay(image,data):
         start_time = time.time()
         small_frame = cv2.resize(image, (0, 0), fx=frame_resizing, fy=frame_resizing)
         # small_frame = cv2.resize(image, (256,256), interpolation= cv2.INTER_LINEAR)

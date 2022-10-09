@@ -8,7 +8,7 @@ import collections
 import time
 from SaveimgFromVideo import SaveImg
 from FaceTrainFromImage import FaceTrain
-from recognition import detectAndDisplay
+from recognition import DetectAndDisplay
 import os
 import tensorflow as tf
 import cv2
@@ -93,7 +93,7 @@ while True:
         print("종료")
         break
     else :
-        detectAndDisplay(frame,data)
+        DetectAndDisplay(frame,data)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 cv2.destroyAllWindows()
