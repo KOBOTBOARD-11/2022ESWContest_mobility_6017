@@ -52,11 +52,9 @@ void setup()
 {
     MQ9Init();
     FirebaseInit();
-    ESP.wdtDisable();
 }
 void loop()
 {
-  ESP.wdtDisable();
   ReadMQ9();
   ReadGasData();  
 }
