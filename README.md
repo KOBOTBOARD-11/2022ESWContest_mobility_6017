@@ -199,8 +199,6 @@ pip install -r requirements.txt
     frame_resizing = 0.25
     model_method = 'CNN'
 
-
-
     def DetectAndDisplay(image,data):
         start_time = time.time()
         small_frame = cv2.resize(image, (0, 0), fx=frame_resizing, fy=frame_resizing)
