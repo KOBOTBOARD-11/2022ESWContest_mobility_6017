@@ -34,7 +34,6 @@ config = {
   }
 
 
-
 #-- firebase setting --#
 firebase = pyrebase.initialize_app(config)
 Token = "esc-car-keeper.firebaseapp.com" # fire storage
