@@ -50,20 +50,20 @@ float CO = MQ9.readSensor();
 
 void setup()
 {
-    MQ9init();
-    firebaseinit();
+    MQ9Init();
+    FirebaseInit();
     ESP.wdtDisable();
 }
 void loop()
 {
   ESP.wdtDisable();
-  readMQ9();
-  ReadGasdata();  
+  ReadMQ9();
+  ReadGasData();  
 }
 
 
 
-void MQ9init(){
+void MQ9Init(){
   Serial.begin(115200); //Init serial port
   //Set math model to calculate the PPM concentration and the value of constants
   MQ9.setRegressionMethod(1); //_PPM =  a*ratio^b
@@ -79,7 +79,7 @@ void MQ9init(){
   MQ9.setR0(calcR0/10);
 }
 
-void firebaseinit(){
+void FirebaseInit(){
    Serial.begin(115200);
 
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -120,7 +120,7 @@ void firebaseinit(){
 }
 
 
-void readMQ9(){
+void ReadMQ9(){
   MQ9.update(); 
 
   MQ9.setA(1000.5); MQ9.setB(-2.186); 
