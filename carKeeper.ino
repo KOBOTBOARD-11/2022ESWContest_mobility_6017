@@ -62,7 +62,6 @@ void loop()
 }
 
 
-
 void MQ9Init(){
   Serial.begin(115200); //Init serial port
   //Set math model to calculate the PPM concentration and the value of constants
