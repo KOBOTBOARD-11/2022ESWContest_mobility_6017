@@ -30,7 +30,8 @@
 ## 📃CarKeeper 사용 설명서
 
 <div align="center">
-<img width="339" alt="스크린샷 2022-10-10 오후 9 26 35" src="https://user-images.githubusercontent.com/79856225/194866072-e7a60212-0e2f-44c7-a24a-2770079c99cd.png">  
+<img width="560" alt="스크린샷 2022-10-10 오후 9 26 35" src="https://user-images.githubusercontent.com/79856225/194866072-e7a60212-0e2f-44c7-a24a-2770079c99cd.png">  
+</div>
 
 
 <img width="339" alt="스크린샷 2022-10-10 오후 9 27 39" src="https://user-images.githubusercontent.com/79856225/194866321-2f4fb405-e4c4-4b41-a24b-c5eda575599d.png">  
