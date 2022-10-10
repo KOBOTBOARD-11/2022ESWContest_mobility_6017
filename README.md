@@ -4,6 +4,7 @@
 
 ## 📽Stream
 
+![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (10)](https://user-images.githubusercontent.com/85275893/194807006-9927c1e3-ca30-42eb-853f-6d4645853f4b.png)
 
 ### 파일 구조
 
