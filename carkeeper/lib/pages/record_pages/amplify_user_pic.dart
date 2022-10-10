@@ -18,6 +18,7 @@ class AmplifyUserPic extends StatelessWidget {
           const SizedBox(height: 50),
           ExtendedImage.network(
             userImageSrc,
+            cache: false,
           ),
           Opacity(
             opacity: 0.5,

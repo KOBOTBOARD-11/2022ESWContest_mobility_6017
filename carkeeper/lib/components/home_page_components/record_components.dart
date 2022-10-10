@@ -32,17 +32,17 @@ class _RecordCompoState extends State<RecordCompo> {
     if (info == 'wildboar') {
       info = "멧돼지가";
     } else if (info == 'human') {
-      info = "낯선이가";
+      info = "사람이";
     } else if (info == 'dog') {
       info = "들개가";
     } else if (info == 'waterdeer') {
-      info = "물사슴이";
+      info = "고라니가";
     } else if (info == 'racoon') {
       info = "너구리가";
     } else {
       info = info;
     }
-
+    print(recordInfo);
     return Column(
       children: [
         Container(

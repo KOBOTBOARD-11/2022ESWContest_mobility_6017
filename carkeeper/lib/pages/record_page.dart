@@ -14,8 +14,7 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPageState extends State<RecordPage> {
-  final _snapshot =
-      FirebaseFirestore.instance.collection('pictures').snapshots();
+  var _snapshot = FirebaseFirestore.instance.collection('pictures').snapshots();
   bool human = false;
   @override
   Widget build(BuildContext context) {
@@ -28,14 +27,15 @@ class _RecordPageState extends State<RecordPage> {
           elevation: 1,
           actions: <Widget>[
             IconButton(
-              onPressed: () {
-                setState(() async {
+              onPressed: () async {
+                setState(() {
                   recordInfo.clear();
-                  await FirebaseFirestore.instance
-                      .collection('pictures')
-                      .doc('pic')
-                      .delete();
+                  print(recordInfo);
                 });
+                await FirebaseFirestore.instance
+                    .collection('pictures')
+                    .doc('pic0')
+                    .delete();
               },
               icon: const Icon(
                 Icons.delete,
@@ -129,19 +129,24 @@ class _RecordPageState extends State<RecordPage> {
   Container _buildRecordContainer(String imageUrl, String userImageUrl,
       int userType, String date, String info) {
     if (info == 'wildboar') {
-      info = "멧돼지가";
+      info = "멧돼지";
+      human = false;
     } else if (info == 'human') {
-      info = "낯선이가";
+      info = "사람";
       human = true;
     } else if (info == 'dog') {
-      info = "들개가";
+      info = "들개";
+      human = false;
     } else if (info == 'waterdeer') {
-      info = "물사슴이";
+      info = "고라니";
+      human = false;
     } else if (info == 'racoon') {
-      info = "너구리가";
+      info = "너구리";
+      human = false;
     } else {
       date = "No";
       info = "No";
+      human = false;
     }
     return Container(
       decoration: buttonStyle1(),

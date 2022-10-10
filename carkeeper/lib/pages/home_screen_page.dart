@@ -110,50 +110,45 @@ class HomeScreenPageState extends State<HomeScreenPage>
                       child: Column(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 3),
                             child: Row(
                               children: [
-                                const SizedBox(width: 35),
+                                const SizedBox(width: 40),
                                 Text(
                                   "감지 내역",
                                   style: subtitle2(
                                       mColor: const Color(0xFF06A66C)),
                                 ),
                                 const SizedBox(width: 15),
-                                Column(
-                                  children: [
-                                    const SizedBox(height: 1),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(90),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 0,
-                                            blurRadius: 1,
-                                            offset: const Offset(0, 1),
-                                          )
-                                        ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(90),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 0,
+                                        blurRadius: 1,
+                                        offset: const Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: RotationTransition(
+                                    turns: Tween(begin: 0.0, end: 2.0)
+                                        .animate(_controller),
+                                    child: InkWell(
+                                      child: const Icon(
+                                        Icons.refresh,
+                                        size: 20,
+                                        color: Color(0xFF06A66C),
                                       ),
-                                      child: RotationTransition(
-                                        turns: Tween(begin: 0.0, end: 2.0)
-                                            .animate(_controller),
-                                        child: InkWell(
-                                          child: const Icon(
-                                            Icons.refresh,
-                                            size: 20,
-                                            color: Color(0xFF06A66C),
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              _controller.forward(from: 0);
-                                            });
-                                          },
-                                        ),
-                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          _controller.forward(from: 0);
+                                        });
+                                      },
                                     ),
-                                  ],
+                                  ),
                                 )
                               ],
                             ),
