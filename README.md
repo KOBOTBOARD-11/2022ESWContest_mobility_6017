@@ -59,12 +59,9 @@
 - Github: https://github.com/YEONOC
 - Email : chlqhtjr752@kookmin.ac.kr
 
-
-
-
-
-
 ## 🔎사용 환경 설정 및 시작하기
+
+![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (9)](https://user-images.githubusercontent.com/85275893/194818960-64bb7d96-95af-4aff-b7bd-ad7f93191581.png)
 
 [🛠 Tracking ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/AI_dev)  
 [🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev_v2)  
