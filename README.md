@@ -4,6 +4,8 @@
 ## 📋프로젝트 개요 
 **🚙 Car Keeper(카키퍼)**     
 
+![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD](https://user-images.githubusercontent.com/85275893/194801936-36381d80-559d-4d77-b10b-07bdb608546c.png)
+
 **작품 설명(3줄 요약)**   
 - 사용자에게 안전한 차박 경험을 제공하기 위한 솔루션
 - 차박 상황에서 주변의 위협 감지 및 객체 인식
