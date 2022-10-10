@@ -27,7 +27,7 @@
 - 객체 탐지가 어려운 야간 상황에서도 정확한 정보 제공.
 
 
-## 📃CarKeeper 사용 설명서
+## 📘 CarKeeper 사용 설명서
 
 <div align="center">
 <img width="560" alt="스크린샷 2022-10-10 오후 9 26 35" src="https://user-images.githubusercontent.com/79856225/194866072-e7a60212-0e2f-44c7-a24a-2770079c99cd.png">  
