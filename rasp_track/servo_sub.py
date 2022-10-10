@@ -47,10 +47,7 @@ def on_disconnect(client, userdata, flags, rc=0):
 
 def on_subscribe(client, userdata, mid, granted_qos):
     print("subscribed: " + str(mid) + " " + str(granted_qos))
-
-def on_publish(client, userdata, mid):
-    print("In on_pub callback mid= ", mid)
-
+    
 def on_message(client, userdata, msg):
     # subscribe servo value
     global x
