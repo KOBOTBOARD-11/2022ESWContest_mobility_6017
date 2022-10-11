@@ -428,7 +428,7 @@ def run(
                                     wildboar_flag = True
                                 elif wildboar_flag == True:
                                     measure_wildboar_time = time.time()
-                                    if (measure_wildboar_time - first_wildboar_time >= 5) and (distance <= 250):
+                                    if (measure_wildboar_time - first_wildboar_time >= 30) and (distance <= 250):
                                         wildboar_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         path = cv2.imwrite(image_path, im0)
@@ -449,7 +449,7 @@ def run(
                                     dog_flag = True
                                 elif dog_flag == True:
                                     measure_dog_time = time.time()
-                                    if (measure_dog_time - first_dog_time >= 5 ) and (distance <= 250):
+                                    if (measure_dog_time - first_dog_time >= 30) and (distance <= 250):
                                         print("upload!")
                                         dog_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -472,7 +472,7 @@ def run(
                                     racoon_flag = True
                                 elif racoon_flag == True:
                                     measure_racoon_time = time.time()
-                                    if (measure_racoon_time - first_racoon_time >= 5) and (distance <= 250):
+                                    if (measure_racoon_time - first_racoon_time >= 30) and (distance <= 250):
                                         print("upload!")
                                         racoon_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -496,7 +496,7 @@ def run(
                                     waterdeer_flag = True
                                 elif waterdeer_flag == True:
                                     measure_waterdeer_time = time.time()
-                                    if (measure_waterdeer_time - first_waterdeer_time >= 5) and (distance <= 250):
+                                    if (measure_waterdeer_time - first_waterdeer_time >= 30) and (distance <= 250):
                                         print("upload!")
                                         waterdeer_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
@@ -521,7 +521,7 @@ def run(
                                     human_flag = True
                                 elif human_flag == True:
                                     measure_human_time = time.time()
-                                    if (measure_human_time - first_human_time >= 5) and (distance <= 250):
+                                    if (measure_human_time - first_human_time >= 30) and (distance <= 250):
                                         
                                         faceImg = im0[int(coordi[0][1]-int(int(coordi[0][3])/2)):int(coordi[0][1]),int(coordi[0][0])-int(int(coordi[0][2])/2):int(coordi[0][0])+int(int(coordi[0][2])/2)]
                                         faceImg = cv2.resize(faceImg, (0, 0), fx = 3.0, fy = 3.0, interpolation= cv2.INTER_LANCZOS4) # faceImg -> frame
