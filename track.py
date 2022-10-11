@@ -68,35 +68,81 @@ config = {
   }
 
 firebase = pyrebase.initialize_app(config)
+global storage 
 storage = firebase.storage()
 Token = "esc-car-keeper.firebaseapp.com" # fire storage
 
 credpath = r"/home/kobot/Yolov5_DeepSort_Pytorch_ESC/firebase/serviceKey.json" # serviceKey Path
 login = credentials.Certificate(credpath)
 firebase_admin.initialize_app(login)
+global db
 db = firestore.client()
 
 import urllib.request
 import threading
 from saveimgfromVid import SaveImg
 from facetrainfromIMG import FaceTrain
-from recognition import detectAndDisplay
+from recognition import DetectAndDisplay
 import os
 import pickle
 
-def Mode_snapshot(doc_snapshot, changes, read_time):
+def ClassifyObject(cls):
+    if cls == 0:
+        return 'wildboar'
+    elif cls ==1:
+        return  'dog'
+    elif cls == 2:
+        return 'racoon'
+    elif cls == 3:
+        return 'waterdeer'
+    elif cls ==4:
+        return 'human'   
+
+def FireUpload(path, picNum, cls):
+    global storage
+    global db
+    storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
+    pictures = db.collection("pictures") #Database
+    pictures.document("pic" + str(0)).set({
+        'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
+        'type' : ClassifyObject(cls),
+        'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
+    })
+    picNum += 1
+    
+def IdentifyUser(ID):
+    if ID :
+        if ID[0] == 'CarOwner' :
+            return 2
+        elif ID[0] == 'stranger':
+            return 1
+    else :
+        return 0
+
+def ModeSnapshot(doc_snapshot, changes, read_time):
     global observerMode
     for doc in doc_snapshot:
         observerMode = (doc.to_dict()["mode"])
     callback_done.set()
+    
+def ObserverMode(startDocRef):
+    global observerMode
+    startDocRef.on_snapshot(ModeSnapshot)
+    if observerMode == 'off':
+        while True:
+            time.sleep(1)
+            print("Off")
+            startDocRef.on_snapshot(ModeSnapshot)
+            if observerMode =='on':
+                break
 
-def on_snapshot(doc_snapshot, changes, read_time):
+def OnSnapshot(doc_snapshot, changes, read_time):
     for doc in doc_snapshot:
         VideoURl.append(doc.to_dict()["VideoURL"])
     callback_done.set()
     
 #-- save video from url --# 
-def save_video(video_url) :
+def SaveVideo(video_url) :
     savename = 'User/user.mp4'
     urllib.request.urlretrieve(video_url,savename)
     SaveImg(savename)
@@ -104,7 +150,7 @@ def save_video(video_url) :
 
 
 doc_ref = db.collection(u'FaceID').document(u'user')
-doc_ref.on_snapshot(on_snapshot)
+doc_ref.on_snapshot(OnSnapshot)
 
 callback_done = threading.Event()
 VideoURl =[]
@@ -115,27 +161,27 @@ import json
 
 distance = 1000 # 초기값 설정 1000
 
-def on_connect(client, userdata, flags, rc):
+def OnConnect(client, userdata, flags, rc):
     if rc == 0:
         print("connected OK")
     else:
         print("Bad connection Returned code=", rc)
-def on_disconnect(client, userdata, flags, rc=0):
+def OnDisconnect(client, userdata, flags, rc=0):
     print(str(rc))
-def on_subscribe(client, userdata, mid, granted_qos):
+def OnSubscribe(client, userdata, mid, granted_qos):
     print("subscribed: " + str(mid) + " " + str(granted_qos))
-def on_message(client, userdata, msg) : # msg -> 거리
+def OnMessage(client, userdata, msg) : # msg -> 거리
     global distance 
     distance = int(str(msg.payload.decode("utf-8")))
     print("초음파 거리: ", distance)
-def on_publish(client, userdata, mid):
+def OnPublish(client, userdata, mid):
     print("on Send = ", mid)
     
 client = mqtt.Client()
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_subscribe = on_subscribe
-client.on_message = on_message
+client.on_connect = OnConnect
+client.on_disconnect = OnDisconnect
+client.on_subscribe = OnSubscribe
+client.on_message = OnMessage
 
 client.connect('10.3.60.134', 1883)
 client.subscribe('ultraCarKeeper', 1)
@@ -247,16 +293,19 @@ def run(
     user_flag = False
     
     doc_ref = db.collection(u'FaceID').document(u'user')
-    doc_ref.on_snapshot(on_snapshot)
+    doc_ref.on_snapshot(OnSnapshot)
+    startDocRef = db.collection(u'CarKeeper').document(u'observer')
+    startDocRef.on_snapshot(ModeSnapshot)
 
     while True:
-        doc_ref.on_snapshot(on_snapshot)
+        doc_ref.on_snapshot(OnSnapshot)
+        startDocRef.on_snapshot(ModeSnapshot)
         time.sleep(1)
-        if(VideoURl):
-            print(VideoURl[0])
+        if VideoURl and observerMode == 'on':
+            # print(VideoURl[0])
             break
         
-    save_video(VideoURl[0]) # Learning Part
+    SaveVideo(VideoURl[0]) # Learning Part
   
     encoding_file = 'encodings.pickle'
 
@@ -281,7 +330,7 @@ def run(
         pred = model(im, augment=augment, visualize=visualize)
         t3 = time_sync()
         dt[1] += t3 - t2
-
+        
         # Apply NMS
         pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
         dt[2] += time_sync() - t3
@@ -289,13 +338,7 @@ def run(
         # Process detections
         
         for i, det in enumerate(pred): # detections per image
-            # startDocRef = db.collection(u'CarKeeper').document(u'observer')
-            # startDocRef.on_snapshot(Mode_snapshot)
-            # if observerMode == 'off':
-            #     print("--------- observerMode OFF ----------")
-            #     time.sleep(1)
-            #     pass
-    
+            
             seen += 1
             if webcam:  # nr_sources >= 1
                 p, im0, _ = path[i], im0s[i].copy(), dataset.count
@@ -314,13 +357,9 @@ def run(
                     txt_file_name = p.parent.name  # get folder name containing current img
                     save_path = str(save_dir / p.parent.name)  # im.jpg, vid.mp4, ...
                     
-                    
-                    
-            # im0 = cv2.cvtColor(im0, cv2.COLOR_GRAY2BGR) # !!! !!! !!! !!! !!! !!! !!!
             curr_frames[i] = im0
 
             txt_path = str(save_dir / 'tracks' / txt_file_name)  # im.txt
-            # s += '%gx%g ' % im.shape[2:]  # print string
             imc = im0.copy() if save_crop else im0  # for save_crop
 
             annotator = Annotator(im0, line_width=2, pil=not ascii)
@@ -384,25 +423,17 @@ def run(
                                 }
                                 jsonStr = json.dumps(jsonObject)
                                 client.publish('servoCarKeeper', jsonStr, 1)
-                                
                                 if wildboar_flag == False : 
                                     first_wildboar_time = time.time()
                                     wildboar_flag = True
                                 elif wildboar_flag == True:
                                     measure_wildboar_time = time.time()
-                                    if measure_wildboar_time - first_wildboar_time >= 5 and distance <= 200:
-                                        print("upload!")
+                                    if (measure_wildboar_time - first_wildboar_time >= 5) and (distance <= 250):
                                         wildboar_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
-                                        cv2.imwrite(image_path, im0)
-                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
-                                        #storage
-                                        pictures = db.collection("pictures") #Database
-                                        pictures.document("pic" + str(picNum)).set({
-                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
-                                            'type' : 'wildboar',
-                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
-                                        })
+                                        path = cv2.imwrite(image_path, im0)
+                                        FireUpload(path,picNum,c)
+                                        ObserverMode(startDocRef)
                                         
                             if c == 1 :
                                 coordi = xywhs.tolist()
@@ -418,19 +449,14 @@ def run(
                                     dog_flag = True
                                 elif dog_flag == True:
                                     measure_dog_time = time.time()
-                                    if measure_dog_time - first_dog_time >= 5 and distance <= 200:
+                                    if (measure_dog_time - first_dog_time >= 5 ) and (distance <= 250):
                                         print("upload!")
                                         dog_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
-                                        cv2.imwrite(image_path, im0)
-                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
-                                        #storage
-                                        pictures = db.collection("pictures") #Database
-                                        pictures.document("pic" + str(picNum)).set({
-                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
-                                            'type' : 'dog',
-                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
-                                        })
+                                        path = cv2.imwrite(image_path, im0)
+                                        FireUpload(path,picNum,c)
+                                        ObserverMode(startDocRef)
+                                        
                                         
                             if c == 2 :
                                 coordi = xywhs.tolist()
@@ -446,19 +472,14 @@ def run(
                                     racoon_flag = True
                                 elif racoon_flag == True:
                                     measure_racoon_time = time.time()
-                                    if measure_racoon_time - first_racoon_time >= 5 and distance <= 200:
+                                    if (measure_racoon_time - first_racoon_time >= 5) and (distance <= 250):
                                         print("upload!")
                                         racoon_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
-                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
-                                        #storage
-                                        pictures = db.collection("pictures") #Database
-                                        pictures.document("pic" + str(picNum)).set({
-                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
-                                            'type' : 'racoon',
-                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
-                                        })
+                                        path = cv2.imwrite(image_path, im0)
+                                        FireUpload(path,picNum,c)
+                                        ObserverMode(startDocRef)
                            
                             if c == 3 :
                                 coordi = xywhs.tolist()
@@ -475,19 +496,14 @@ def run(
                                     waterdeer_flag = True
                                 elif waterdeer_flag == True:
                                     measure_waterdeer_time = time.time()
-                                    if measure_waterdeer_time - first_waterdeer_time >= 5 and distance <= 200:
+                                    if (measure_waterdeer_time - first_waterdeer_time >= 5) and (distance <= 250):
                                         print("upload!")
                                         waterdeer_flag = False
                                         image_path = str(Path('pictures/' + 'pic_' + str(picNum) + ".jpg"))
                                         cv2.imwrite(image_path, im0)
-                                        storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
-                                        #storage
-                                        pictures = db.collection("pictures") #Database
-                                        pictures.document("pic" + str(picNum)).set({
-                                            'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
-                                            'type' : 'waterdeer',
-                                            'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1)
-                                        })
+                                        path = cv2.imwrite(image_path, im0)
+                                        FireUpload(path,picNum,c)
+                                        ObserverMode(startDocRef)
                         
                             if c == 4 :
                                 coordi = xywhs.tolist() # tensor to list
@@ -505,12 +521,12 @@ def run(
                                     human_flag = True
                                 elif human_flag == True:
                                     measure_human_time = time.time()
-                                    if measure_human_time - first_human_time >= 5 and distance <= 200:
+                                    if (measure_human_time - first_human_time >= 5) and (distance <= 250):
                                         
                                         faceImg = im0[int(coordi[0][1]-int(int(coordi[0][3])/2)):int(coordi[0][1]),int(coordi[0][0])-int(int(coordi[0][2])/2):int(coordi[0][0])+int(int(coordi[0][2])/2)]
                                         faceImg = cv2.resize(faceImg, (0, 0), fx = 3.0, fy = 3.0, interpolation= cv2.INTER_LANCZOS4) # faceImg -> frame
                                         
-                                        ID = detectAndDisplay(faceImg,data)
+                                        ID = DetectAndDisplay(faceImg,data)
                                         
                                         print("upload!")
                                         human_flag = False
@@ -521,22 +537,18 @@ def run(
                                         storage.child("pictures/pic/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/pictures/pic_' + str(picNum) + '.jpg')
                                         storage.child("user_pic/user/" + str(picNum)).put('/home/kobot/Yolov5_DeepSort_Pytorch_ESC/user_pic/user_' + str(picNum) + '.jpg')
                                        
-                                        if ID :
-                                            if ID[0] == 'CarOwner' :
-                                                user_flag = 2
-                                            elif ID[0] == 'stranger':
-                                                user_flag = 1
-                                        else :
-                                            user_flag = 0
+                                        user_flag = IdentifyUser(ID)
                                         
                                         pictures = db.collection("pictures") #Database
-                                        pictures.document("pic" + str(picNum)).set({
+                                        pictures.document("pic" + str(0)).set({
                                             'time' : datetime.datetime.now().strftime("['%Y.%m.%d %H:%M:%S']"),
                                             'type' : 'human',
                                             'pic' : storage.child("pictures/pic/" + str(picNum)).get_url(1),
                                             'user_pic' : storage.child("user_pic/user/" + str(picNum)).get_url(1),
                                             'user_type' : user_flag
                                         })
+                                        picNum += 1
+                                        ObserverMode(startDocRef)            
                           
                             label = None if hide_labels else (f'{w} {names[c]}' if hide_conf else \
                                 (f'{id} {conf:.2f}' if hide_class else f'{id} {names[c]} {conf:.2f}'))
@@ -562,7 +574,7 @@ def run(
             if show_vid:
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
-
+            
             # Save results (image with detections)
             if save_vid:
                 if vid_path[i] != save_path:  # new video
@@ -593,13 +605,13 @@ def run(
     if update:
         strip_optimizer(yolo_weights)  # update model (to fix SourceChangeWarning)
 
-def parse_opt():
+def ParseOpt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--yolo-weights', nargs='+', type=Path, default=WEIGHTS / '/home/kobot/Yolov5_DeepSort_Pytorch_ESC/best.pt') #, help='model.pt path(s)')
+    parser.add_argument('--yolo-weights', nargs='+', type=Path, default=WEIGHTS / '/home/kobot/Yolov5_DeepSort_Pytorch_ESC/best.pt')
     parser.add_argument('--strong-sort-weights', type=Path, default=WEIGHTS / 'osnet_x0_25_msmt17.pt')
     parser.add_argument('--config-strongsort', type=str, default='strong_sort/configs/strong_sort.yaml')
-    parser.add_argument('--source', type=str, default='http://203.246.113.210:12345/video_feed', help='file/dir/URL/glob, 0 for webcam')
-    # parser.add_argument('--source', type=str, default=0, help='file/dir/URL/glob, 0 for webcam')  
+    # parser.add_argument('--source', type=str, default='http://203.246.113.210:12345/video_feed', help='file/dir/URL/glob, 0 for webcam')
+    parser.add_argument('--source', type=str, default=0, help='file/dir/URL/glob, 0 for webcam')  
     
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.5, help='confidence threshold')
@@ -641,6 +653,6 @@ def main(opt):
 
 if __name__ == "__main__":
     client.loop_start()
-    opt = parse_opt()
+    opt = ParseOpt()
     main(opt)
     client.loop_stop()
