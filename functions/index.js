@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 
 admin.initializeApp(functions.config().firebase);
  
-function getNowDate() {
+function GetNowDate() {
   const now = new Date();
   const utcNow = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
   const koreaTimeDiff = 9 * 60 * 60 * 1000;
@@ -18,13 +18,13 @@ function getNowDate() {
   return koreaDate;
 }
 
-exports.sendGasNotifications = functions
+exports.SendGasNotifications = functions
   .region('asia-northeast3')
   .firestore
   .document('gas_sensor/{gasId}/ppm_level/{levelId}')
   .onUpdate(
   async (snapshot, context) => {
-    koreaDate = getNowDate()
+    koreaDate = GetNowDate()
     // Notification details.
     const level = snapshot.after.data().level;
     const detectedGas = context.params.gasId;
@@ -62,13 +62,13 @@ exports.sendGasNotifications = functions
   }
   });
 
-exports.sendAccessNotifications = functions
+exports.SendAccessNotifications = functions
   .region('asia-northeast3')
   .firestore
   .document('pictures/{documentId}')
   .onUpdate(
     async (snapshot, context) => {
-      koreaDate = getNowDate()      
+      koreaDate = GetNowDate()      
       // Notification details.
       const data = snapshot.after.data();
       let accessObject = data.type;
