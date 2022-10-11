@@ -71,7 +71,7 @@
  <div align="center">
 
  
-[![Video Label](https://youtu.be/96_i5zxQGfc/0.jpg)](https://youtu.be/96_i5zxQGfc)
+[![Video Label](https://img.youtube.com/vi/96_i5zxQGfc/0.jpg)](https://youtu.be/96_i5zxQGfc)
 </div>
 
 ## 👮팀 소개 및 역할
