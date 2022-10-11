@@ -4,7 +4,7 @@
 ---
 * 터미널에서 아래의 명령어들을 실행
 ```python
-git clone -b AI_dev --single-branch https://github.com/KOBOTBOARD-11/ESC_2022.git
+git clone -b AI_dev --single-branch https://github.com/KOBOTBOARD-11/2022ESWContest_mobility_6017.git
 ```
 ```python
 cd Yolov5_DeepSort_Pytorch
