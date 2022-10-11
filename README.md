@@ -49,10 +49,28 @@
 <img width="560" alt="스크린샷 2022-10-10 오후 9 27 56" src="https://user-images.githubusercontent.com/79856225/194866346-78d21a99-f926-41d5-b3dc-25745cf2d774.png">  
 </div>
 
+<div align="center">
+<img width="560" alt="스크린샷 2022-10-11 오후 2 42 03" src="https://user-images.githubusercontent.com/79856225/195006074-7d710840-6c98-4296-9586-c696394baf0e.png">
+</div>
+
+<div align="center">
+<img width="560" alt="스크린샷 2022-10-11 오후 2 42 12" src="https://user-images.githubusercontent.com/79856225/195006089-0f2516e4-2d1a-442a-a4e5-68981b7140fc.png">
+</div>
+
+<div align="center">
+<img width="560" alt="스크린샷 2022-10-11 오후 2 42 18" src="https://user-images.githubusercontent.com/79856225/195006090-83f0d1d9-8044-40fa-a327-00c5e44e06ac.png">
+</div>
+
+
+<div align="center">
+<img width="560" alt="스크린샷 2022-10-11 오후 2 42 23" src="https://user-images.githubusercontent.com/79856225/195006093-4d1dc109-126f-4b0c-a8ac-b5930e150be1.png">
+</div>
 
 ## 🎬프로젝트 시연 동영상
 
  <div align="center">
+
+ 
 
 
 </div>
