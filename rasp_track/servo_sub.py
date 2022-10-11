@@ -36,19 +36,19 @@ count = 0
 ### MQTT setup
 client = mqtt.Client()
 
-def on_connect(client, userdata, flags, rc):
+def OnConnect(client, userdata, flags, rc):
     if rc == 0:
         print("connected OK")
     else:
         print("Bad connection Returned code=", rc)
 
-def on_disconnect(client, userdata, flags, rc=0):
+def OnDisconnect(client, userdata, flags, rc=0):
     print(str(rc))
 
-def on_subscribe(client, userdata, mid, granted_qos):
+def OnSubscribe(client, userdata, mid, granted_qos):
     print("subscribed: " + str(mid) + " " + str(granted_qos))
     
-def on_message(client, userdata, msg):
+def OnMessage(client, userdata, msg):
     # subscribe servo value
     global x
     global y
@@ -125,10 +125,10 @@ def on_message(client, userdata, msg):
     pix.set_servo_pulsewidth(27,SetServo(x))
     piy.set_servo_pulsewidth(17,SetServo(y))
         
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_subscribe = on_subscribe
-client.on_message = on_message       
+client.on_connect = OnConnect
+client.on_disconnect = OnDisconnect
+client.on_subscribe = OnSubscribe
+client.on_message = OnMessage       
 
 client.connect('10.3.60.134', 1883) 
 client.subscribe('servoCarKeeper', 1)
