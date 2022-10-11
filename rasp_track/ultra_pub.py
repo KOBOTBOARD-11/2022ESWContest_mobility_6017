@@ -3,22 +3,22 @@ import paho.mqtt.client as mqtt
 import time
 import RPi.GPIO as GPIO
 
-def on_connect(client, userdata, flags, rc):
+def OnConnect(client, userdata, flags, rc):
     if rc == 0:
         print("completely connected")
     else:
         print("Bad connection Returned code=", rc)
 
-def on_disconnect(client, userdata, flags, rc=0):
+def OnDisconnect(client, userdata, flags, rc=0):
     print(str(rc))
 
-def on_publish(client, userdata, mid):
+def OnPublish(client, userdata, mid):
     print("In on_pub callback mid= ", mid)
 
 client = mqtt.Client()
-client.on_connect = on_connect
-client.on_disconnect = on_disconnect
-client.on_publish = on_publish
+client.on_connect = OnConnect
+client.on_disconnect = OnDisconnect
+client.on_publish = OnPublish
 client.connect('10.3.60.134', 1883)
 
 TRIG = 18
@@ -28,7 +28,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
-def distance():
+def Distance():
 	GPIO.output(TRIG, 0)
 	time.sleep(0.000002)
 
@@ -50,7 +50,7 @@ def distance():
 client.loop_start()
 
 while True:
-    dis = distance()
+    dis = Distance()
     print (dis, 'cm')
     client.publish('ultraCarKeeper', int(dis), 1)
     time.sleep(1)
