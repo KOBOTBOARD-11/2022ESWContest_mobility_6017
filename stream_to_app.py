@@ -12,7 +12,7 @@ import cv2, base64
 portNum = 6000
 print("Started server on port : ", portNum)
 
-async def streamServe(websocket, path):
+async def StreamServe(websocket, path):
     print("Client Connected !")
     try :
         global cap
@@ -35,7 +35,7 @@ async def streamServe(websocket, path):
     except:
         print("Someting went Wrong !")
 
-startServer = websockets.serve(streamServe, port=portNum)
+startServer = websockets.serve(StreamServe, port=portNum)
 
 asyncio.get_event_loop().run_until_complete(startServer)
 asyncio.get_event_loop().run_forever()
