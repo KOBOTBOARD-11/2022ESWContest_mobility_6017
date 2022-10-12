@@ -113,16 +113,6 @@ pip install -r requirements.txt
     import face_recognition
     import pickle
     import os
-    import tensorflow as tf
-
-    os.environ["CUDA_VISIBLE_DEVICES"]="0"
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    if gpus:
-        try:
-            tf.config.experimental.set_memory_growth(gpus[0], True)
-        except RuntimeError as e:
-            print(e)
-
 
     Image_paths = []
     Names = []
