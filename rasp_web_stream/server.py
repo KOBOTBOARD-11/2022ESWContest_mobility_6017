@@ -28,4 +28,5 @@ def VideoFeed():
     return Response(GenerateFrames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
-   app.run(host="10.3.60.134", port = "8080")
+    # write your raspberry IP
+   app.run(host="raspberryIP", port = "8080")
