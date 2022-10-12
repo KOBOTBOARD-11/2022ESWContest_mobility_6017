@@ -115,12 +115,12 @@
 
 ## 🔎사용 환경 설정 및 시작하기
 
-![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (9)](https://user-images.githubusercontent.com/85275893/194818960-64bb7d96-95af-4aff-b7bd-ad7f93191581.png)
+![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (1)](https://user-images.githubusercontent.com/85275893/195243213-ad762b7b-2863-4fb9-a6e0-ee0e4be0b93b.png)
 
 [🛠 Tracking ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/AI_dev)  
 [🛠 Application ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev_v2)  
 [🛠 FaceID ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/faceid_dev)   
-[🛠 Functions ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/functions_dev)    
+[🛠 Cloud_Functions ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/functions_dev)    
 [🛠 Streaming ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/stream_dev)    
-[🛠 Pan-Tilt_HAT](https://github.com/KOBOTBOARD-11/ESC_2022/tree/track_dev)    
+[🛠 Access_Sensor ](https://github.com/KOBOTBOARD-11/ESC_2022/tree/track_dev)    
 [🛠 Gas_Sensor](https://github.com/KOBOTBOARD-11/ESC_2022/tree/gas_dev)
