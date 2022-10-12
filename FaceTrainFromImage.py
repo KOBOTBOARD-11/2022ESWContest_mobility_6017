@@ -3,9 +3,6 @@ import cv2
 import face_recognition
 import pickle
 import os
-import tensorflow as tf
-
-
 
 def FaceTrain():
     file_count = sum(len(files) for _, _, files in os.walk(r'Image/user'))
