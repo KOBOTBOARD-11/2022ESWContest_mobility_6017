@@ -9,16 +9,13 @@
 ```python
 pip install git+https://github.com/Joeclinton1/google-images-download.git
 ```
----
 
 ### 2. 데이터 라벨링
-
-* labelImg로 데이터 라벨링 진행.
-* [labelImg Official Github](https://github.com/heartexlabs/labelImg)
-
 ---
+* labelImg로 데이터 라벨링 진행.
+* [LabelImg Official Github link](https://github.com/heartexlabs/labelImg)
 
-### 1. YOLOv5 + StrongSORT 환경설정
+### 3. YOLOv5 + StrongSORT 환경설정
 ---
 * 터미널에서 아래의 명령어들을 실행
 ```python
@@ -32,7 +29,7 @@ pip install -r requirements.txt
 ```
 <br>
 
-### 2. Firebase 환경설정
+### 4. Firebase 환경설정
 ---
 * 파이썬으로 파이어베이스를 제어하기 위한 pyerbase 설치
 
@@ -67,6 +64,7 @@ pip install firebase_admin
 |-- requirements.txt
 |-- saveimgfromVid.py
 |-- track.py
+|-- gid.py
 |
 |-- Image
 |-- Pictures
