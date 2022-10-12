@@ -99,9 +99,53 @@
 |감지 거리(3.3V)|2cm ~ 400cm|
 |측정 각도|<15|
 
+### 2. 회로도
 
-### 2.사용 방법
+<img width="904" alt="스크린샷 2022-10-12 오후 2 23 51" src="https://user-images.githubusercontent.com/79856225/195257042-9f550e0d-c393-47d5-916a-83c59f399945.png">  
 
-1. 라즈베리파이로 서보모터 제어
-    - rasp_track
-    
+
+### 3.사용 방법
+
+### 라즈베리파이로 서보모터 제어  
+rasp_track
+
+
+1. 필요 라이브러리 다운로드
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. 서보모터 떨림 방지를 위한 pigpio 라이브러리 다운로드
+- 홈 디렉토리에서 다음 명령어 수행
+    ```bash
+    wget https://github.com/joan2937/pigpio/archive/master.zip
+    unzip master.zip
+    cd pigpio-master
+    make
+    sudo make install
+    ```
+- sudo pigpio 명령어를 사용하여 pigpip 실행
+    - 데몬 종료 시 sudo killall pigpiod 명령어 사용
+
+3. 초음파 및 서보모터 핀 설정
+- servo_sub.py  
+    - X축 서보모터 핀 설정 : 27
+    - Y축 서보모터 핀 설정 ; 17
+
+- ultra_pub.py
+    - TRIG = 18
+    - ECHO = 5
+
+
+4. MQTT 브로커 설정
+
+    ```python
+    client.connect('MQTT 브로커 주소', 'MQTT 브로커 포트번호') 
+    ```
+
+5. 파일 실행
+    ```bash
+    python3 ultra_pub.py
+    python3 servo_sub.py 
+    ```
+
