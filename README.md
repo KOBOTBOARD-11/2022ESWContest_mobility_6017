@@ -12,7 +12,7 @@ pip install git+https://github.com/Joeclinton1/google-images-download.git
 
 ### 2. 데이터 라벨링
 ---
-* labelImg로 데이터 라벨링 진행.
+* labelImg로 데이터 라벨링 진행
 * [LabelImg Official Github link](https://github.com/heartexlabs/labelImg)
 
 ### 3. YOLOv5 + StrongSORT 환경설정
