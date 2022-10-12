@@ -98,23 +98,27 @@ git clone https://github.com/KOBOTBOARD-11/2022ESWContest_mobility_6017.git
 
 - 프로그램을 실행하기 전, [공식문서](https://firebase.google.com/)에 따라 Firebase 프로젝트를 생성하고 초기 설정 작업을 진행합니다. `※ 아래 설치과정에서 Firebase 관련 내용들은 본인의 Firebase 프로젝트 정보에 맞게 설정해주세요!`
 
-2. 영상 스트리밍 실행
+2. MQTT 브로커 설치
+
+- 공식문서에 따라 서버 환경에서 MQTT 브로커인 [mosquitto](https://mosquitto.org/)를 설치합니다.
+
+3. 영상 스트리밍 실행
 
 - [stream_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/stream_dev) 브랜치에서 READMA.md의 실행방법에 따라 프로그램을 실행합니다.
 
-3. HW 실행
+4. HW 실행
 
 - 각 브랜치에서 READMA.md의 회로도 및 실행 방법에 따라 프로그램을 실행해주세요.
 
     [(1) track_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/track_dev) → [(2) gas_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/gas_dev)
 
-4. 서버 실행
+5. 서버 실행
 
 - 각 브랜치에서 READMA.md의 실행방법에 따라 프로그램을 실행합니다.
 
     [(1) functions_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/functions_dev) → [(2) AI_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/AI_dev) → [(3) faceid_dev](https://github.com/KOBOTBOARD-11/ESC_2022/tree/faceid_dev)
 
-5. 애플리케이션 실행
+6. 애플리케이션 실행
 
 - [app_dev_v2](https://github.com/KOBOTBOARD-11/ESC_2022/tree/app_dev_v2) 브랜치에서 READMA.md의 실행방법에 따라 프로그램을 실행합니다.
 
