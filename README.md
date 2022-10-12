@@ -1,5 +1,23 @@
 # AI_dev 📷
 ---
+### 1. 이미지 크롤링 환경설정
+---
+* 먼저 자신의 크롬버전에 맞는 크롬드라이버 설치
+
+* 아래의 명령어로 Google Image Downloader 다운로드
+
+```python
+pip install git+https://github.com/Joeclinton1/google-images-download.git
+```
+---
+
+### 2. 데이터 라벨링
+
+* labelImg로 데이터 라벨링 진행.
+* [labelImg Official Github](https://github.com/heartexlabs/labelImg)
+
+---
+
 ### 1. YOLOv5 + StrongSORT 환경설정
 ---
 * 터미널에서 아래의 명령어들을 실행
