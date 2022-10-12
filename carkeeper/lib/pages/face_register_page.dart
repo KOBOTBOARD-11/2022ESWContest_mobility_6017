@@ -83,7 +83,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
                   heroTag: "upload",
                   child: const Icon(Icons.upload),
                   onPressed: () {
-                    _uploadFile(context);
+                    uploadFile(context);
                   },
                 )
               ],
@@ -99,7 +99,7 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
     });
   }
 
-  Future _uploadFile(BuildContext context) async {
+  Future uploadFile(BuildContext context) async {
     try {
       // 스토리지에 업로드할 파일 경로
       final firebaseStorageRef = FirebaseStorage.instance

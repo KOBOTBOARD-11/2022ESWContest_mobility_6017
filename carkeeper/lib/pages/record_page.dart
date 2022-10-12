@@ -4,7 +4,9 @@ import 'package:carkeeper/pages/record_pages/amplify_user_pic.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);
@@ -27,18 +29,32 @@ class _RecordPageState extends State<RecordPage> {
           elevation: 1,
           actions: <Widget>[
             IconButton(
-              onPressed: () async {
-                setState(() {
+              onPressed: () {
+                setState(() async {
                   recordInfo.clear();
-                  print(recordInfo);
+                  await FirebaseFirestore.instance
+                      .collection('pictures')
+                      .doc('pic0')
+                      .delete();
                 });
-                await FirebaseFirestore.instance
-                    .collection('pictures')
-                    .doc('pic0')
-                    .delete();
               },
               icon: const Icon(
                 Icons.delete,
+                color: Color(0xFF06A66C),
+              ),
+            ),
+            IconButton(
+              onPressed: () async {
+                final url = Uri.parse('tel:119');
+                if (await canLaunchUrl(url)) {
+                  launchUrl(url);
+                } else {
+                  // ignore: avoid_print
+                  print("Can't launch $url");
+                }
+              },
+              icon: const Icon(
+                Icons.dialer_sip,
                 color: Color(0xFF06A66C),
               ),
             ),
@@ -128,6 +144,12 @@ class _RecordPageState extends State<RecordPage> {
 
   Container _buildRecordContainer(String imageUrl, String userImageUrl,
       int userType, String date, String info) {
+    bool owner = false;
+    if (userType == 2) {
+      owner = true;
+    } else if (userType == 1 || userType == 0) {
+      owner = false;
+    }
     if (info == 'wildboar') {
       info = "멧돼지";
       human = false;
@@ -173,7 +195,9 @@ class _RecordPageState extends State<RecordPage> {
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: human
-                                  ? const Color(0xFF73FF00)
+                                  ? (owner
+                                      ? const Color(0xFF73FF00)
+                                      : Colors.red)
                                   : Colors.transparent,
                               width: 5,
                             ),

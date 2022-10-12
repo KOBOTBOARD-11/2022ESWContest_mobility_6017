@@ -50,10 +50,6 @@ class HomeScreenPageState extends State<HomeScreenPage>
     _controller.dispose();
   }
 
-  void setAni() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
