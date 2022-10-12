@@ -101,7 +101,8 @@
 
 ### 2. 회로도
 
-<img width="904" alt="스크린샷 2022-10-12 오후 2 23 51" src="https://user-images.githubusercontent.com/79856225/195257042-9f550e0d-c393-47d5-916a-83c59f399945.png">  
+<img width="389" alt="스크린샷 2022-10-12 오후 2 41 46" src="https://user-images.githubusercontent.com/79856225/195259459-cfb814b8-eb5b-4fd2-8493-0d078c206070.png">
+ 
 
 
 ### 3.사용 방법
