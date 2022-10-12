@@ -77,26 +77,41 @@
 ## 👮팀 소개 및 역할
 
 1. 👨🏾‍💻 박준용
-- Role : 팀장,인공지능, 아두이노
+- Position : 팀장
 - Github: https://github.com/junyong1111
 - Email : jypark93@kookmin.ac.kr
-
+- Role 
+    - 아두이노 가스센서 서버통신 구현
+    - 사용자 인식 기능 설계 및 구현  
+ 
 2. 🧑🏽‍💻 변준형
-- Role : 컴퓨터 비전, 라즈베리파이
+- Position : 팀원
 - Github: https://github.com/Byeooon
 - Email : junhyeong0519@kookmin.ac.kr
+- Role
+    - 객체 추적 모델 설계 및 구현
+    - 사용자 인식모델 전처리
+    - 서버와 Firebase간 통신 구현
+    - 하드웨어 설계 및 구현
 
 
 3. 👩🏻‍💻 이세희
-- Role : 서버개발, Backend
+- Position : 팀원
 - Github: https://github.com/Sehee-Lee-01
 - Email : tpfktpgml24@kookmin.ac.kr
+- Role
+    - 라즈베리파이와 모바일 애플리케이션 스트리밍 통신 구현
+    - Firebase FCM, Cloud Functions 구현
+    - MQTT 통신을 통한 HW 원격제어 구현
 
 
 4. 🧑🏻‍💻 최보석
-- Role : 데이터라벨링, FrontEnd
+- Position : 팀원
 - Github: https://github.com/YEONOC
 - Email : chlqhtjr752@kookmin.ac.kr
+- Role
+    - 모바일 애플리케이션 디자인 및 개발
+    - Firebase와 모바일 애플리케이션 간 통신 구현
 
 ## 🔎사용 환경 설정 및 시작하기
 
