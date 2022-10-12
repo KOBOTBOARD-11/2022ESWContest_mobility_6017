@@ -66,7 +66,7 @@
 
 ## 🔎시스템 구성도
 
-![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (9)](https://user-images.githubusercontent.com/85275893/194818960-64bb7d96-95af-4aff-b7bd-ad7f93191581.png)
+![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD (1)](https://user-images.githubusercontent.com/85275893/195243213-ad762b7b-2863-4fb9-a6e0-ee0e4be0b93b.png)
 
 ## 📂브랜치별 개요 및 링크
 
