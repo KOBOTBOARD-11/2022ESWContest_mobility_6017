@@ -1,13 +1,7 @@
-# from dotenv import load_dotenv
-# import os
-
 import websockets
 import asyncio
 import time
 import cv2, base64
-
-# load_dotenv()
-# streamURL = os.environ.get('STREAM_URL')
 
 portNum = 6000
 print("Started server on port : ", portNum)
@@ -16,8 +10,8 @@ async def StreamServe(websocket, path):
     print("Client Connected !")
     try :
         global cap
-        # cap = cv2.VideoCapture(streamURL)
-        cap = cv2.VideoCapture(0)
+        # 라즈베리파이의 http 스트리밍 영상 URL을 넣으세요.
+        cap = cv2.VideoCapture('streamingURL')
 
         while cap.isOpened():
             time.sleep(0.1)

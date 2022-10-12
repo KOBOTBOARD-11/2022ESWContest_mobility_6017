@@ -28,5 +28,5 @@ def VideoFeed():
     return Response(GenerateFrames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
-    # write your raspberry IP
+    # 라즈베리파이의 IP 번호를 넣으세요.
    app.run(host="raspberryIP", port = "8080")
