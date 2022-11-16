@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
+import 'package:carkeeper/pages/login_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/pages/stream_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -122,8 +123,9 @@ class MyApp extends StatelessWidget {
         fontFamily: "${GoogleFonts.archivo()}",
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/carkeeper',
+      initialRoute: '/login',
       routes: {
+        '/login': (context) => LoginPage(),
         '/carkeeper': (context) => CarKeeperPage(),
         '/home': (context) => HomeScreenPage(),
         '/stream': (context) => StreamPage(),
