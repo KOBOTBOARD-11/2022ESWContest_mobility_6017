@@ -4,6 +4,7 @@ import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/login_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
+import 'package:carkeeper/pages/sign_up_page.dart';
 import 'package:carkeeper/pages/stream_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 import 'firebase/firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -126,6 +126,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
+        '/signup': (context) => SignUpPage(),
         '/carkeeper': (context) => CarKeeperPage(),
         '/home': (context) => HomeScreenPage(),
         '/stream': (context) => StreamPage(),

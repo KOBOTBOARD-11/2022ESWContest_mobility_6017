@@ -42,7 +42,7 @@ class _RecordCompoState extends State<RecordCompo> {
     } else {
       info = info;
     }
-    print(recordInfo);
+
     return Column(
       children: [
         Container(
