@@ -29,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -50,46 +51,66 @@ class _SignUpPageState extends State<SignUpPage> {
                     decoration: BoxDecoration(
                         border: Border(bottom: BorderSide(color: Colors.grey))),
                     child: Text(
-                      "회원가입",
+                      "Sign Up",
                       style: h3(mColor: const Color(0xFF06A66C)),
                     ),
                   ),
-                  SizedBox(height: Mheight * 0.05),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: Mwidth * 0.1),
                     child: Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: SizedBox(
+                            width: Mwidth * 0.8,
+                            child: Text(
+                              "E-mail",
+                              style: subtitle2(mColor: Colors.black),
+                            ),
+                          ),
+                        ),
                         const TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "E-mail",
-                            hintText: "Press your E-mail",
-                            labelStyle: TextStyle(color: Color(0xFF06A66C)),
+                            //labelText: "E-mail",
+                            hintText: "Enter E-mail",
+                            hintStyle: TextStyle(color: Colors.grey),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide(
                                   width: 1, color: Color(0xFF06A66C)),
                             ),
                           ),
                         ),
-                        SizedBox(height: Mheight * 0.01),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: SizedBox(
+                            width: Mwidth * 0.8,
+                            child: Text(
+                              "Password",
+                              style: subtitle2(mColor: Colors.black),
+                            ),
+                          ),
+                        ),
                         const TextField(
                           obscureText: true,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "Password",
-                            hintText: "Press your Password",
-                            labelStyle: TextStyle(color: Color(0xFF06A66C)),
+                            //labelText: "Password",
+                            hintText: "Enter Password",
+                            hintStyle: TextStyle(color: Colors.grey),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide(
                                   width: 1, color: Color(0xFF06A66C)),
                             ),
                           ),
                         ),
-                        SizedBox(height: Mheight * 0.01),
+                        SizedBox(height: 20),
                         Row(
                           children: [
                             Expanded(
@@ -99,10 +120,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   onPressed: () {},
                                   color: const Color(0xFF06A66C),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(30)),
                                   child: Center(
                                     child: Text(
-                                      "가입하기",
+                                      "Submit",
                                       style: subtitle3(mColor: Colors.white),
                                     ),
                                   ),
@@ -117,13 +138,16 @@ class _SignUpPageState extends State<SignUpPage> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  color: const Color(0xFF06A66C),
+                                  color: Colors.white,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(30),
+                                      side: const BorderSide(
+                                          color: Color(0xFF06A66C))),
                                   child: Center(
                                     child: Text(
-                                      "뒤로가기",
-                                      style: subtitle3(mColor: Colors.white),
+                                      "Cancel",
+                                      style: subtitle3(
+                                          mColor: const Color(0xFF06A66C)),
                                     ),
                                   ),
                                 ),
