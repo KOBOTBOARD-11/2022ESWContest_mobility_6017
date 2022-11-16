@@ -1,16 +1,15 @@
-import 'package:carkeeper/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -51,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                         border: Border(bottom: BorderSide(color: Colors.grey))),
                     child: Text(
-                      "로그인",
+                      "회원가입",
                       style: h3(mColor: const Color(0xFF06A66C)),
                     ),
                   ),
@@ -103,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                     child: Text(
-                                      "로그인",
+                                      "가입하기",
                                       style: subtitle3(mColor: Colors.white),
                                     ),
                                   ),
@@ -116,17 +115,14 @@ class _LoginPageState extends State<LoginPage> {
                                 aspectRatio: 4 / 1,
                                 child: MaterialButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SignUpPage()));
+                                    Navigator.pop(context);
                                   },
                                   color: const Color(0xFF06A66C),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                     child: Text(
-                                      "회원가입",
+                                      "뒤로가기",
                                       style: subtitle3(mColor: Colors.white),
                                     ),
                                   ),
