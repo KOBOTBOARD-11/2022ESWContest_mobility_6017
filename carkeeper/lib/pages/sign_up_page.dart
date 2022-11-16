@@ -1,3 +1,4 @@
+import 'package:carkeeper/firebase/firebase_auth_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
@@ -10,16 +11,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  AuthManager authManager = AuthManager();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+  String email = '';
+  String pw = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override
@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Container(
                     alignment: Alignment.center,
                     width: Mwidth * 0.8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         border: Border(bottom: BorderSide(color: Colors.grey))),
                     child: Text(
                       "Sign Up",
@@ -70,8 +70,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                         ),
-                        const TextField(
-                          decoration: InputDecoration(
+                        TextField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             //labelText: "E-mail",
                             hintText: "Enter E-mail",
@@ -83,8 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   width: 1, color: Color(0xFF06A66C)),
                             ),
                           ),
+                          keyboardType: TextInputType.emailAddress,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
                           child: SizedBox(
@@ -95,9 +97,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                         ),
-                        const TextField(
+                        TextField(
+                          controller: pwController,
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             //labelText: "Password",
                             hintText: "Enter Password",
@@ -110,14 +113,19 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Expanded(
                               child: AspectRatio(
                                 aspectRatio: 4 / 1,
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    //print("hi");
+                                    email = emailController.text;
+                                    pw = pwController.text;
+                                    authManager.signUpUser(email, pw);
+                                  },
                                   color: const Color(0xFF06A66C),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30)),
