@@ -1,3 +1,5 @@
+import 'package:carkeeper/firebase/firebase_auth_manager.dart';
+import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  AuthManager authManager = AuthManager();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+  String email = '';
+  String pw = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -71,8 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        const TextField(
-                          decoration: InputDecoration(
+                        TextField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             //labelText: "E-mail",
                             hintText: "Enter E-mail",
@@ -96,9 +104,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        const TextField(
+                        TextField(
+                          controller: pwController,
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             //labelText: "Password",
                             hintText: "Enter Password",
@@ -113,9 +122,20 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: Mheight * 0.03),
                         AspectRatio(
-                          aspectRatio: 6 / 1,
+                          aspectRatio: 6,
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              email = emailController.text;
+                              pw = pwController.text;
+                              final access =
+                                  await authManager.signInUser(email, pw);
+                              if (access == true) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CarKeeperPage()));
+                              } else {
+                                print("fail");
+                              }
+                            },
                             color: const Color(0xFF06A66C),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
@@ -130,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: Mheight * 0.01),
                         AspectRatio(
-                          aspectRatio: 6 / 1,
+                          aspectRatio: 6,
                           child: MaterialButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(

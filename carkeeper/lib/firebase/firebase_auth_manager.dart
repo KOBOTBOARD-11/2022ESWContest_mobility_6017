@@ -28,9 +28,9 @@ class AuthManager {
     } on FirebaseAuthException catch (e) {
       //로그인 예외처리
       if (e.code == 'user-not-found') {
-        print('등록되지 않은 이메일입니다');
+        print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('비밀번호가 틀렸습니다');
+        print('Wrong password provided for that user.');
       } else {
         print(e.code);
       }
