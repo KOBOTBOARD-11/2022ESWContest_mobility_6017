@@ -41,7 +41,7 @@ CheckDialogYesOrNo(BuildContext context, String mainContent, String subContent,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              FlatButton(
+              MaterialButton(
                 // 버튼 클릭시 CheckDialogConfirm로 가서 확인 Dialog를 보여준다.
                 color: mColor,
                 shape: RoundedRectangleBorder(
@@ -87,7 +87,7 @@ CheckDialogYesOrNo(BuildContext context, String mainContent, String subContent,
                   });
                 },
               ),
-              FlatButton(
+              MaterialButton(
                 color: mColor == Colors.white
                     ? const Color(0xFF06A66C)
                     : Colors.white,
