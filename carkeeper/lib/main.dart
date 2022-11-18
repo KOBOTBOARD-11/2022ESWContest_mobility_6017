@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:carkeeper/pages/camera_page.dart';
 import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
@@ -123,8 +124,9 @@ class MyApp extends StatelessWidget {
         fontFamily: "${GoogleFonts.archivo()}",
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/camera',
       routes: {
+        '/camera': (context) => CameraPage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
         '/carkeeper': (context) => CarKeeperPage(),
