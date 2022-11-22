@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:carkeeper/commons/confirm.dart';
+import 'package:carkeeper/styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key}) : super(key: key);
@@ -15,6 +17,10 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> {
+  late Timer _timer;
+  int _timeCount = 0;
+  bool isPlayed = false;
+  bool isPaused = false;
   late bool _cameraInitialized = false;
   late CameraController _cameraController;
   @override
@@ -28,6 +34,7 @@ class _CameraPageState extends State<CameraPage> {
     if (_cameraController != null) {
       _cameraController.dispose();
     }
+    _timer.cancel();
     super.dispose();
   }
 
@@ -44,36 +51,80 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
-  Column _camera(BuildContext context) {
-    return Column(
+  Stack _camera(BuildContext context) {
+    int secondCount = _timeCount ~/ 100;
+    return Stack(
       children: [
         SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.9,
+            height: MediaQuery.of(context).size.height,
             child: CameraPreview(_cameraController)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MaterialButton(
-              onPressed: () async {
-                await _cameraController.startVideoRecording();
-              },
-              child: const Icon(Icons.play_arrow, size: 40),
-            ),
-            MaterialButton(
-              onPressed: () async {
-                // final path = join((await getTemporaryDirectory()).path,
-                //     '${DateTime.now()}.mp3');
-                final file = await _cameraController.stopVideoRecording();
-                uploadFile(file.path);
-                print(file.path);
-              },
-              child: const Icon(Icons.play_arrow, size: 40),
-            ),
-          ],
+        Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFF06A66C)),
+              color: Colors.white),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.1,
+          child: Center(
+            child: isPlayed
+                ? Text(
+                    '$secondCount',
+                    style: h1(mColor: const Color(0xFF06A66C)),
+                  )
+                : title(isPaused ? "촬영이 완료되었습니다." : "20초 동안 촬영합니다."),
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: Column(
+            verticalDirection: VerticalDirection.up,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              MaterialButton(
+                onPressed: () => setState(() {
+                  startVideo();
+                  isPlayed = true;
+                }),
+                child: Icon(
+                  CupertinoIcons.largecircle_fill_circle,
+                  size: 100,
+                  color: isPlayed ? Colors.transparent : Colors.redAccent,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  void _startTime() {
+    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      setState(() {
+        _timeCount++;
+        _stopTime();
+      });
+    });
+  }
+
+  void _stopTime() {
+    if (_timeCount >= 2100) {
+      _timer.cancel();
+      _timeCount = 0;
+      isPlayed = false;
+      isPaused = true;
+      stopVideo();
+    }
+  }
+
+  Future<void> startVideo() async {
+    await _cameraController.startVideoRecording();
+    _startTime();
+  }
+
+  Future<void> stopVideo() async {
+    final file = await _cameraController.stopVideoRecording();
+    CheckDialogUpload(context, file.path);
   }
 
   Future<void> readyToCamera() async {
@@ -98,32 +149,7 @@ class _CameraPageState extends State<CameraPage> {
     });
   }
 
-  Future uploadFile(String path) async {
-    File? file = File(path);
-    try {
-      // 스토리지에 업로드할 파일 경로
-      final firebaseStorageRef = FirebaseStorage.instance
-          .ref()
-          .child('post_video') //'post'라는 folder를 만들고
-          .child('${DateTime.now().millisecondsSinceEpoch}.mp4');
-
-      // 파일 업로드
-      final uploadTask = firebaseStorageRef.putFile(
-          file, SettableMetadata(contentType: 'video/mp4'));
-
-      // 완료까지 기다림
-      await uploadTask.whenComplete(() => null);
-
-      // 업로드 완료 후 url
-      final downloadUrl = await firebaseStorageRef.getDownloadURL();
-
-      //문서 작성
-      await FirebaseFirestore.instance.collection('FaceID').doc('user').set({
-        'VideoURL': downloadUrl,
-        'Time': DateTime.now(),
-      });
-    } catch (e) {
-      print(e);
-    }
+  Text title(String info) {
+    return Text(info, style: h3(mColor: const Color(0xFF06A66C)));
   }
 }
