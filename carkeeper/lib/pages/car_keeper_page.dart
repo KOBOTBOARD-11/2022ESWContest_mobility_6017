@@ -1,6 +1,7 @@
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
+import 'package:carkeeper/pages/user_page.dart';
 import 'package:flutter/material.dart';
 
 class CarKeeperPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _CarKeeperPageState extends State<CarKeeperPage> {
   final List<Widget> _widgetOptions = <Widget>[
     RecordPage(),
     HomeScreenPage(),
-    FaceRegisterPage(),
+    UserPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -68,7 +69,7 @@ class _CarKeeperPageState extends State<CarKeeperPage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
-              label: '사용자 등록',
+              label: '회원 정보',
             ),
           ],
           currentIndex: _selectedIndex,

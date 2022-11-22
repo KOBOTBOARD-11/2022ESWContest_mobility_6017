@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:carkeeper/pages/camera_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,8 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
   // 이미지를 보여주는 위젯
   Widget showGuideLine() {
     return SizedBox(
-        //color: const Color(0xffd0cece),
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width * 1.4,
+        height: MediaQuery.of(context).size.width * 1.5,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -30,12 +30,12 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1.  카메라 어플을 통해서\n\t화면의 영상처럼\n\t얼굴을 10초간 찍어주세요.",
+                  "1.  등록하러 가기를 누르시고 \n\t화면의 영상처럼\n\t얼굴을 15초간 찍어주세요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "2.  앨범 버튼을 통해 앨범에서\n\t카메라 영상을 선택해주세요.",
+                  "2.  빨간 버튼을 누르시면\n\t촬영이 시작됩니다.\n\t20초 뒤에 자동으로 촬영이 끝나요.",
                   style: subtitle3(mColor: Colors.black),
                 ),
                 const SizedBox(height: 5),
@@ -69,25 +69,26 @@ class _FaceRegisterPageState extends State<FaceRegisterPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             showGuideLine(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton(
-                  heroTag: "video",
-                  child: const Icon(Icons.insert_photo_outlined),
-                  onPressed: () {
-                    getVideo(ImageSource.gallery);
-                  },
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CameraPage()));
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.05,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF06A66C),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                FloatingActionButton(
-                  heroTag: "upload",
-                  child: const Icon(Icons.upload),
-                  onPressed: () {
-                    uploadFile(context);
-                  },
-                )
-              ],
-            )
+                child: Center(
+                  child: Text(
+                    "등록하러 가기",
+                    style: h5(mColor: Colors.white),
+                  ),
+                ),
+              ),
+            ),
           ],
         ));
   }

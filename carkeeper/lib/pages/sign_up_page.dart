@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       borderRadius: BorderRadius.circular(30)),
                                   child: Center(
                                     child: Text(
-                                      "Submit",
+                                      "가입하기",
                                       style: subtitle3(mColor: Colors.white),
                                     ),
                                   ),
@@ -153,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                           color: Color(0xFF06A66C))),
                                   child: Center(
                                     child: Text(
-                                      "Cancel",
+                                      "취소하기",
                                       style: subtitle3(
                                           mColor: const Color(0xFF06A66C)),
                                     ),

@@ -108,7 +108,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   void _stopTime() {
-    if (_timeCount >= 2100) {
+    if (_timeCount >= 1600) {
       _timer.cancel();
       _timeCount = 0;
       isPlayed = false;

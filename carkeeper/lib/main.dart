@@ -4,9 +4,11 @@ import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/pages/home_screen_page.dart';
 import 'package:carkeeper/pages/login_page.dart';
+import 'package:carkeeper/pages/main_page.dart';
 import 'package:carkeeper/pages/record_page.dart';
 import 'package:carkeeper/pages/sign_up_page.dart';
 import 'package:carkeeper/pages/stream_page.dart';
+import 'package:carkeeper/pages/user_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -124,8 +126,10 @@ class MyApp extends StatelessWidget {
         fontFamily: "${GoogleFonts.archivo()}",
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/camera',
+      initialRoute: '/main',
       routes: {
+        '/main': (context) => MainPage(),
+        '/user': (context) => UserPage(),
         '/camera': (context) => CameraPage(),
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignUpPage(),
