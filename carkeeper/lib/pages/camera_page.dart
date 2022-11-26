@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:carkeeper/commons/confirm.dart';
 import 'package:carkeeper/styles.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,25 +50,32 @@ class _CameraPageState extends State<CameraPage> {
 
   Stack _camera(BuildContext context) {
     int secondCount = _timeCount ~/ 100;
+    double radians = 90 * math.pi / 180;
     return Stack(
       children: [
-        SizedBox(
+        Transform.rotate(
+          angle: radians,
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: CameraPreview(_cameraController)),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFF06A66C)),
+                color: Colors.white60),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: CameraPreview(_cameraController)),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFF06A66C)),
-              color: Colors.white),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.1,
-          child: Center(
-            child: isPlayed
-                ? Text(
-                    '$secondCount',
-                    style: h1(mColor: const Color(0xFF06A66C)),
-                  )
-                : title(isPaused ? "촬영이 완료되었습니다." : "20초 동안 촬영합니다."),
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: Center(
+              child: isPlayed
+                  ? Text(
+                      '$secondCount',
+                      style: h1(mColor: const Color(0xFF06A66C)),
+                    )
+                  : title(isPaused ? "촬영이 완료되었습니다." : "20초 동안 촬영합니다."),
+            ),
           ),
         ),
         Container(
