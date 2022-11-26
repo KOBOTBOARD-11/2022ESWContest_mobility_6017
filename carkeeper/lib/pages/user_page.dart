@@ -1,6 +1,7 @@
 import 'package:carkeeper/pages/face_register_page.dart';
 import 'package:carkeeper/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class UserPage extends StatefulWidget {
@@ -11,6 +12,46 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pop(context);
+        });
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          content: SizedBox(
+            height: 200,
+            child: Center(
+              child: Container(
+                decoration: const BoxDecoration(color: Colors.transparent),
+                height: 50.0,
+                width: 50.0,
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(
+                    Color(0xFF06A66C),
+                  ),
+                  strokeWidth: 5.0,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      print("Success");
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
@@ -61,8 +102,9 @@ class _UserPageState extends State<UserPage> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.3),
           InkWell(
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
+            onTap: () {
+              _showDialog();
+              signOut();
             },
             child: Text(
               "Sign Out",

@@ -121,10 +121,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                 aspectRatio: 4 / 1,
                                 child: MaterialButton(
                                   onPressed: () {
-                                    //print("hi");
                                     email = emailController.text;
                                     pw = pwController.text;
+
                                     authManager.signUpUser(email, pw);
+                                    Navigator.pop(context);
                                   },
                                   color: const Color(0xFF06A66C),
                                   shape: RoundedRectangleBorder(

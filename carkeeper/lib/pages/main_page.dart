@@ -11,17 +11,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, userSnapshot) {
-          if (userSnapshot.hasData) {
-            return CarKeeperPage();
-          } else {
-            return LoginPage();
-          }
-        },
-      ),
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, userSnapshot) {
+        if (userSnapshot.hasData) {
+          return const CarKeeperPage();
+        } else {
+          return LoginPage();
+        }
+      },
     );
   }
 }

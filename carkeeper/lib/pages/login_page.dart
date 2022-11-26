@@ -2,6 +2,7 @@ import 'package:carkeeper/firebase/firebase_auth_manager.dart';
 import 'package:carkeeper/pages/car_keeper_page.dart';
 import 'package:carkeeper/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
+import 'package:carkeeper/commons/confirm.dart';
 
 import '../styles.dart';
 
@@ -28,6 +29,37 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pop(context);
+        });
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          content: SizedBox(
+            height: 200,
+            child: Center(
+              child: Container(
+                decoration: const BoxDecoration(color: Colors.transparent),
+                height: 50.0,
+                width: 50.0,
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(
+                    Color(0xFF06A66C),
+                  ),
+                  strokeWidth: 5.0,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -125,16 +157,11 @@ class _LoginPageState extends State<LoginPage> {
                           aspectRatio: 6,
                           child: MaterialButton(
                             onPressed: () async {
+                              _showDialog();
                               email = emailController.text;
                               pw = pwController.text;
                               final access =
                                   await authManager.signInUser(email, pw);
-                              if (access == true) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CarKeeperPage()));
-                              } else {
-                                print("fail");
-                              }
                             },
                             color: const Color(0xFF06A66C),
                             shape: RoundedRectangleBorder(
