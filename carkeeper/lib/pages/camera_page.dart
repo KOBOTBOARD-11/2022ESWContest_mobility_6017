@@ -74,7 +74,7 @@ class _CameraPageState extends State<CameraPage> {
                       '$secondCount',
                       style: h1(mColor: const Color(0xFF06A66C)),
                     )
-                  : title(isPaused ? "촬영이 완료되었습니다." : "20초 동안 촬영합니다."),
+                  : title(isPaused ? "촬영이 완료되었습니다." : "15초 동안 촬영합니다."),
             ),
           ),
         ),
@@ -84,16 +84,31 @@ class _CameraPageState extends State<CameraPage> {
             verticalDirection: VerticalDirection.up,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-              MaterialButton(
-                onPressed: () => setState(() {
-                  startVideo();
-                  isPlayed = true;
-                }),
-                child: Icon(
-                  CupertinoIcons.largecircle_fill_circle,
-                  size: 100,
-                  color: isPlayed ? Colors.transparent : Colors.redAccent,
-                ),
+              Row(
+                children: [
+                  SizedBox(width: 130),
+                  MaterialButton(
+                    onPressed: () => setState(() {
+                      startVideo();
+                      isPlayed = true;
+                    }),
+                    child: Icon(
+                      CupertinoIcons.largecircle_fill_circle,
+                      size: 100,
+                      color: isPlayed ? Colors.transparent : Colors.redAccent,
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () => setState(() {
+                      Navigator.pop(context);
+                    }),
+                    child: Icon(
+                      CupertinoIcons.back,
+                      size: 60,
+                      color: isPlayed ? Colors.transparent : Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -123,7 +123,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   onPressed: () {
                                     email = emailController.text;
                                     pw = pwController.text;
-
                                     authManager.signUpUser(email, pw);
                                     Navigator.pop(context);
                                   },

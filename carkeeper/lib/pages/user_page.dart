@@ -16,7 +16,7 @@ class _UserPageState extends State<UserPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        Future.delayed(const Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 1), () {
           Navigator.pop(context);
         });
         return AlertDialog(

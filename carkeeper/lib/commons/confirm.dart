@@ -10,6 +10,7 @@ import '../pages/car_keeper_page.dart';
 import '../pages/home_screen_page.dart';
 import '../styles.dart';
 
+late bool upload;
 CheckDialogYesOrNo(BuildContext context, String mainContent, String subContent,
     Color mColor) async {
   HomeScreenPageState? parent =
@@ -172,8 +173,8 @@ CheckDialogUpload(BuildContext context, String path) {
                   ),
                   onPressed: () async {
                     await uploadFile(path);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CarKeeperPage()));
+                    Navigator.pop(context);
+                    upload = true;
                   },
                 ),
                 MaterialButton(
@@ -186,6 +187,7 @@ CheckDialogUpload(BuildContext context, String path) {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
+                    upload = false;
                   },
                   child: Text(
                     "아니요",
