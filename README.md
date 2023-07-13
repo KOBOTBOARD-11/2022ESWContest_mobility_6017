@@ -5,6 +5,8 @@
 
 ![2차_2022ESWContest_자동차모빌리티_6017_KOBOTBOARD](https://user-images.githubusercontent.com/85275893/195241756-63e32ab9-091f-4b15-8c01-790960d653d7.png)
 
+[🔗 발표자료 보러가기](https://docs.google.com/presentation/d/1JEyy27ELte9bV5lUglR9cuIeznLnYUA1nOGd07us_eQ/edit?usp=sharing)
+
 **📖 작품 설명(3줄 요약)**
 
 - 사용자에게 **안전한** 차박 경험을 제공하기 위한 솔루션
